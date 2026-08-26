@@ -1,0 +1,39 @@
+#❱❱❱ 3D static analysis example ❰❰❰#
+
+using Serendip
+
+# ❱❱❱ Geometry and generation
+
+geo = GeoModel(size=0.2)
+add_box(geo, [0.0, 0.0, 0.0], 1.0, 1.0, 1.0)
+mesh = Mesh(geo)
+select(mesh, :element, tag="solids")
+
+# ❱❱❱ Finite element modeling
+
+mapper= RegionMapper()
+add_mapping(mapper, "solids", MechSolid, LinearElastic, E=2e3, nu=0.2)
+
+model = FEModel(mesh, mapper)
+ana = MechAnalysis(model, outdir="static-3d", outkey="static-3d")
+add_logger(ana, :nodalreduce, (z==1), "top-face.dat")
+
+stage = add_stage(ana, nincs=4, nouts=10)
+add_bc(stage, :node, (z==0), ux=0, uy=0, uz=0)
+add_bc(stage, :face, (z==1), tz=:(-10*x))   # triangular load
+
+run(ana)
+
+# ❱❱❱ Post-processing
+
+plot = DomainPlot(
+    elevation = 30,
+    azimuth = -60,
+)
+add_plot(plot, model;
+    field = "σzz",
+    colormap = :spectral,
+    label = "`σ_z`",
+    warp = 50,
+)
+save(plot, "static-3d.pdf")
