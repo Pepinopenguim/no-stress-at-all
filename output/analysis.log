@@ -1,0 +1,25 @@
+Serendip - Finite Element Simulation Log
+
+Mechanical analysis  Stage 1
+Time 2026-08-29T21:09:38.712
+unknown dofs: 9339
+inc 1  output 0  T=0.0   ΔT=0.1
+    it 1  residue: 3.8027e-25
+inc 2  output 0  T=0.1   ΔT=0.1
+    it 1  residue: 7.6617e-25
+inc 3  output 1  T=0.2   ΔT=0.1
+    it 1  residue: 4.2510e-25
+inc 4  output 1  T=0.3   ΔT=0.1
+    it 1  residue: 4.4562e-25
+inc 5  output 2  T=0.4   ΔT=0.1
+    it 1  residue: 3.6230e-25
+inc 6  output 2  T=0.5   ΔT=0.1
+    it 1  residue: 3.9613e-25
+inc 7  output 3  T=0.6   ΔT=0.1
+    it 1  residue: 4.3935e-25
+inc 8  output 3  T=0.7   ΔT=0.1
+    it 1  residue: 3.5220e-25
+inc 9  output 4  T=0.8   ΔT=0.1
+    it 1  residue: 4.9013e-25
+inc 10  output 4  T=0.9   ΔT=0.1
+    it 1  residue: 4.3370e-25
