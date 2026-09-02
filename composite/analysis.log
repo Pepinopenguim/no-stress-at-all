@@ -1,0 +1,305 @@
+Serendip - Finite Element Simulation Log
+
+Mechanical analysis  Stage 1
+Time 2026-09-02T09:01:12.401
+unknown dofs: 10164
+inc 1  output 0  T=0.0   ΔT=0.01
+    it 1  residue: 3.4693e+02
+    it 2  residue: 8.7297e+01
+    it 3  residue: 1.2794e-08
+inc 2  output 0  T=0.01   ΔT=0.01
+    it 1  residue: 5.1311e-03
+inc 3  output 1  T=0.02   ΔT=0.005
+    it 1  residue: 5.1311e-03
+inc 4  output 1  T=0.025   ΔT=0.009975
+    it 1  residue: 3.4207e-03
+inc 5  output 1  T=0.035   ΔT=0.005025
+    it 1  residue: 8.2458e-03
+inc 6  output 2  T=0.04   ΔT=0.004987
+    it 1  residue: 4.2033e-03
+inc 7  output 2  T=0.045   ΔT=0.009953
+    it 1  residue: 5.2723e-03
+inc 8  output 2  T=0.0549   ΔT=0.005059
+    it 1  residue: 1.1016e-02
+inc 9  output 3  T=0.06   ΔT=0.004977
+    it 1  residue: 5.4920e-03
+inc 10  output 3  T=0.065   ΔT=0.009927
+    it 1  residue: 6.7496e-03
+inc 11  output 3  T=0.0749   ΔT=0.005096
+    it 1  residue: 1.3892e-02
+inc 12  output 4  T=0.08   ΔT=0.004963
+    it 1  residue: 6.7840e-03
+inc 13  output 4  T=0.085   ΔT=0.009895
+    it 1  residue: 8.2155e-03
+inc 14  output 4  T=0.0949   ΔT=0.005142
+    it 1  residue: 1.6746e-02
+inc 15  output 5  T=0.1   ΔT=0.004947
+    it 1  residue: 8.1100e-03
+inc 16  output 5  T=0.1049   ΔT=0.009858
+    it 1  residue: 9.6626e-03
+inc 17  output 5  T=0.1148   ΔT=0.005195
+    it 1  residue: 1.9576e-02
+inc 18  output 6  T=0.12   ΔT=0.004929
+    it 1  residue: 9.4759e-03
+inc 19  output 6  T=0.1249   ΔT=0.009815
+    it 1  residue: 1.1088e-02
+inc 20  output 6  T=0.1347   ΔT=0.005256
+    it 1  residue: 2.2380e-02
+inc 21  output 7  T=0.14   ΔT=0.004908
+    it 1  residue: 1.0888e-02
+inc 22  output 7  T=0.1449   ΔT=0.009768
+    it 1  residue: 1.2488e-02
+inc 23  output 7  T=0.1547   ΔT=0.005325
+    it 1  residue: 2.5153e-02
+inc 24  output 8  T=0.16   ΔT=0.004884
+    it 1  residue: 1.2354e-02
+inc 25  output 8  T=0.1649   ΔT=0.009715
+    it 1  residue: 1.3859e-02
+inc 26  output 8  T=0.1746   ΔT=0.005401
+    it 1  residue: 2.7892e-02
+inc 27  output 9  T=0.18   ΔT=0.004857
+    it 1  residue: 1.3879e-02
+inc 28  output 9  T=0.1849   ΔT=0.009657
+    it 1  residue: 1.5199e-02
+inc 29  output 9  T=0.1945   ΔT=0.005486
+    it 1  residue: 3.0593e-02
+inc 30  output 10  T=0.2   ΔT=0.004828
+    it 1  residue: 1.5470e-02
+inc 31  output 10  T=0.2048   ΔT=0.009593
+    it 1  residue: 1.6503e-02
+inc 32  output 10  T=0.2144   ΔT=0.005578
+    it 1  residue: 3.3251e-02
+inc 33  output 11  T=0.22   ΔT=0.004797
+    it 1  residue: 1.7136e-02
+inc 34  output 11  T=0.2248   ΔT=0.009524
+    it 1  residue: 1.7769e-02
+inc 35  output 11  T=0.2343   ΔT=0.005679
+    it 1  residue: 3.5863e-02
+inc 36  output 12  T=0.24   ΔT=0.004762
+    it 1  residue: 1.8883e-02
+inc 37  output 12  T=0.2448   ΔT=0.00945
+    it 1  residue: 1.8424e-02
+inc 38  output 12  T=0.2542   ΔT=0.005788
+    it 1  residue: 3.5992e-02
+inc 39  output 13  T=0.26   ΔT=0.004725
+    it 1  residue: 2.1188e-02
+inc 40  output 13  T=0.2647   ΔT=0.009369
+    it 1  residue: 1.8305e-02
+inc 41  output 13  T=0.2741   ΔT=0.005906
+    it 1  residue: 3.5784e-02
+inc 42  output 14  T=0.28   ΔT=0.004684
+    it 1  residue: 2.2782e-02
+inc 43  output 14  T=0.2847   ΔT=0.009283
+    it 1  residue: 1.8170e-02
+inc 44  output 14  T=0.294   ΔT=0.006033
+    it 1  residue: 3.5545e-02
+inc 45  output 15  T=0.3   ΔT=0.004641
+    it 1  residue: 2.3297e-02
+inc 46  output 15  T=0.3046   ΔT=0.009196
+    it 1  residue: 1.8024e-02
+inc 47  output 15  T=0.3138   ΔT=0.006162
+    it 1  residue: 3.5290e-02
+inc 48  output 16  T=0.32   ΔT=0.004598
+    it 1  residue: 2.3822e-02
+inc 49  output 16  T=0.3246   ΔT=0.009108
+    it 1  residue: 1.7875e-02
+inc 50  output 16  T=0.3337   ΔT=0.006293
+    it 1  residue: 3.5021e-02
+inc 51  output 17  T=0.34   ΔT=0.004554
+    it 1  residue: 2.4349e-02
+inc 52  output 17  T=0.3446   ΔT=0.00902
+    it 1  residue: 1.7721e-02
+inc 53  output 17  T=0.3536   ΔT=0.006426
+    it 1  residue: 3.4740e-02
+inc 54  output 18  T=0.36   ΔT=0.00451
+    it 1  residue: 2.4880e-02
+inc 55  output 18  T=0.3645   ΔT=0.008931
+    it 1  residue: 1.7563e-02
+inc 56  output 18  T=0.3734   ΔT=0.006559
+    it 1  residue: 3.4449e-02
+inc 57  output 19  T=0.38   ΔT=0.004465
+    it 1  residue: 2.5415e-02
+inc 58  output 19  T=0.3845   ΔT=0.008841
+    it 1  residue: 1.7402e-02
+inc 59  output 19  T=0.3933   ΔT=0.006694
+    it 1  residue: 3.4149e-02
+inc 60  output 20  T=0.4   ΔT=0.00442
+    it 1  residue: 2.5952e-02
+inc 61  output 20  T=0.4044   ΔT=0.00875
+    it 1  residue: 1.7238e-02
+inc 62  output 20  T=0.4132   ΔT=0.006829
+    it 1  residue: 3.3841e-02
+inc 63  output 21  T=0.42   ΔT=0.004375
+    it 1  residue: 2.6493e-02
+inc 64  output 21  T=0.4244   ΔT=0.008659
+    it 1  residue: 1.7072e-02
+inc 65  output 21  T=0.433   ΔT=0.006966
+    it 1  residue: 3.3525e-02
+inc 66  output 22  T=0.44   ΔT=0.004329
+    it 1  residue: 2.7038e-02
+inc 67  output 22  T=0.4443   ΔT=0.008567
+    it 1  residue: 1.6903e-02
+inc 68  output 22  T=0.4529   ΔT=0.007104
+    it 1  residue: 3.3203e-02
+inc 69  output 23  T=0.46   ΔT=0.004283
+    it 1  residue: 2.7585e-02
+inc 70  output 23  T=0.4643   ΔT=0.008474
+    it 1  residue: 1.6732e-02
+inc 71  output 23  T=0.4728   ΔT=0.007242
+    it 1  residue: 3.2875e-02
+inc 72  output 24  T=0.48   ΔT=0.004237
+    it 1  residue: 2.8135e-02
+inc 73  output 24  T=0.4842   ΔT=0.008381
+    it 1  residue: 1.6558e-02
+inc 74  output 24  T=0.4926   ΔT=0.007382
+    it 1  residue: 3.2542e-02
+inc 75  output 25  T=0.5   ΔT=0.004191
+    it 1  residue: 2.8688e-02
+inc 76  output 25  T=0.5042   ΔT=0.008287
+    it 1  residue: 1.6383e-02
+inc 77  output 25  T=0.5125   ΔT=0.007522
+    it 1  residue: 3.2204e-02
+inc 78  output 26  T=0.52   ΔT=0.004144
+    it 1  residue: 2.9244e-02
+inc 79  output 26  T=0.5241   ΔT=0.008193
+    it 1  residue: 1.6207e-02
+inc 80  output 26  T=0.5323   ΔT=0.007663
+    it 1  residue: 3.1862e-02
+inc 81  output 27  T=0.54   ΔT=0.004097
+    it 1  residue: 2.9802e-02
+inc 82  output 27  T=0.5441   ΔT=0.008099
+    it 1  residue: 1.6028e-02
+inc 83  output 27  T=0.5522   ΔT=0.007805
+    it 1  residue: 3.1515e-02
+inc 84  output 28  T=0.56   ΔT=0.004049
+    it 1  residue: 3.0363e-02
+inc 85  output 28  T=0.564   ΔT=0.008004
+    it 1  residue: 1.5848e-02
+inc 86  output 28  T=0.5721   ΔT=0.007947
+    it 1  residue: 3.1165e-02
+inc 87  output 29  T=0.58   ΔT=0.004002
+    it 1  residue: 3.0926e-02
+inc 88  output 29  T=0.584   ΔT=0.007908
+    it 1  residue: 1.5667e-02
+inc 89  output 29  T=0.5919   ΔT=0.00809
+    it 1  residue: 3.0812e-02
+inc 90  output 30  T=0.6   ΔT=0.003954
+    it 1  residue: 3.1491e-02
+inc 91  output 30  T=0.604   ΔT=0.007812
+    it 1  residue: 1.5485e-02
+inc 92  output 30  T=0.6118   ΔT=0.008234
+    it 1  residue: 3.0456e-02
+inc 93  output 31  T=0.62   ΔT=0.003906
+    it 1  residue: 3.2057e-02
+inc 94  output 31  T=0.6239   ΔT=0.007716
+    it 1  residue: 1.5302e-02
+inc 95  output 31  T=0.6316   ΔT=0.008377
+    it 1  residue: 3.0098e-02
+inc 96  output 32  T=0.64   ΔT=0.003858
+    it 1  residue: 3.2626e-02
+inc 97  output 32  T=0.6439   ΔT=0.00762
+    it 1  residue: 1.5118e-02
+inc 98  output 32  T=0.6515   ΔT=0.008522
+    it 1  residue: 2.9737e-02
+inc 99  output 33  T=0.66   ΔT=0.00381
+    it 1  residue: 3.3195e-02
+inc 100  output 33  T=0.6638   ΔT=0.007523
+    it 1  residue: 1.4933e-02
+inc 101  output 33  T=0.6713   ΔT=0.008667
+    it 1  residue: 2.9373e-02
+inc 102  output 34  T=0.68   ΔT=0.003762
+    it 1  residue: 3.3766e-02
+inc 103  output 34  T=0.6838   ΔT=0.007427
+    it 1  residue: 1.4747e-02
+inc 104  output 34  T=0.6912   ΔT=0.008812
+    it 1  residue: 2.9009e-02
+inc 105  output 35  T=0.7   ΔT=0.003713
+    it 1  residue: 3.4338e-02
+inc 106  output 35  T=0.7037   ΔT=0.00733
+    it 1  residue: 1.4560e-02
+inc 107  output 35  T=0.711   ΔT=0.008957
+    it 1  residue: 2.8642e-02
+inc 108  output 36  T=0.72   ΔT=0.003665
+    it 1  residue: 3.4910e-02
+inc 109  output 36  T=0.7237   ΔT=0.007233
+    it 1  residue: 1.4373e-02
+inc 110  output 36  T=0.7309   ΔT=0.009102
+    it 1  residue: 2.8274e-02
+inc 111  output 37  T=0.74   ΔT=0.003616
+    it 1  residue: 3.5483e-02
+inc 112  output 37  T=0.7436   ΔT=0.007136
+    it 1  residue: 1.4186e-02
+inc 113  output 37  T=0.7508   ΔT=0.009248
+    it 1  residue: 2.7905e-02
+inc 114  output 38  T=0.76   ΔT=0.003568
+    it 1  residue: 3.6056e-02
+inc 115  output 38  T=0.7636   ΔT=0.007039
+    it 1  residue: 1.3998e-02
+inc 116  output 38  T=0.7706   ΔT=0.009393
+    it 1  residue: 2.7535e-02
+inc 117  output 39  T=0.78   ΔT=0.003519
+    it 1  residue: 3.6630e-02
+inc 118  output 39  T=0.7835   ΔT=0.006942
+    it 1  residue: 1.3810e-02
+inc 119  output 39  T=0.7905   ΔT=0.009539
+    it 1  residue: 2.7165e-02
+inc 120  output 40  T=0.8   ΔT=0.003471
+    it 1  residue: 3.7203e-02
+inc 121  output 40  T=0.8035   ΔT=0.006845
+    it 1  residue: 1.3622e-02
+inc 122  output 40  T=0.8103   ΔT=0.009684
+    it 1  residue: 2.6794e-02
+inc 123  output 41  T=0.82   ΔT=0.003422
+    it 1  residue: 3.7776e-02
+inc 124  output 41  T=0.8234   ΔT=0.006748
+    it 1  residue: 1.3434e-02
+inc 125  output 41  T=0.8302   ΔT=0.00983
+    it 1  residue: 2.6423e-02
+inc 126  output 42  T=0.84   ΔT=0.003374
+    it 1  residue: 3.8348e-02
+inc 127  output 42  T=0.8434   ΔT=0.006651
+    it 1  residue: 1.3246e-02
+inc 128  output 42  T=0.85   ΔT=0.009975
+    it 1  residue: 2.6051e-02
+inc 129  output 43  T=0.86   ΔT=0.003326
+    it 1  residue: 3.8920e-02
+inc 130  output 43  T=0.8633   ΔT=0.006555
+    it 1  residue: 1.3058e-02
+inc 131  output 43  T=0.8699   ΔT=0.01012
+    it 1  residue: 2.5680e-02
+inc 132  output 44  T=0.88   ΔT=0.003277
+    it 1  residue: 3.9490e-02
+inc 133  output 44  T=0.8833   ΔT=0.006458
+    it 1  residue: 1.2870e-02
+inc 134  output 44  T=0.8897   ΔT=0.01026
+    it 1  residue: 2.5309e-02
+inc 135  output 45  T=0.9   ΔT=0.003229
+    it 1  residue: 4.0060e-02
+inc 136  output 45  T=0.9032   ΔT=0.006362
+    it 1  residue: 1.2682e-02
+inc 137  output 45  T=0.9096   ΔT=0.01041
+    it 1  residue: 2.4939e-02
+inc 138  output 46  T=0.92   ΔT=0.003181
+    it 1  residue: 4.0627e-02
+inc 139  output 46  T=0.9232   ΔT=0.006266
+    it 1  residue: 1.2495e-02
+inc 140  output 46  T=0.9294   ΔT=0.01055
+    it 1  residue: 2.4569e-02
+inc 141  output 47  T=0.94   ΔT=0.003133
+    it 1  residue: 4.1194e-02
+inc 142  output 47  T=0.9431   ΔT=0.006171
+    it 1  residue: 1.2308e-02
+inc 143  output 47  T=0.9493   ΔT=0.0107
+    it 1  residue: 2.4200e-02
+inc 144  output 48  T=0.96   ΔT=0.003085
+    it 1  residue: 4.1758e-02
+inc 145  output 48  T=0.9631   ΔT=0.006076
+    it 1  residue: 1.2122e-02
+inc 146  output 48  T=0.9692   ΔT=0.01084
+    it 1  residue: 2.3832e-02
+inc 147  output 49  T=0.98   ΔT=0.003038
+    it 1  residue: 4.2320e-02
+inc 148  output 49  T=0.983   ΔT=0.005981
+    it 1  residue: 1.1936e-02
+inc 149  output 49  T=0.989   ΔT=0.01098
+    it 1  residue: 2.3465e-02
