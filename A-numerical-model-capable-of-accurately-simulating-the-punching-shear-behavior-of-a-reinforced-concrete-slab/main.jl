@@ -3,57 +3,6 @@ using Serendip
 # ===========================================================
 # ================= SLAB DEFINITION =========================
 # ===========================================================
-# >> Reinforcement
-struct Reinforcement
-    n::Int
-    ϕ::Float64
-    Δ::Float64  # center-to-center spacing
-end
-
-
-# >> U-bar
-struct UBar
-    n::Int
-    ϕ::Float64
-    Δ::Float64  # center-to-center spacing
-    x::Float64
-    z::Float64
-end
-
-
-# Defines offset for given reinforcement
-reinforcement_offset(rein::Reinforcement, l) =
-    (l - (rein.n - 1) * rein.Δ) / 2
-
-
-# >> Top reinforcement
-# 16 ϕ 16.0 @ 155
-top_reinforcement = Reinforcement(
-    16,
-    16.0,
-    155.0,
-)
-
-
-# >> Bottom reinforcement
-# 16 ϕ 10.0 @ 155
-bot_reinforcement = Reinforcement(
-    16,
-    10.0,
-    155.0,
-)
-
-
-# >> U-bar at edges
-# 130 (z) x 250 (x or y)
-# (2x) ϕ 16.0 @ 155
-u_bar = UBar(
-    2,
-    16.0,
-    155.0,
-    250.0,
-    130.0,
-)
 
 
 # >> Beam proportions
@@ -61,36 +10,72 @@ u_bar = UBar(
 b = 2500.0    # y direction
 h = 180.0     # z direction
 
-# Removed the *1e3 conversion factor
-z_offset = (h - u_bar.z) / 2
-
-# ===========================================================
-# ================= COLUMN DEFINITION =======================
-# ===========================================================
-
-column_reinforcement = Reinforcement(8, 16.0, 0.0)
-
-column_shear_armor = Reinforcement(18, 10.0, 80.0)
-
-# ===========================================================
-# ================= GEOMODEL ================================
-# ===========================================================
 
 # >> Define box 
-# NOTE - Assuming symmetry. 
-geo = GeoModel(size=1)
+geo = GeoModel(size=1000)
 
 box = add_box(geo, [0.0, 0.0, 0.0], ℓ, b, h; tag="bulk")
 
-# Define first bar of top reinforcement
-offset_top = reinforcement_offset(top_reinforcement, ℓ)
-
-p0_top = add_point(geo, [offset_top, offset_top, z_offset + u_bar.z])
-px_top = add_point(geo, [ℓ - offset_top, offset_top, z_offset + u_bar.z])
-py_top = add_point(geo, [offset_top, ℓ - offset_top, z_offset + u_bar.z])
-
-barx_top = add_line(geo, p0_top, px_top, "top-bar")
-bary_top = add_line(geo, p0_top, py_top, "top-bar")
-add_array()
+# Define a single line near surface
 
 # add top_reinforcement
+
+function create_grid(geo::GeoModel, tag::String, C::Vector{Float64}, n::Int, d::Float64)
+    cx, cy, cz = C
+
+    p0 = add_point(geo, [cx, cy, h - cz])
+    p1x = add_point(geo, [ℓ - cx, cy    , h - cz])
+    p1y = add_point(geo, [cx    , b - cy, h - cz])
+
+    top_edge_x = add_line(geo, p0, p1x)
+    top_path_x = add_path(geo, [top_edge_x]; tag=tag)
+    top_array_x = add_array(geo, top_path_x; ny=16, dy=155.0)
+
+    top_edge_y = add_line(geo, p0, p1y)
+    top_path_y = add_path(geo, [top_edge_y]; tag=tag)
+    top_array_y = add_array(geo, top_path_y; nx=16, dx=155.0)
+end
+
+create_grid(geo, "topReinforcement", [87.5, 87.5, h - 25], 16, 155.0)
+create_grid(geo, "botReinforcement", [87.5, 87.5, 25], 16, 155.0)
+
+# define U reinforcements
+# _ux -> parallel to x
+@enum Direction x y
+function create_ubars(geo::GeoModel, tag::String, C::Vector{Float64}, ℓ_u::Float64, direction::Direction, n::Int, d::Float64)
+    cx, cy, cz = C
+
+    (∇x, ∇y, nx, ny, dx, dy) = direction == x ? (ℓ_u, 0, 1, n, 0.0, d) : (0, ℓ_u, n, 1, d, 0.0)
+
+    points_u = [
+        add_point(geo, [cx + ∇x, cy + ∇y, h - cz])
+        add_point(geo, [cx, cy, h - cz])
+        add_point(geo, [cx, cy, cz])
+        add_point(geo, [cx + ∇x, cy + ∇y, cz])
+    ]
+
+    edges_u = [add_line(geo,points_u[i],points_u[i+1]) for i in 1:3]
+    path_u = add_path(geo, edges_u; tag=tag)
+    add_array(geo, path_u; nx=nx, ny=ny, dx=dx, dy=dy)
+end
+
+create_ubars(geo, "uBar", [87.5, 87.5, 25], 250.0, x, 16, 155.0)
+create_ubars(geo, "uBar", [ℓ - 87.5, 87.5, 25], -250.0, x, 16, 155.0)
+create_ubars(geo, "uBar", [87.5, 87.5, 25], 250.0, y, 16, 155.0)
+create_ubars(geo, "uBar", [87.5, b - 87.5, 25], -250.0, y, 16, 155.0)
+
+# define mesh
+
+mesh = Mesh(geo)
+
+# view mesh
+
+video = VideoBuilder(bounds_factor=1.05)
+
+for az in 0:10:360
+    frame = DomainPlot(azimuth=az)
+    add_plot(frame, mesh, view_mode=:wireframe)
+    add_frame(video, frame)
+end
+
+save(video, "test.mp4")
