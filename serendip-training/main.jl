@@ -9,7 +9,7 @@ l = 6.0   # x direction
 b = 5.0   # y direction
 h = 0.6   # z direction
 
-geo  = GeoModel(size=0.1)
+geo  = GeoModel(size=0.2)
 base = add_rectangle(geo, [0,0,0], l, b)
 volume = extrude(geo, base, [0,0,h])
 
@@ -49,8 +49,9 @@ model = FEModel(mesh, mapper)
 ana   = MechAnalysis(model, outkey="simple-slab")
 stage = add_stage(ana, nincs=10, nouts=5)
 
-add_bc(stage, :node, (x==0, z==0), ux=0, uy=0, uz=0) # fixed support
-add_bc(stage, :node, (x==l, z==0), uy=0, uz=0) # roller support
+add_bc(stage, :face, (x==0), ux=0, uy=0, uz=0) # fixed support
+add_bc(stage, :face, (x==l), ux=0, uy=0, uz=0) # fixed support
+add_bc(stage, :face, (y==0), ux=0, uy=0, uz=0) # fixed support
 add_bc(stage, :face, (z==h), tz=-1000) # surface load
 
 run(ana)
@@ -60,13 +61,13 @@ run(ana)
 # ❱❱❱ Post-processing
 
 
-plot = DomainPlot()
+plot = DomainPlot(azimuth=-30)
 add_plot(plot, model;
-    # warp=50,
-    field="σx´",
-    field_mult=1e-3,
-    label="`σ_x` [MPa]",
+    warp=50,
+    field="σxx",
+    field_mult=1e3,
+    label="`u_z` [mm]",
     colormap=:spectral,
-    view_mode=:wireframe,
+    view_mode=:surface,
 )
 save(plot, "simple-beam.pdf")

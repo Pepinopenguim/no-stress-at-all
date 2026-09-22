@@ -1,7 +1,7 @@
 using Serendip
 
 # 1. Geometria da Viga-Parede (Unidade em metros)
-geo = GeoModel(size=1) 
+geo = GeoModel(size=1)
 
 # 1.1 Coordenadas da viga-parede
 p1  = add_point(geo, [0, 0, 0])
@@ -27,7 +27,7 @@ h5  = add_point(geo, [0.275, 0.234, 0]) #furo*
 h6  = add_point(geo, [0.381, 0.340, 0]) #furo*
 h7  = add_point(geo, [0.275, 0.446, 0]) #furo*
 h8  = add_point(geo, [0.169, 0.340, 0]) #furo*
-l1 = add_point(geo, [0.5, 0.78, 0]) 
+l1 = add_point(geo, [0.5, 0.78, 0])
 l2  = add_point(geo, [0.5,0.78, 0.14])
 
 l3 = add_point(geo, [0.07, 0, 0]) #apoio_1
@@ -37,14 +37,14 @@ l5 = add_point(geo, [0.93, 0, 0]) #apoio_2
 l6 = add_point(geo, [0.93, 0, 0.14]) #apoio_2
 
 # 1.3 Superfície da viga-parede
-s1 = add_polygon(geo, [pl10, p2, p3, p4, p5, pl5, p7, p8])
-s2 = add_polygon(geo, [h1, h2, h3, h4])
-s3 = add_polygon(geo, [p1, pl1, pl2, pl10]) #Apoios 1
-s4 = add_polygon(geo, [pl4, p6, pl5, pl3]) #Apoios 2
-s5 = add_disk(geo, [0.5, 0.74, 0.07], [0, 1, 0], 0.07) #aplicação de carga
-s6 = add_polygon(geo, [h5, h6, h7, h8]) #furo2
-Viga_f1 = cut(geo, s1, s2) 
-Viga = cut(geo, Viga_f1, s6)
+# s1 = add_polygon(geo, [pl10, p2, p3, p4, p5, pl5, p7, p8])
+# s2 = add_polygon(geo, [h1, h2, h3, h4])
+# s3 = add_polygon(geo, [p1, pl1, pl2, pl10]) #Apoios 1
+# s4 = add_polygon(geo, [pl4, p6, pl5, pl3]) #Apoios 2
+# s5 = add_disk(geo, [0.5, 0.74, 0.07], [0, 1, 0], 0.07) #aplicação de carga
+# s6 = add_polygon(geo, [h5, h6, h7, h8]) #furo2
+# Viga_f1 = cut(geo, s1, s2)
+# Viga = cut(geo, Viga_f1, s6)
 
 # 1.4 Extrusão da viga-parede
 viga_vol = extrude(geo, Viga, [0, 0, 0.14])
@@ -57,13 +57,13 @@ l_apoio_2 = add_line(geo, l5, l6)
 
 placas = [apoio_1, l, l_apoio_1, l_apoio_2, apoio_2, aplicacao_carga]
 fragment(geo, viga_vol, placas)
-#1.5 Aramadura da viga-parede
+#1.5 Armadura da viga-parede
 
 # Coordenadas da armadura N1
 a1 = add_point(geo, [0.025, 0.165, 0.025])
 a2 = add_point(geo, [0.685, 0.165, 0.025])
-al1 = add_line(geo, a1, a2) 
-N1 = add_path(geo, [al1], tag="bar_N1", interface_tag="bar_N1-interface") 
+al1 = add_line(geo, a1, a2)
+N1 = add_path(geo, [al1], tag="bar_N1", interface_tag="bar_N1-interface")
 add_array(geo, N1, nz=3, dz=0.045)
 
 # Coordenadas da armadura N2
@@ -116,7 +116,7 @@ e2 = add_point(geo, [0.975, 0.655, 0.025])
 e3 = add_point(geo, [0.975, 0.655, 0.115])
 e4 = add_point(geo, [0.025, 0.655, 0.115])
 al12 = add_line(geo, e1, e2)
-al13 = add_line(geo, e2, e3) 
+al13 = add_line(geo, e2, e3)
 al14 = add_line(geo, e3, e4)
 al15 = add_line(geo, e4, e1)
 N5 = add_path(geo, [al12, al13, al14, al15], tag="bar_N5", interface_tag="bar_N5-interface")
@@ -128,7 +128,7 @@ al16 = add_line(geo, f1, f2)
 N6 = add_path(geo, [al16], tag="bar_N6", interface_tag="bar_N6-interface")
 add_array(geo, N6, nz=2, dz=0.5*0.14)
 
-#1.6 Reforço da viga parede NSM 
+#1.6 Reforço da viga parede NSM
 
 r1 = add_point(geo, [0.001, 0.165,0.001])
 r2 = add_point(geo, [0.999, 0.165,0.001])
@@ -149,9 +149,13 @@ mesh = Mesh(geo)
 
 video = VideoBuilder(freeze_scale=false, bounds_factor=1.05)
 
-for az in 0:10:360
+for az in 0:20:360
     frame = DomainPlot(azimuth=az)
-    add_plot(frame, mesh, view_mode=:wireframe)
+    add_plot(
+        frame,
+        mesh,
+        view_mode=:wireframe
+    )
     add_frame(video, frame)
 end
 
@@ -175,7 +179,7 @@ GF = 0.05        # kN/m
 nu = 0.2
 mu = 1.4
 
-#Aço 
+#Aço
 Ea = 200e6       # Módulo de Elasticidade do aço (kN/m²)
 fy_aco  = 556e3       # Tensão de escoamento do aço 10 mm(kN/m²)
 fy1_aco = 649e3        # 6.3 mm
@@ -192,21 +196,21 @@ pb  = ϕb*pi
 pc  = ϕc*pi
 
 # Contato aço-Concreto
-tmax10  =  10.77e3  
+tmax10  =  10.77e3
 tmax63  =  10e3
-tmax8   =  10.33e3                 
-tres10  =  0.8e3 
-tres63  =  0.9e3 
-tres8   =  0.9e3               
-s1_10      = 0.55e-3             
-s1_63   = 0.30e-3 
-s1_8    = 0.42e-3 
-s2_10      = s1_10*1.1               
+tmax8   =  10.33e3
+tres10  =  0.8e3
+tres63  =  0.9e3
+tres8   =  0.9e3
+s1_10      = 0.55e-3
+s1_63   = 0.30e-3
+s1_8    = 0.42e-3
+s2_10      = s1_10*1.1
 s2_63   = s1_63*1.1
 s2_8    = s1_8*1.1
-s3_10      = 12e-3 
-s3_63   = 12e-3    
-s3_8    = 12e-3  
+s3_10      = 12e-3
+s3_63   = 12e-3
+s3_8    = 12e-3
 ks10    = 1*tmax10/s1_10
 ks_63   = 1*tmax63/s1_63
 ks_8    = 1*tmax8/s1_8
@@ -233,8 +237,8 @@ nu_man = 0.3
 ks_ref = 1e9
 kn_ref = 100*ks_ref
 
-#Parâmetros equivalentes 
-E_equ = (E_lam*A_lam + E_man*A_man)/(A_lam+A_man)   
+#Parâmetros equivalentes
+E_equ = (E_lam*A_lam + E_man*A_man)/(A_lam+A_man)
 A_equ = A_lam + A_man
 
 mapper = RegionMapper()
@@ -242,19 +246,19 @@ mapper = RegionMapper()
 add_mapping(mapper, "concreto", MechBulk, LinearElastic, E=E, nu=nu)
 add_mapping(mapper, "cohesive", MechCohesive, MohrCoulombCohesive, E=E, nu=nu, ft=ft, GF=GF, mu=mu)
 
-# Mapeamento das Placas de Aço 
+# Mapeamento das Placas de Aço
 add_mapping(mapper, "steel_plates_inf", MechBulk, LinearElastic, E=200e6, nu=0.3)
 add_mapping(mapper, "steel_plates_sup", MechBulk, LinearElastic, E=200e6, nu=0.3)
 
 # Mapeamento das barras de aço
-add_mapping(mapper, "bar_N1", MechBar, VonMises, E=Ea, A=Aa, fy=fy_aco, H=Ha) 
-add_mapping(mapper, "bar_N2", MechBar, VonMises, E=Ea, A=Aa, fy=fy_aco, H=Ha) 
+add_mapping(mapper, "bar_N1", MechBar, VonMises, E=Ea, A=Aa, fy=fy_aco, H=Ha)
+add_mapping(mapper, "bar_N2", MechBar, VonMises, E=Ea, A=Aa, fy=fy_aco, H=Ha)
 add_mapping(mapper, "bar_N3", MechBar, VonMises, E=Ea, A=Aa, fy=fy_aco, H=Ha)
 add_mapping(mapper, "bar_N4", MechBar, VonMises, E=Ea, A=Ab, fy=fy1_aco, H=Ha)
 add_mapping(mapper, "bar_N4f", MechBar, VonMises, E=Ea, A=Ab, fy=fy1_aco, H=Ha)
 add_mapping(mapper, "bar_N5", MechBar, VonMises, E=Ea, A=Ab, fy=fy1_aco, H=Ha)
 add_mapping(mapper, "bar_N6", MechBar, VonMises, E=Ea, A=Ac, fy=fy2_aco, H=Ha)
-add_mapping(mapper, "bar_N1-interface", MechBondSlip, CebBondSlip, taumax=tmax10, taures=tres10, s1=s1_10, s2= s2_10, s3=s3_10, alpha=alpha_aco, p=pa, ks=ks10, kn=kn_10) 
+add_mapping(mapper, "bar_N1-interface", MechBondSlip, CebBondSlip, taumax=tmax10, taures=tres10, s1=s1_10, s2= s2_10, s3=s3_10, alpha=alpha_aco, p=pa, ks=ks10, kn=kn_10)
 add_mapping(mapper, "bar_N2-interface", MechBondSlip, CebBondSlip, taumax=tmax10, taures=tres10, s1=s1_10, s2= s2_10, s3=s3_10, alpha=alpha_aco, p=pa, ks=ks10, kn=kn_10)
 add_mapping(mapper, "bar_N3-interface", MechBondSlip, CebBondSlip, taumax=tmax10, taures=tres10, s1=s1_10, s2= s2_10, s3=s3_10, alpha=alpha_aco, p=pa, ks=ks10, kn=kn_10)
 
@@ -272,14 +276,14 @@ model = FEModel(mesh, mapper)
 
 ana   = MechAnalysis(model, outkey="Vigaparede_DB3_W_H2_S_F", outdir="Viga_DB3_W_H2_S_F")
 
-log1 = add_logger(ana, :nodalreduce, (y == 0.78), "forca.dat") 
-log2 = add_logger(ana, :node, (x==0.5, y==0.04, z==0), "LVDT1.dat") 
-log3 = add_logger(ana, :node, (x==0.732, y==0.405, z==0), "LVDT3_1.dat") 
+log1 = add_logger(ana, :nodalreduce, (y == 0.78), "forca.dat")
+log2 = add_logger(ana, :node, (x==0.5, y==0.04, z==0), "LVDT1.dat")
+log3 = add_logger(ana, :node, (x==0.732, y==0.405, z==0), "LVDT3_1.dat")
 log4 = add_logger(ana, :node, (x==0.838, y==0.511, z==0), "LVDT3_2.dat")
-log5 = add_logger(ana, :node, (x==0.275, y==0.234, z==0), "LVDT4_1.dat") 
+log5 = add_logger(ana, :node, (x==0.275, y==0.234, z==0), "LVDT4_1.dat")
 log6 = add_logger(ana, :node, (x==0.381, y==0.340, z==0), "LVDT4_2.dat")
 
-log7 = add_logger(ana, :node, (x==0.5, y==0.04, z==0), "flecha.dat") 
+log7 = add_logger(ana, :node, (x==0.5, y==0.04, z==0), "flecha.dat")
 add_monitor(ana, :node, (x==0.5, y==0.04, z==0), :uy)
 
 log_ip = add_logger(ana, :ip, (x >= 0.49, x <= 0.51, y <= 0.05), "tensao_deformacao.dat")
@@ -296,15 +300,15 @@ log_EF1 = add_logger(ana, :ip, ("N1_ips", [0.5, 0.165, 0.07]),  "EF1_aco.dat")
 
 stage = add_stage(ana, nincs=1000, nouts=50)
 
-# 5. CONDIÇÕES DE CONTORNO 
+# 5. CONDIÇÕES DE CONTORNO
 
 # Apoio Esquerdo (na base da placa esquerda, y=0.0)
-add_bc(stage, :node, (x == 0.07, y == 0.0), ux=0, uy=0, uz=0)  
+add_bc(stage, :node, (x == 0.07, y == 0.0), ux=0, uy=0, uz=0)
 # Apoio Direito (na base da placa direita, y=0.0)
-add_bc(stage, :node, (x == 0.93, y == 0.0), uy=0)       
+add_bc(stage, :node, (x == 0.93, y == 0.0), uy=0)
 
-# Deslocamento imposto no TOPO da placa superior 
-add_bc(stage, :node, (x == 0.5, y == 0.78), uy=-0.002) 
+# Deslocamento imposto no TOPO da placa superior
+add_bc(stage, :node, (x == 0.5, y == 0.78), uy=-0.002)
 
 # 6. Execução da análise
 run(ana, autoinc=true, maxits=80, tol=1.0, rspan=0.03, quiet=false)
