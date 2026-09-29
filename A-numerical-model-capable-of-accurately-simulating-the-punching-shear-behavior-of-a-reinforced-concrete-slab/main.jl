@@ -13,12 +13,11 @@ h = 180.0e-3     # z direction
 
 # >> Define slab
 geo = GeoModel(size=1)
+geo = GeoModel(size=1)
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ, b, h; tag="bulk")
 
-# Define a single line near surface
-
-# add top_reinforcement
+# This function creates a grid of bars for the current problem
 
 function create_grid(geo::GeoModel, tag::String, C::Vector{Float64}, n::Int, d::Float64)
     cx, cy, cz = C
@@ -195,9 +194,9 @@ speak10 = 1e-3
 mapper = RegionMapper()
 
 add_mapping(mapper, "bulk", MechSolid, LinearElastic, E=Ec, nu=nu)
-add_mapping(mapper, "topReinforcement")
-add_mapping(mapper, "botReinforcement")
-add_mapping(mapper, "uBar")
+add_mapping(mapper, "topReinforcement", MechBar, VonMises)
+add_mapping(mapper, "botReinforcement", MechBar, VonMises)
+add_mapping(mapper, "uBar", MechBar, VonMises)
 add_mapping(mapper, "columnReinforcement", MechBar, VonMises, E=Ea)
 add_mapping(mapper, "columnStirrup")
 
