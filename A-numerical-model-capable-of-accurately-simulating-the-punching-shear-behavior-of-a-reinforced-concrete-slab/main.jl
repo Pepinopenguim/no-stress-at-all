@@ -200,3 +200,7 @@ add_mapping(mapper, "botReinforcement")
 add_mapping(mapper, "uBar")
 add_mapping(mapper, "columnReinforcement", MechBar, VonMises, E=Ea)
 add_mapping(mapper, "columnStirrup")
+
+# >> Load points
+
+# To obtain polar 

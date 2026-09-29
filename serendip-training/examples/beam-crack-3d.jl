@@ -23,7 +23,7 @@ add_array(geo, p, ny=3, dy=0.25*b)
 mesh = Mesh(geo)
 
 select(mesh.elems, :bulk, tag="bulk")
-add_cohesive_elements(mesh, x<ℓ/2, tag="cohesive", implicit=false)
+add_cohesive_elements(mesh, x < ℓ/2, tag="cohesive", implicit=false)
 
 # ❱❱❱ Finite element analysis
 E     = 37.e6
