@@ -56,26 +56,22 @@ bulk = fuse(geo, slab, column, tag="bulk")
 
 load_radius = 1124mm
 load_θs = [30 * n for n in 1:12 if n ∉ (3:3:12)]
-plate_coords = []
 
 # define dimensions of square plate
 # assuming 5x5cm
 plate_dim = [5cm, 5cm, 2cm]
-
-# simple function to define a plate of iron.
+plates = Any[]
 for θ in load_θs
-    # define center of load circle
     load_center = [ℓ/2, b/2]
+    plate_coord = load_center .+ load_radius .* [cosd(θ), sind(θ)]
+    push!(plate_coords, (plate_coord[1], plate_coord[2]))
 
-    plate_coord = load_center + load_radius * [cosd(θ), sind(θ)] 
-
-    push!(plate_coords, plate_coord)
-
-    # NOTE: from corner of box, not center
-    plate_corner = plate_coord - plate_dim[1:2]/2
-
-    plate = add_box(geo, [plate_coord..., h], plate_dim...; tag="steelPlate")
+    corner = plate_coord .- plate_dim[1:2] ./ 2
+    plate  = add_box(geo, [corner..., h], plate_dim...; tag="steelPlate")
+    push!(plates, plate)
 end
+
+fragment(geo, bulk, plates)
 
 # ===========================================================
 # ----------------- MESH AND VIDEO DEF. ---------------------
@@ -105,7 +101,7 @@ save(video, "view.mp4")
 # ===========================================================
 
 # >> Concrete
-Ec    = 21.551MPa
+Ec    = 29.9MPa
 nu    = 0.2
 
 # >> Steel
@@ -125,34 +121,46 @@ add_mapping(mapper, "steelPlate", MechSolid, LinearElastic, E=Es)
 model = FEModel(mesh, mapper; g=9.81)
 ana = MechAnalysis(model; outkey="elastic_1", outdir="elastic")
 
-stage = add_stage(ana, nincs=10, nouts=50)
+stage = add_stage(ana, nincs=1, nouts=1)
 
 # ===========================================================
 # ----------------- BOUNDARY CONDITIONS ---------------------
 # ===========================================================
 
 
-add_bc(stage, :node, x==0, ux=0, uy=0, uz=0)
-add_bc(stage, :node, x==ℓ, ux=0, uy=0, uz=0)
-add_bc(stage, :node, y==0, ux=0, uy=0, uz=0)
-add_bc(stage, :node, y==b, ux=0, uy=0, uz=0)
+# Slab perimeter fully restrained (the only support of the system)
+add_bc(stage, :face, (x == 0.0), ux=0, uy=0, uz=0)
+add_bc(stage, :face, (x == ℓ),   ux=0, uy=0, uz=0)
+add_bc(stage, :face, (y == 0.0), ux=0, uy=0, uz=0)
+add_bc(stage, :face, (y == b),   ux=0, uy=0, uz=0)
 
+# logger
+add_logger(ana, :nodalreduce, (x==0, y==0, z==h), "test.table")
+
+
+z_top = h + plate_dim[3]
 for (xp, yp) in plate_coords
-    add_bc(stage, :node, (x==xp, y==yp, z==h); uz=-1)
+    x_lo = xp - plate_dim[1]/2
+    x_hi = xp + plate_dim[1]/2
+    y_lo = yp - plate_dim[2]/2
+    y_hi = yp + plate_dim[2]/2
+    add_bc(stage, :face,
+           (x >= x_lo, x <= x_hi, y >= y_lo, y <= y_hi, z == z_top);
+           uz = -1mm)
 end
-
 
 # >> Load definitions 
 run(ana)
 
 plot_kwargs = (
-    field      = "σxx",
+    field      = "uz",
     colormap   = :spectral,
     diverging  = true,
-    line_color = :gray,
+    field_mult = 1e3,
     line_width = 0.1,
     colorbar   = :bottom,
-    label      = "`sigma_(x x)` [MPa]",
+    warp = 100,
+    label      = "`u_(z)` [mm]",
     view_mode   = :wireframe
 )
 
@@ -166,8 +174,10 @@ save(plot, "elastic//elastic.pdf")
 
 
 video = VideoBuilder(bounds_factor=1.05)
-for az in 0:10:180
-    frame = DomainPlot(azimuth=az)
+for az in 0:20:180
+    frame = DomainPlot(
+        azimuth=az,
+    )
     add_plot(
         frame, model;
         plot_kwargs...
