@@ -61,6 +61,7 @@ load_θs = [30 * n for n in 1:12 if n ∉ (3:3:12)]
 # assuming 5x5cm
 plate_dim = [5cm, 5cm, 2cm]
 plates = Any[]
+plate_coords = Any[]
 for θ in load_θs
     load_center = [ℓ/2, b/2]
     plate_coord = load_center .+ load_radius .* [cosd(θ), sind(θ)]
