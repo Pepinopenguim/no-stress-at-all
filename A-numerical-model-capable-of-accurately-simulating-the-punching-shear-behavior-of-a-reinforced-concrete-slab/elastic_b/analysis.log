@@ -1,7 +1,7 @@
 Serendip - Finite Element Simulation Log
 
 Mechanical analysis  Stage 1
-Time 2026-09-30T19:17:29.993
-unknown dofs: 14576
+Time 2026-10-01T16:24:12.697
+unknown dofs: 41306
 inc 1  output 0  T=0.0   ΔT=1.0
-    it 1  residue: 6.4069e-09
+    it 1  residue: 4.5890e-09

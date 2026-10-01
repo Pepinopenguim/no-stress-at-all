@@ -1,13 +1,12 @@
 #=
-This code represents a simple simulation of the structure assuming 
-no steel bars and elastic qualities of the beam.
-
-For the sake of simplifing the solution, displacement applied will be unitary
+This code represents another simple simulation of the structure assuming 
+elastic steel bars and elastic qualities of the beam.
 
 Objectives:
     - Correctly define geometry, materials (mapping), forces, etc.
     - review if loading is fine
     - create analysis and plots accordingly
+    - Define 
 =#
 
 using Serendip
@@ -31,7 +30,7 @@ h = 180.0mm     # z direction
 
 
 # >> Define slab
-geo = GeoModel(size=1)
+geo = GeoModel(size=.1)
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ, b, h; tag="bulk")
 
@@ -53,7 +52,7 @@ bulk = fuse(geo, slab, column, tag="bulk")
 # ===========================================================
 # ----------------- LOAD PLATE DEFINITION -------------------
 # ===========================================================
-
+# TODO - REVIEW ANGLE
 load_radius = 1124mm
 load_θs = [30 * n for n in 1:12 if n ∉ (3:3:12)]
 
@@ -80,7 +79,7 @@ fragment(geo, bulk, plates)
 
 
 # This function creates a grid of bars for the current problem
-function create_grid(geo::GeoModel, tag::String, C::Vector{Float64}, n::Int, d::Float64)
+function create_grid(geo::GeoModel, tag::String, interface_tag::String, C::Vector{Float64}, n::Int64, d::Float64)
     cx, cy, cz = C
 
     p0 = add_point(geo, [cx, cy, h - cz])
@@ -88,18 +87,18 @@ function create_grid(geo::GeoModel, tag::String, C::Vector{Float64}, n::Int, d::
     p1y = add_point(geo, [cx    , b - cy, h - cz])
 
     top_edge_x = add_line(geo, p0, p1x)
-    top_path_x = add_path(geo, [top_edge_x]; tag=tag)
-    add_array(geo, top_path_x; ny=16, dy=155.0mm)
+    top_path_x = add_path(geo, [top_edge_x]; tag=tag, interface_tag=interface_tag)
+    add_array(geo, top_path_x; ny=n, dy=d)
 
     top_edge_y = add_line(geo, p0, p1y)
-    top_path_y = add_path(geo, [top_edge_y]; tag=tag)
-    add_array(geo, top_path_y; nx=16, dx=155.0mm)
+    top_path_y = add_path(geo, [top_edge_y]; tag=tag, interface_tag=interface_tag)
+    add_array(geo, top_path_y; nx=n, dx=d)
 
 
 end
 
-create_grid(geo, "topReinforcement", [87.5mm, 87.5mm, h - 25mm], 16, 155.0mm)
-create_grid(geo, "botReinforcement", [87.5mm, 87.5mm, 25mm], 16, 155.0mm)
+create_grid(geo, "topReinforcement", "barInt", [87.5mm, 87.5mm, h - 25mm], 16, 155.0mm)
+create_grid(geo, "botReinforcement", "barInt", [87.5mm, 87.5mm, 25mm], 16, 155.0mm)
 
 
 # ===========================================================
@@ -143,10 +142,11 @@ Es    = 200GPa
 
 mapper = RegionMapper()
 
-add_mapping(mapper, "bulk", MechSolid, LinearElastic, E=Ec, nu=nu)
+add_mapping(mapper, "bulk", MechSolid, LinearElastic, E=Ec, nu=nu) #TODO - LinearCohesive
 add_mapping(mapper, "steelPlate", MechSolid, LinearElastic, E=Es)
-add_mapping(mapper, "topReinforcement", MechBar, LinearElastic, d=16mm, E=Es)
+add_mapping(mapper, "topReinforcement", MechBar, LinearElastic, d=16mm, E=Es) # TODO - VonMises
 add_mapping(mapper, "botReinforcement", MechBar, LinearElastic, d=10mm, E=Es)
+add_mapping(mapper, "barInt", MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=0.01)
 
 # ===========================================================
 # ----------------- FEModel ---------------------------------
@@ -168,20 +168,22 @@ add_bc(stage, :face, (x == ℓ),   ux=0, uy=0, uz=0)
 add_bc(stage, :face, (y == 0.0), ux=0, uy=0, uz=0)
 add_bc(stage, :face, (y == b),   ux=0, uy=0, uz=0)
 
+
+loading = select(model, :face, z==h + plate_dim[3]; tag="loading")
+
 # logger
 add_logger(ana, :nodalreduce, (x==0, y==0, z==h), "test.table")
 
 
 z_top = h + plate_dim[3]
-for (xp, yp) in plate_coords
-    x_lo = xp - plate_dim[1]/2
-    x_hi = xp + plate_dim[1]/2
-    y_lo = yp - plate_dim[2]/2
-    y_hi = yp + plate_dim[2]/2
-    add_bc(stage, :face,
-           (x >= x_lo, x <= x_hi, y >= y_lo, y <= y_hi, z == z_top);
-           uz = -1mm)
-end
+
+
+add_bc(
+        stage,
+        :face,
+        "loading";  
+        uz = -1mm
+    )
 
 # >> Load definitions 
 run(ana)

@@ -40,11 +40,10 @@ create_grid(geo, "botReinforcement", [87.5e-3, 87.5e-3, 25e-3], 16, 155.0e-3)
 
 # define U reinforcements
 # _ux -> parallel to x
-@enum Direction x y
-function create_ubars(geo::GeoModel, tag::String, C::Vector{Float64}, ℓ_u::Float64, direction::Direction, n::Int, d::Float64)
+function create_ubars(geo::GeoModel, tag::String, C::Vector{Float64}, ℓ_u::Float64, direction::String, n::Int, d::Float64)
     cx, cy, cz = C
 
-    (∇x, ∇y, nx, ny, dx, dy) = direction == x ? (ℓ_u, 0, 1, n, 0.0, d) : (0, ℓ_u, n, 1, d, 0.0)
+    (∇x, ∇y, nx, ny, dx, dy) = direction == "x" ? (ℓ_u, 0, 1, n, 0.0, d) : (0, ℓ_u, n, 1, d, 0.0)
 
     points_u = [
         add_point(geo, [cx + ∇x, cy + ∇y, h - cz])
@@ -58,10 +57,10 @@ function create_ubars(geo::GeoModel, tag::String, C::Vector{Float64}, ℓ_u::Flo
     add_array(geo, path_u; nx=nx, ny=ny, dx=dx, dy=dy)
 end
 # NOTE - signal of ℓ_u inverts its orientation
-create_ubars(geo, "uBar", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, x, 16, 155.0e-3)
-create_ubars(geo, "uBar", [ℓ - 87.5e-3, 87.5e-3, 25e-3], -250.0e-3, x, 16, 155.0e-3)
-create_ubars(geo, "uBar", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, y, 16, 155.0e-3)
-create_ubars(geo, "uBar", [87.5e-3, b - 87.5e-3, 25e-3], -250.0e-3, y, 16, 155.0e-3)
+create_ubars(geo, "uBar", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, "x", 16, 155.0e-3)
+create_ubars(geo, "uBar", [ℓ - 87.5e-3, 87.5e-3, 25e-3], -250.0e-3, "x", 16, 155.0e-3)
+create_ubars(geo, "uBar", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, "y", 16, 155.0e-3)
+create_ubars(geo, "uBar", [87.5e-3, b - 87.5e-3, 25e-3], -250.0e-3, "y", 16, 155.0e-3)
 
 # >> define column
 ℓ_col = 300.0e-3             # x
