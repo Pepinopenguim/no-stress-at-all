@@ -1,23 +1,22 @@
 #=
-This code represents another simple simulation of the structure assuming 
-elastic steel bars and elastic qualities of the beam.
+Now the objective is to make it non-linear
 
 Objectives:
     - Correctly define geometry, materials (mapping), forces, etc.
     - review if loading is fine
     - create analysis and plots accordingly
-    - Define 
+    - Define the materials correctly
 =#
 
 using Serendip
-using LinearAlgebra
+using LinearAlgebra: sind, cosd
 
 # units of measure
-mm = 1e-3
-cm = 1e-2
+const mm = 1e-3
+const cm = 1e-2
 
-MPa = 1e6
-GPa = 1e9
+const MPa = 1e6
+const GPa = 1e9
 
 # ===========================================================
 # ----------------- SLAB DEFINITION -------------------------
@@ -71,6 +70,7 @@ for θ in load_θs
     push!(plates, plate)
 end
 
+# unite plates with volume
 fragment(geo, bulk, plates)
 
 # ===========================================================
@@ -100,6 +100,44 @@ end
 create_grid(geo, "topReinforcement", "barInt", [87.5mm, 87.5mm, h - 25mm], 16, 155.0mm)
 create_grid(geo, "botReinforcement", "barInt", [87.5mm, 87.5mm, 25mm], 16, 155.0mm)
 
+# ===========================================================
+# ----------------- U BARS DEFINTION ------------------------
+# ===========================================================
+
+function create_ubars(geo::GeoModel, tag::String, interface_tag::String, C::Vector{Float64}, ℓ_u::Float64, direction::String, n::Int, d::Float64)
+    cx, cy, cz = C
+
+    # NOTE - Im assuming the circle radius as h - cz/2
+    # rx and ry are so only because direction affects different orientations
+    # one is always null
+    # its direction is defined by ℓ_u
+    # ri -> radius at coord i
+    r = ℓ_u > 0 ? h - cz / 2 : -h + cz / 2 
+    (∇x, ∇y, rx, ry, nx, ny, dx, dy) = direction == "x" ? (ℓ_u, 0, r, 0, 1, n, 0.0, d) : (0, ℓ_u, 0, r, n, 1, d, 0.0)
+    
+    points_u = [
+        add_point(geo, [cx + ∇x, cy + ∇y, h - cz])
+        add_point(geo, [cx + rx, cy + ry, h - cz])
+        add_point(geo, [cx, cy, h - cz/2])
+        add_point(geo, [cx + rx, cy + ry, cz])
+        add_point(geo, [cx + ∇x, cy + ∇y, cz])
+    ]
+
+    edges_u = [
+        add_line(geo, points_u[1], points_u[2]),
+        add_line(geo, points_u[2], points_u[4]), # TODO - TEMP
+        # add_circle_arc(geo, points_u[2], points_u[3], points_u[4]; center=false),
+        add_line(geo, points_u[4], points_u[5])
+    ]
+    path_u = add_path(geo, edges_u; tag=tag, interface_tag=interface_tag)
+    add_array(geo, path_u; nx=nx, ny=ny, dx=dx, dy=dy)
+end
+
+# NOTE - signal of ℓ_u inverts its orientation
+create_ubars(geo, "uBar", "barInt", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, "x", 16, 155.0e-3)
+create_ubars(geo, "uBar", "barInt", [ℓ - 87.5e-3, 87.5e-3, 25e-3], -250.0e-3, "x", 16, 155.0e-3)
+create_ubars(geo, "uBar", "barInt", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, "y", 16, 155.0e-3)
+create_ubars(geo, "uBar", "barInt", [87.5e-3, b - 87.5e-3, 25e-3], -250.0e-3, "y", 16, 155.0e-3)
 
 # ===========================================================
 # ----------------- MESH AND VIDEO DEF. ---------------------
@@ -123,7 +161,7 @@ for az in 0:10:360
     )
     add_frame(video, frame)
 end
-save(video, "elastic_b//view.mp4")
+save(video, "elastic_b//view_c.mp4")
 
 
 
@@ -135,18 +173,24 @@ save(video, "elastic_b//view.mp4")
 Ec    = 29.9MPa
 nu    = 0.2
 
-# >> Steel
-Es    = 200GPa
+# >> Steel ϕ16.0
+Es1   = 196.9GPa
+fy1   = 549.0MPa 
+
+# >> Steel ϕ10.0
+Es2   = 126.6GPa
+fy2   = 515.0MPa 
 
 # >> Mappers
 
 mapper = RegionMapper()
 
-add_mapping(mapper, "bulk", MechSolid, LinearElastic, E=Ec, nu=nu) #TODO - LinearCohesive
-add_mapping(mapper, "steelPlate", MechSolid, LinearElastic, E=Es)
-add_mapping(mapper, "topReinforcement", MechBar, LinearElastic, d=16mm, E=Es) # TODO - VonMises
-add_mapping(mapper, "botReinforcement", MechBar, LinearElastic, d=10mm, E=Es)
-add_mapping(mapper, "barInt", MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=0.01)
+add_mapping(mapper, "bulk"            , MechSolid, LinearCohesive, E=Ec, nu=nu) 
+add_mapping(mapper, "steelPlate"      , MechSolid, LinearElastic, E=Es)
+add_mapping(mapper, "topReinforcement", MechBar, VonMises, d=16mm, E=Es1, fy=fy1) 
+add_mapping(mapper, "botReinforcement", MechBar, VonMises, d=10mm, E=Es2, fy=fy2)
+add_mapping(mapper, "uBar"            , MechBar, VonMises, d=16mm, E=Es1, fy=fy1)
+add_mapping(mapper, "barInt"          , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=0.01) # TODO - Review values
 
 # ===========================================================
 # ----------------- FEModel ---------------------------------
@@ -206,7 +250,7 @@ plot = DomainPlot(
 add_plot(plot, model;
     plot_kwargs...
 )
-save(plot, "elastic_b_//elastic.pdf")
+save(plot, "elastic_b//elastic.pdf")
 
 
 video = VideoBuilder(bounds_factor=1.05)
@@ -220,5 +264,5 @@ for az in 0:20:180
     )
     add_frame(video, frame)
 end
-save(video, "elastic_b_//elastic.mp4")
+save(video, "elastic_b//elastic.mp4")
 
