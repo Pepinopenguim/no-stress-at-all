@@ -107,37 +107,25 @@ create_grid(geo, "botReinforcement", "barInt", [87.5mm, 87.5mm, 25mm], 16, 155.0
 function create_ubars(geo::GeoModel, tag::String, interface_tag::String, C::Vector{Float64}, ℓ_u::Float64, direction::String, n::Int, d::Float64)
     cx, cy, cz = C
 
-    # NOTE - Im assuming the circle radius as h - cz/2
-    # rx and ry are so only because direction affects different orientations
-    # one is always null
-    # its direction is defined by ℓ_u
-    # ri -> radius at coord i
-    r = ℓ_u > 0 ? h - cz / 2 : -h + cz / 2 
-    (∇x, ∇y, rx, ry, nx, ny, dx, dy) = direction == "x" ? (ℓ_u, 0, r, 0, 1, n, 0.0, d) : (0, ℓ_u, 0, r, n, 1, d, 0.0)
+    (∇x, ∇y, nx, ny, dx, dy) = direction == "x" ? (ℓ_u, 0, 1, n, 0.0, d) : (0, ℓ_u, n, 1, d, 0.0)
     
     points_u = [
         add_point(geo, [cx + ∇x, cy + ∇y, h - cz])
-        add_point(geo, [cx + rx, cy + ry, h - cz])
-        add_point(geo, [cx, cy, h - cz/2])
-        add_point(geo, [cx + rx, cy + ry, cz])
-        add_point(geo, [cx + ∇x, cy + ∇y, cz])
+        add_point(geo, [cx     , cy     , h - cz])
+        add_point(geo, [cx     , cy     ,     cz])
+        add_point(geo, [cx + ∇x, cy + ∇y,     cz])
     ]
 
-    edges_u = [
-        add_line(geo, points_u[1], points_u[2]),
-        add_line(geo, points_u[2], points_u[4]), # TODO - TEMP
-        # add_circle_arc(geo, points_u[2], points_u[3], points_u[4]; center=false),
-        add_line(geo, points_u[4], points_u[5])
-    ]
+    edges_u = [add_line(geo,points_u[i],points_u[i+1]) for i in 1:3]
     path_u = add_path(geo, edges_u; tag=tag, interface_tag=interface_tag)
     add_array(geo, path_u; nx=nx, ny=ny, dx=dx, dy=dy)
 end
 
 # NOTE - signal of ℓ_u inverts its orientation
-create_ubars(geo, "uBar", "barInt", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, "x", 16, 155.0e-3)
-create_ubars(geo, "uBar", "barInt", [ℓ - 87.5e-3, 87.5e-3, 25e-3], -250.0e-3, "x", 16, 155.0e-3)
-create_ubars(geo, "uBar", "barInt", [87.5e-3, 87.5e-3, 25e-3], 250.0e-3, "y", 16, 155.0e-3)
-create_ubars(geo, "uBar", "barInt", [87.5e-3, b - 87.5e-3, 25e-3], -250.0e-3, "y", 16, 155.0e-3)
+create_ubars(geo, "uBar", "barInt", [87.5mm, 87.5mm, 25mm], 250.0mm, "x", 16, 155.0mm)
+create_ubars(geo, "uBar", "barInt", [ℓ - 87.5mm, 87.5mm, 25mm], -250.0mm, "x", 16, 155.0mm)
+create_ubars(geo, "uBar", "barInt", [87.5mm, 87.5mm, 25mm], 250.0mm, "y", 16, 155.0mm)
+create_ubars(geo, "uBar", "barInt", [87.5mm, b - 87.5mm, 25mm], -250.0mm, "y", 16, 155.0mm)
 
 # ===========================================================
 # ----------------- MESH AND VIDEO DEF. ---------------------
@@ -146,22 +134,17 @@ create_ubars(geo, "uBar", "barInt", [87.5e-3, b - 87.5e-3, 25e-3], -250.0e-3, "y
 # define mesh
 mesh = Mesh(geo)
 
-# delete placeholder elements
-mesh = remove_elements(mesh, "")
-
 # view mesh
 video = VideoBuilder(bounds_factor=1.05)
-for az in 0:10:360
+for az in 0:10:180
     frame = DomainPlot(azimuth=az)
-    add_plot(
-        frame,
-        mesh;
-        #view_mode=:outline
-        view_mode=:wireframe
-    )
+    add_plot(frame, mesh, "bulk";view_mode=:outline, line_color=:gray)
+    add_plot(frame, mesh, "topReinforcement";view_mode=:wireframe, line_elem_color=:blue)
+    add_plot(frame, mesh, "botReinforcement";view_mode=:wireframe, line_elem_color=:pink)
+    add_plot(frame, mesh, "uBar";view_mode=:wireframe, line_color=:red)
     add_frame(video, frame)
 end
-save(video, "elastic_b//view_c.mp4")
+save(video, "elastic_c//view_c.mp4")
 
 
 
@@ -185,8 +168,8 @@ fy2   = 515.0MPa
 
 mapper = RegionMapper()
 
-add_mapping(mapper, "bulk"            , MechSolid, LinearCohesive, E=Ec, nu=nu) 
-add_mapping(mapper, "steelPlate"      , MechSolid, LinearElastic, E=Es)
+add_mapping(mapper, "bulk"            , MechSolid, LinearElastic, E=Ec, nu=nu) 
+add_mapping(mapper, "steelPlate"      , MechSolid, LinearElastic, E=900GPa)
 add_mapping(mapper, "topReinforcement", MechBar, VonMises, d=16mm, E=Es1, fy=fy1) 
 add_mapping(mapper, "botReinforcement", MechBar, VonMises, d=10mm, E=Es2, fy=fy2)
 add_mapping(mapper, "uBar"            , MechBar, VonMises, d=16mm, E=Es1, fy=fy1)
@@ -197,9 +180,9 @@ add_mapping(mapper, "barInt"          , MechBondSlip, LinearBondSlip, ks=1e10, k
 # ===========================================================
 
 model = FEModel(mesh, mapper; g=9.81)
-ana = MechAnalysis(model; outkey="elastic_b", outdir="elastic_b")
+ana = MechAnalysis(model; outkey="elastic_c", outdir="elastic_c")
 
-stage = add_stage(ana, nincs=1, nouts=1)
+stage = add_stage(ana, nincs=50, nouts=25)
 
 # ===========================================================
 # ----------------- BOUNDARY CONDITIONS ---------------------
@@ -207,10 +190,8 @@ stage = add_stage(ana, nincs=1, nouts=1)
 
 
 # Slab perimeter fully restrained (the only support of the system)
-add_bc(stage, :face, (x == 0.0), ux=0, uy=0, uz=0)
-add_bc(stage, :face, (x == ℓ),   ux=0, uy=0, uz=0)
-add_bc(stage, :face, (y == 0.0), ux=0, uy=0, uz=0)
-add_bc(stage, :face, (y == b),   ux=0, uy=0, uz=0)
+add_bc(stage, :face, (z == upp_col_h + h); ux=0, uy=0, uz=0)
+add_bc(stage, :face, (z == -low_col_h); ux=0, uy=0, uz=0)
 
 
 loading = select(model, :face, z==h + plate_dim[3]; tag="loading")
@@ -226,7 +207,7 @@ add_bc(
         stage,
         :face,
         "loading";  
-        uz = -1mm
+        uz = -3cm
     )
 
 # >> Load definitions 
@@ -239,24 +220,26 @@ plot_kwargs = (
     field_mult = 1e3,
     line_width = 0.1,
     colorbar   = :bottom,
-    warp = 100,
+    warp = 10,
     label      = "`u_(z)` [mm]",
-    view_mode   = :wireframe
+    view_mode   = :surface
 )
 
 plot = DomainPlot(
     azimuth = -80,
+    up=:y
 )
 add_plot(plot, model;
     plot_kwargs...
 )
-save(plot, "elastic_b//elastic.pdf")
+save(plot, "elastic_c//elastic.pdf")
 
 
 video = VideoBuilder(bounds_factor=1.05)
 for az in 0:20:180
     frame = DomainPlot(
         azimuth=az,
+        up=:y
     )
     add_plot(
         frame, model;
@@ -264,5 +247,5 @@ for az in 0:20:180
     )
     add_frame(video, frame)
 end
-save(video, "elastic_b//elastic.mp4")
+save(video, "elastic_c//elastic.mp4")
 
