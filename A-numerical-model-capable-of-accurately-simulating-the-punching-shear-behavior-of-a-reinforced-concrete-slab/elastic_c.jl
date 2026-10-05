@@ -15,6 +15,8 @@ using LinearAlgebra: sind, cosd
 const mm = 1e-3
 const cm = 1e-2
 
+const N = 1
+
 const MPa = 1e6
 const GPa = 1e9
 
@@ -155,6 +157,8 @@ save(video, "elastic_c//view_c.mp4")
 # >> Concrete
 Ec    = 29.9MPa
 nu    = 0.2
+ft    = 1.8MPa # Tensile strength, obtained from TABLE 4
+GF    = .134N/mm # Fracture Energy, same table. TODO - Review!!!
 
 # >> Steel ϕ16.0
 Es1   = 196.9GPa
