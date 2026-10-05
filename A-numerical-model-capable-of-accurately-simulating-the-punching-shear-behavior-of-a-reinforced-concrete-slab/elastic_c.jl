@@ -130,11 +130,14 @@ create_ubars(geo, "uBar", "barInt", [87.5mm, 87.5mm, 25mm], 250.0mm, "y", 16, 15
 create_ubars(geo, "uBar", "barInt", [87.5mm, b - 87.5mm, 25mm], -250.0mm, "y", 16, 155.0mm)
 
 # ===========================================================
-# ----------------- MESH AND VIDEO DEF. ---------------------
+# ----------------- MESH, COHESIVE AND VIDEO DEF. -----------
 # ===========================================================
 
 # define mesh
 mesh = Mesh(geo)
+
+# >> Cohesive elements creation
+add_cohesive_elements(mesh, (z >=0, z <= h); tag="cohesive")
 
 # view mesh
 video = VideoBuilder(bounds_factor=1.05)
@@ -142,7 +145,7 @@ for az in 0:10:180
     frame = DomainPlot(azimuth=az)
     add_plot(frame, mesh, "bulk";view_mode=:outline, line_color=:gray)
     add_plot(frame, mesh, "topReinforcement";view_mode=:wireframe, line_elem_color=:blue)
-    add_plot(frame, mesh, "botReinforcement";view_mode=:wireframe, line_elem_color=:pink)
+    add_plot(frame, mesh, "botReinforcement";view_mode=:wireframe, line_elem_color=darken(Color(:green), .6))
     add_plot(frame, mesh, "uBar";view_mode=:wireframe, line_color=:red)
     add_frame(video, frame)
 end
@@ -173,6 +176,7 @@ fy2   = 515.0MPa
 mapper = RegionMapper()
 
 add_mapping(mapper, "bulk"            , MechSolid, LinearElastic, E=Ec, nu=nu) 
+add_mapping(mapper, "cohesive"        , MechCohesive, LinearCohesive, E=Ec, nu=nu) 
 add_mapping(mapper, "steelPlate"      , MechSolid, LinearElastic, E=900GPa)
 add_mapping(mapper, "topReinforcement", MechBar, VonMises, d=16mm, E=Es1, fy=fy1) 
 add_mapping(mapper, "botReinforcement", MechBar, VonMises, d=10mm, E=Es2, fy=fy2)
@@ -186,7 +190,7 @@ add_mapping(mapper, "barInt"          , MechBondSlip, LinearBondSlip, ks=1e10, k
 model = FEModel(mesh, mapper; g=9.81)
 ana = MechAnalysis(model; outkey="elastic_c", outdir="elastic_c")
 
-stage = add_stage(ana, nincs=50, nouts=25)
+stage = add_stage(ana, nincs=50, nouts=5)
 
 # ===========================================================
 # ----------------- BOUNDARY CONDITIONS ---------------------
@@ -217,22 +221,32 @@ add_bc(
 # >> Load definitions 
 run(ana)
 
+# plot_kwargs = (
+#     field      = "uz",
+#     colormap   = :spectral,
+#     diverging  = true,
+#     field_mult = 1e3,
+#     line_width = 0.1,
+#     colorbar   = :bottom,
+#     warp = 10,
+#     label      = "`u_(z)` [mm]",
+#     view_mode   = :surface
+# )
 plot_kwargs = (
-    field      = "uz",
+    field      = "σzz",
+    field_mult = 1e-6,
+    warp       = 10,
     colormap   = :spectral,
     diverging  = true,
-    field_mult = 1e3,
-    line_width = 0.1,
+    line_color = :gray,
     colorbar   = :bottom,
-    warp = 10,
-    label      = "`u_(z)` [mm]",
-    view_mode   = :surface
+    label      = "`σ_(z z)` [MPa]",
 )
 
 plot = DomainPlot(
     azimuth = -80,
-    up=:y
 )
+
 add_plot(plot, model;
     plot_kwargs...
 )
@@ -243,7 +257,7 @@ video = VideoBuilder(bounds_factor=1.05)
 for az in 0:20:180
     frame = DomainPlot(
         azimuth=az,
-        up=:y
+        # up=:y
     )
     add_plot(
         frame, model;
