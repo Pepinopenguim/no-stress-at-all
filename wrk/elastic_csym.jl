@@ -53,11 +53,11 @@ bulk = fuse(geo, slab, column, tag="bulk")
 # ===========================================================
 # TODO - REVIEW ANGLE
 load_radius = 1124mm
-load_θs = [20, 70,]
+load_θs = [20, 70]
 
 # define dimensions of square plate
-# assuming 5x5cm
-plate_dim = [5cm, 5cm, 2cm] # TODO - REVIEW
+# assuming 10x10cm
+plate_dim = [10cm, 10cm, 2cm] # TODO - REVIEW
 plates = Any[]
 for θ in load_θs
     load_center = [0, 0]
@@ -95,14 +95,37 @@ function create_grid(geo::GeoModel, tag::String, interface_tag::String, C::Vecto
 
 end
 
-concrete_cover = 20mm
+concrete_covers = [20mm, 20mm, 25mm]
+cx, cy, cz = concrete_covers
 
 num_bars_top = 8
-spacing = (ℓ / 2 - concrete_cover) / (num_bars_top - 1/2)
+# calculates spacing according to available space, num of bars and 
+# concrete cover
 
 # ---------------------------------- On x
-p0x = add_point(geo, [spacing / 2, 0, h - concrete_cover])
-p1x = add_point(geo, [spacing / 2, b - concrete_cover, h - concrete_cover])
+spacing_x = (ℓ / 2 - cx) / (num_bars_top - 1/2)
+
+# NOTE: starts from half of spacing because of symmetry line
+p0x_top = add_point(geo, [spacing_x / 2, 0, h - concrete_covers])
+p1x_top = add_point(geo, [spacing_x / 2, b - concrete_covers, h - concrete_covers])
+p0x_bot = add_point(geo, [spacing_x / 2, 0, concrete_covers])
+p1x_top = add_point(geo, [spacing_x / 2, b - concrete_covers, concrete_covers])
+
+top_edge_x = add_line(geo, p0x_top, p1x_top)
+top_path_x = add_path(geo, [top_edge_x]; tag="topReinforcement", interface_tag="barInt")
+add_array(geo, top_path_x; ny=num_bars_top, dy=155mm)
+
+# ---------------------------------- On y
+spacing_y = (ℓ / 2 - cy) / (num_bars_top - 1/2)
+
+# NOTE: starts from half of spacing because of symmetry line
+p0y = add_point(geo, [0, spacing_x / 2, h - concrete_covers])
+p1y = add_point(geo, [ℓ - concrete_covers, spacing_x / 2, h - concrete_covers])
+
+top_edge_y = add_line(geo, p0y, p1y)
+top_path_y = add_path(geo, [top_edge_y]; tag="topReinforcement", interface_tag="barInt")
+add_array(geo, top_path_y; nx=num_bars_top, dx=155mm)
+
 
 
 
