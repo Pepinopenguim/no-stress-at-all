@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+# Check argument
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <pdf-file>"
+    exit 1
+fi
+
+pdf="$1"
+
+# Check that the file exists
+if [ ! -f "$pdf" ]; then
+    echo "Error: PDF file not found: $pdf"
+    exit 1
+fi
+
+# Get filename without extension
+filename="$(basename "$pdf" .pdf)"
+output="./notes/${filename}.typ"
+
+# Create the Typst notes file
+cat > "$output" <<EOF
+# $filename — [Short Title]
+
+== Metadata
+
+- *Authors:* 
+- *Year:* 
+- *Journal:* 
+- *DOI:* 
+- *Type:* [Experimental / Numerical / Review / Theoretical]
+- *Tier:* [1 / 2 / 3]
+
+== One-Sentence Summary
+
+[What is the paper about in one sentence?]
+
+== Research Question / Objective
+
+[What problem does it address?]
+
+== Methodology
+
+- *Approach:* [FEM / Experimental / Analytical]
+- *Software:* [ABAQUS / ANSYS / etc.]
+- *Constitutive Model:* [CDP / smeared crack / etc.]
+- *Key Parameters:* [List key material or model parameters]
+- *Specimens:* [What was tested/simulated?]
+
+== Key Findings
+
+1. 
+2. 
+3. 
+
+== Key Figures / Tables
+
+- *Fig. X:* [What it shows and why it matters]
+- *Table Y:* [What it shows]
+
+== Key Equations
+
+[Copy relevant equations with equation numbers]
+
+== Quotes (for potential direct use)
+
+> "..." (p. X)
+
+== Relevance to My Work
+
+- *How it helps:* 
+- *How it differs:* 
+- *What I can cite it for:* 
+- *What I disagree with / limitations:* 
+
+== Connections
+
+- *Cites:* [Key references it cites]
+- *Cited by:* [Key references that cite it]
+- *Related to:* [Other papers in my notes]
+
+== Open Questions
+
+- 
+- 
+
+== Tags
+
+#punching-shear #FEM #CDP #ABAQUS #experimental #review
+EOF
+
+echo "Created: $output"
