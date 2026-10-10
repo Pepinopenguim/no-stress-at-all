@@ -95,21 +95,24 @@ function create_grid(geo::GeoModel, tag::String, interface_tag::String, C::Vecto
 
 end
 
-concrete_covers = [20mm, 20mm, 25mm]
-cx, cy, cz = concrete_covers
+cx, cy, cz = 20mm, 20mm, 25mm
 
 num_bars_top = 8
+num_bars_bot = 8
+
 # calculates spacing according to available space, num of bars and 
 # concrete cover
+get_spacing(c) = (ℓ / 2 - c) / (num_bars_top - 1/2)
+spacing_top = 
+spacing_y = (ℓ / 2 - cy) / (num_bars_top - 1/2)
 
 # ---------------------------------- On x
-spacing_x = (ℓ / 2 - cx) / (num_bars_top - 1/2)
 
 # NOTE: starts from half of spacing because of symmetry line
 p0x_top = add_point(geo, [spacing_x / 2, 0, h - concrete_covers])
 p1x_top = add_point(geo, [spacing_x / 2, b - concrete_covers, h - concrete_covers])
 p0x_bot = add_point(geo, [spacing_x / 2, 0, concrete_covers])
-p1x_top = add_point(geo, [spacing_x / 2, b - concrete_covers, concrete_covers])
+p1x_bot = add_point(geo, [spacing_x / 2, b - concrete_covers, concrete_covers])
 
 top_edge_x = add_line(geo, p0x_top, p1x_top)
 top_path_x = add_path(geo, [top_edge_x]; tag="topReinforcement", interface_tag="barInt")
