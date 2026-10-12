@@ -1,0 +1,105 @@
+Serendip - Finite Element Simulation Log
+
+Mechanical analysis  Stage 1
+Time 2026-10-11T23:33:47.757
+unknown dofs: 117330
+inc 1  output 0  T=0.0   ΔT=0.02
+    it 1  residue: 1.8059e-07  relative correction: 1.0000e+00
+inc 2  output 0  T=0.02   ΔT=0.02
+    it 1  residue: 2.0440e-07  relative correction: 1.0000e+00
+inc 3  output 0  T=0.04   ΔT=0.02
+    it 1  residue: 1.0593e-07  relative correction: 1.0000e+00
+inc 4  output 0  T=0.06   ΔT=0.02
+    it 1  residue: 2.1844e-07  relative correction: 1.0000e+00
+inc 5  output 0  T=0.08   ΔT=0.02
+    it 1  residue: 9.6762e-08  relative correction: 1.0000e+00
+inc 6  output 0  T=0.1   ΔT=0.02
+    it 1  residue: 7.6496e-08  relative correction: 1.0000e+00
+inc 7  output 0  T=0.12   ΔT=0.02
+    it 1  residue: 1.5450e-07  relative correction: 1.0000e+00
+inc 8  output 0  T=0.14   ΔT=0.02
+    it 1  residue: 9.7943e-08  relative correction: 1.0000e+00
+inc 9  output 0  T=0.16   ΔT=0.02
+    it 1  residue: 1.1640e-07  relative correction: 1.0000e+00
+inc 10  output 0  T=0.18   ΔT=0.02
+    it 1  residue: 1.5553e-07  relative correction: 1.0000e+00
+inc 11  output 1  T=0.2   ΔT=0.02
+    it 1  residue: 1.1586e-07  relative correction: 1.0000e+00
+inc 12  output 1  T=0.22   ΔT=0.02
+    it 1  residue: 2.0736e-07  relative correction: 1.0000e+00
+inc 13  output 1  T=0.24   ΔT=0.02
+    it 1  residue: 1.7920e-07  relative correction: 1.0000e+00
+inc 14  output 1  T=0.26   ΔT=0.02
+    it 1  residue: 1.2601e-07  relative correction: 1.0000e+00
+inc 15  output 1  T=0.28   ΔT=0.02
+    it 1  residue: 1.1855e-07  relative correction: 1.0000e+00
+inc 16  output 1  T=0.3   ΔT=0.02
+    it 1  residue: 1.4967e-07  relative correction: 1.0000e+00
+inc 17  output 1  T=0.32   ΔT=0.02
+    it 1  residue: 1.3323e-07  relative correction: 1.0000e+00
+inc 18  output 1  T=0.34   ΔT=0.02
+    it 1  residue: 1.5325e-07  relative correction: 1.0000e+00
+inc 19  output 1  T=0.36   ΔT=0.02
+    it 1  residue: 1.9905e-07  relative correction: 1.0000e+00
+inc 20  output 1  T=0.38   ΔT=0.02
+    it 1  residue: 1.4836e-07  relative correction: 1.0000e+00
+inc 21  output 2  T=0.4   ΔT=0.02
+    it 1  residue: 1.7479e-07  relative correction: 1.0000e+00
+inc 22  output 2  T=0.42   ΔT=0.02
+    it 1  residue: 1.8319e-07  relative correction: 1.0000e+00
+inc 23  output 2  T=0.44   ΔT=0.02
+    it 1  residue: 1.2940e-07  relative correction: 1.0000e+00
+inc 24  output 2  T=0.46   ΔT=0.02
+    it 1  residue: 2.6104e-07  relative correction: 1.0000e+00
+inc 25  output 2  T=0.48   ΔT=0.02
+    it 1  residue: 1.7199e-07  relative correction: 1.0000e+00
+inc 26  output 2  T=0.5   ΔT=0.02
+    it 1  residue: 1.6826e-07  relative correction: 1.0000e+00
+inc 27  output 2  T=0.52   ΔT=0.02
+    it 1  residue: 1.2945e-07  relative correction: 1.0000e+00
+inc 28  output 2  T=0.54   ΔT=0.02
+    it 1  residue: 2.3019e-07  relative correction: 1.0000e+00
+inc 29  output 2  T=0.56   ΔT=0.02
+    it 1  residue: 1.7538e-07  relative correction: 1.0000e+00
+inc 30  output 2  T=0.58   ΔT=0.02
+    it 1  residue: 8.2522e-08  relative correction: 1.0000e+00
+inc 31  output 3  T=0.6   ΔT=0.02
+    it 1  residue: 1.9502e-07  relative correction: 1.0000e+00
+inc 32  output 3  T=0.62   ΔT=0.02
+    it 1  residue: 1.0559e-07  relative correction: 1.0000e+00
+inc 33  output 3  T=0.64   ΔT=0.02
+    it 1  residue: 9.3561e-08  relative correction: 1.0000e+00
+inc 34  output 3  T=0.66   ΔT=0.02
+    it 1  residue: 1.2134e-07  relative correction: 1.0000e+00
+inc 35  output 3  T=0.68   ΔT=0.02
+    it 1  residue: 9.7003e-08  relative correction: 1.0000e+00
+inc 36  output 3  T=0.7   ΔT=0.02
+    it 1  residue: 1.4679e-07  relative correction: 1.0000e+00
+inc 37  output 3  T=0.72   ΔT=0.02
+    it 1  residue: 1.4165e-07  relative correction: 1.0000e+00
+inc 38  output 3  T=0.74   ΔT=0.02
+    it 1  residue: 8.3831e-08  relative correction: 1.0000e+00
+inc 39  output 3  T=0.76   ΔT=0.02
+    it 1  residue: 1.1883e-07  relative correction: 1.0000e+00
+inc 40  output 3  T=0.78   ΔT=0.02
+    it 1  residue: 1.7076e-07  relative correction: 1.0000e+00
+inc 41  output 4  T=0.8   ΔT=0.02
+    it 1  residue: 2.7551e-07  relative correction: 1.0000e+00
+inc 42  output 4  T=0.82   ΔT=0.02
+    it 1  residue: 1.2466e-07  relative correction: 1.0000e+00
+inc 43  output 4  T=0.84   ΔT=0.02
+    it 1  residue: 1.4806e-07  relative correction: 1.0000e+00
+inc 44  output 4  T=0.86   ΔT=0.02
+    it 1  residue: 3.0948e-07  relative correction: 1.0000e+00
+inc 45  output 4  T=0.88   ΔT=0.02
+    it 1  residue: 1.3617e-07  relative correction: 1.0000e+00
+inc 46  output 4  T=0.9   ΔT=0.02
+    it 1  residue: 1.2774e-07  relative correction: 1.0000e+00
+inc 47  output 4  T=0.92   ΔT=0.02
+    it 1  residue: 1.5721e-07  relative correction: 1.0000e+00
+inc 48  output 4  T=0.94   ΔT=0.02
+    it 1  residue: 9.9933e-08  relative correction: 1.0000e+00
+inc 49  output 4  T=0.96   ΔT=0.02
+    it 1  residue: 1.4308e-07  relative correction: 1.0000e+00
+inc 50  output 4  T=0.98   ΔT=0.02
+    it 1  residue: 1.9373e-07  relative correction: 1.0000e+00
