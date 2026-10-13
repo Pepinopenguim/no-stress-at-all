@@ -1,7 +1,7 @@
 
 = Introdução
 
-
+    #highlight()[
     A introdução é a seção do projeto/relatório que responde à pergunta #emph[o quê?]
     Ela deve apresentar o tema da pesquisa, o problema a ser investigado, os objetivos e a justificativa do estudo, de forma clara e coerente.
 
@@ -20,10 +20,11 @@
 
     / Estrutura do trabalho (opcional): Pode-se indicar brevemente como o projeto/relatório está organizado,
         facilitando a leitura e compreensão do documento.
-  
+]  
 
 == Objetivos
 
+    #highlight()[
     Os objetivos expressam as intenções e metas do projeto/relatório científico tanto em termos amplos (objetivo geral) quanto em passos práticos (objetivos específicos).
     Servem como guia para a escolha da metodologia, para a execução das etapas e, ao final, para avaliar se o estudo alcançou o que foi proposto.
 
@@ -31,9 +32,11 @@
 
     / Objetivos específicos: Têm caráter mais _concreto_ e _operacional_. Correspondem a etapas ou metas que precisam ser cumpridas para alcançar o objetivo geral.
         Devem ser redigidos como ações práticas (ex.: analisar, avaliar, identificar, comparar, desenvolver, propor) e expressar resultados verificáveis.
-
+    ]
 
 == Justificativa
+    #highlight()[
+
     Sua função é evidenciar a relevância científica, tecnológica, social, econômica ou ambiental da pesquisa.
     É um componente essencial, pois contribui diretamente para a aceitação e credibilidade da pesquisa
     perante avaliadores, agências de fomento ou a comunidade acadêmica.
@@ -47,3 +50,4 @@
     A justificativa pode ser apresentada de forma breve na introdução ou em uma seção própria,
     dependendo da complexidade da pesquisa e da exigência da instituição.
     Nos dois casos, deve estar claramente articulada com os objetivos e com a metodologia proposta.
+    ]
