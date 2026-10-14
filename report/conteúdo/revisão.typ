@@ -15,6 +15,8 @@ Exposição da base conceitual que sustenta o projeto, reunindo princípios, mod
 
 === Método dos Elementos Finitos
 
+O método dos Elementos Finitos é uma das principais ferramentas numéricas utilizadas para a solução de problemas mecânicos. Baseia-se na discretização de linhas, superfícies e volumes em elementos  
+
 === Elementos Coesivos
 
 == Estado da Arte

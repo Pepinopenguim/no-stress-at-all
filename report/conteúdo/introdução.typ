@@ -1,6 +1,10 @@
 
 = Introdução
 
+    A falha por punção é um dos estados limites mais recorrentes em estruturas de concreto armado, ocorrendo principalmente em conexões laje-pilar. Seu comportamento é complexo, de difícil previsibilidade, o que apresenta um grande desafio na engenharia estrutural como um todo.
+
+    Uma das principais formas de se abordar o tema  adsf
+
     #highlight()[
     A introdução é a seção do projeto/relatório que responde à pergunta #emph[o quê?]
     Ela deve apresentar o tema da pesquisa, o problema a ser investigado, os objetivos e a justificativa do estudo, de forma clara e coerente.

@@ -4,9 +4,9 @@
 // ❱❱❱ Dados para os pretextuais e bibliografia
 
 #show: relatório.with(
-    título: "Título do trabalho",
+    título: "Modelagem Numérica da Punção em Lajes de Concreto Armado usando Elementos Finitos",
     subtítulo: "Seminário de mestrado em estruturas e construção civil",
-    tipo: "Seminário", // "Tese", "Dissertação", "TCC", "Seminário"
+    tipo: "TCC", // "Tese", "Dissertação", "TCC", "Seminário"
     programa: "Programa de Pós-Graduação em Estruturas e Construção Civil",
     departamento: "Departamento de Engenharia Civil e Ambiental",
     faculdade: "Faculdade de Tecnologia",
@@ -14,7 +14,7 @@
     orientador: "Raul Durand",
     coorientador: none,
     data: datetime(day:1, month:1, year:2025),
-    bibliografia: "referências.bib",
+    bibliografia: "ref.bib",
     estilo: "abnt.csl",
 )
 

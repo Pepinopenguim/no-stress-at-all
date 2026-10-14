@@ -1,6 +1,19 @@
 
 = Metodologia
 
+== Aplicação de Elementos Finitos Coesivos
+
+=== Geração de Malha
+
+=== Condição de Contorno (?)
+
+=== Simulações
+
+objeto de estudo
+
+=== Análise dos Resultados 
+
+(como será feito?)
 
 A metodologia descreve o caminho a ser seguido, as ferramentas e recursos empregados e a lógica de investigação, permitindo que outros pesquisadores compreendam e eventualmente repliquem o estudo.
 Ela responde à pergunta _Como será feito?_

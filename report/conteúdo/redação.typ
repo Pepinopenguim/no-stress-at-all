@@ -72,7 +72,7 @@ As figuras são etiquetadas e citadas da mesma forma que as tabelas.
 Por exemplo, a @fig:tração-separação apresenta as curvas de tração-separação para concreto segundo o modelo de Hordijk (1991) e um modelo bilinear simplificado.
 
 #figure(
-    caption: [Função de tração-separação para concreto, segundo o modelo de #cite(<hordijk:91>, form:"prose") e um modelo bilinear simplificado.],
+    caption: [Função de tração-separação para concreto, um modelo bilinear simplificado.],
     [
         #import "@preview/lilaq:0.5.0" as lq
         #let wc = 3
@@ -97,14 +97,5 @@ Por exemplo, a @fig:tração-separação apresenta as curvas de tração-separa�
 
 == Citações e bibliografia
 
-Para elaborar a bibliografia, é necessário criar um arquivo (`.bib`) com as referências bibliográficas.
-Cada referência bibliográfica corresponde a um item no arquivo `.bib`, que deve seguir o formato BibTeX.
-Para usar o estilo de citação de acordo com as normas da ABNT, é preciso incorporar o arquivo de estilo `.csl` correspondente no documento principal. A ABNT não fornece oficialmente um arquivo `.csl`.
-Contudo, existem arquivos `.csl` criados por terceiros que seguem as normas da ABNT.
-
-
-As citações são inseridas no texto utilizando a sequência `@chave`, onde `chave` é o identificador da publicação no arquivo `.bib`. Também é possível citar utilizando o comando `#cite()`, que permite formatar a citação. 
-Por exemplo, a citação @zienkiewicz:95  faz uso da sintaxe `@chave`.
-Já a citação -- #cite(<cundall:79>, form:"prose") -- utiliza o comando `#cite()`, que permite formatar a citação de forma
-a integrá-la ao texto.
+adsf
 

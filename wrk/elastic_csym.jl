@@ -11,6 +11,9 @@ Objectives:
 using Serendip
 using LinearAlgebra: sind, cosd
 
+
+rel_path = "wrk" # no backstick
+
 # units of measure
 const mm = 1e-3
 const cm = 1e-2
@@ -31,7 +34,7 @@ h = 180.0mm     # z direction
 
 
 # >> Define slab
-geo = GeoModel(size=.05)
+geo = GeoModel(size=.1)
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 
@@ -168,6 +171,10 @@ create_ubars(geo, [ℓ, b, h], "uBar", "barInt", C, 250mm, 16mm, "x", 16)
 create_ubars(geo, [ℓ, b, h], "uBar", "barInt", C, 250mm, 16mm, "y", 16)
 
 
+# TODO
+p = add_point(geo, [275mm, 0, h * .999]; embedded=true, tag="logger1")
+
+
 # ===========================================================
 # ----------------- MESH, COHESIVE AND VIDEO DEF. -----------
 # ===========================================================
@@ -175,8 +182,11 @@ create_ubars(geo, [ℓ, b, h], "uBar", "barInt", C, 250mm, 16mm, "y", 16)
 # define mesh
 mesh = Mesh(geo)
 
+# >> Select the solid cells that can be cracked
+select(mesh.elems, :bulk, tag="bulk")
+
 # >> Cohesive elements creation
-add_cohesive_elements(mesh, (z >=0, z <= h); tag="cohesive")
+add_cohesive_elements(mesh, (z >= 0, z <= h); tag="cohesive")
 
 # view mesh
 video = VideoBuilder(bounds_factor=1.05)
@@ -188,7 +198,7 @@ for az in 0:20:180
     add_plot(frame, mesh, "uBar";view_mode=:wireframe, line_color=:red)
     add_frame(video, frame)
 end
-save(video, "elastic_c//view_c.mp4")
+save(video, "$rel_path//RS_SYM//view_c.mp4")
 
 
 
@@ -227,7 +237,7 @@ add_mapping(mapper, "barInt"          , MechBondSlip, LinearBondSlip, ks=1e10, k
 # ===========================================================
 
 model = FEModel(mesh, mapper; g=9.81)
-ana = MechAnalysis(model; outkey="elastic_c", outdir="elastic_c")
+ana = MechAnalysis(model; outkey="RS_SYM", outdir="$rel_path//RS_SYM")
 
 stage = add_stage(ana, nincs=50, nouts=5)
 
@@ -249,9 +259,6 @@ add_bc(stage, :face, (y == 0); ux = 0)
 
 loading = select(model, :face, z==h + plate_dim[3]; tag="loading")
 
-# logger
-add_logger(ana, :nodalreduce, (x==0, y==0, z==h), "test.table")
-
 
 z_top = h + plate_dim[3]
 
@@ -263,7 +270,52 @@ add_bc(
         uz = -3cm
     )
 
-# >> Load definitions 
+
+# ===========================================================
+# ----------------- LVDT LOGGERS & MONITORS -----------------
+# ===========================================================
+
+# LVDT positions on the slab top surface (x, y) [mm]
+logger_X = [
+     275  0
+     475  0
+     725  0
+    1170  0
+]
+
+loggers  = Vector{Any}(undef, size(logger_X, 1))
+monitors = Vector{Any}(undef, size(logger_X, 1))
+
+#=
+for i in axes(logger_X, 1)
+    xv = logger_X[i, 1]      
+    yv = logger_X[i, 2]
+    tag = "logger$i"
+
+    # Embedded reference point at the LVDT location
+    add_point(geo, [xv, yv, h]; embedded=true, tag=tag)
+
+    # Spatial selector using Serendip's coordinate symbols
+    sel = (x == xv, y == yv)
+
+    # Nodal-reduce logger → totals uz / fz over the selected nodes
+    loggers[i] = add_logger(ana, :nodalreduce, sel, "logger$i.dat")
+
+    # Single-node monitor for real-time uz (like a raw LVDT channel)
+    monitors[i] = add_monitor(ana, :node, sel, :uz)
+end 
+
+l1, l2, l3, l4 = loggers
+
+=#
+
+logger1 = add_logger(ana, :nodalreduce, "logger1", "logger1.dat")
+# monitor1 = add_logger(ana, :node, "logger1", :uz)
+
+# ===========================================================
+# ----------------- ANÁLISE ---------------------------------
+# ===========================================================
+
 run(ana)
 
 # plot_kwargs = (
@@ -295,7 +347,7 @@ plot = DomainPlot(
 add_plot(plot, model;
     plot_kwargs...
 )
-save(plot, "elastic_c//elastic.pdf")
+save(plot, "$rel_path//RS_SYM//RS_SYM.pdf")
 
 
 video = VideoBuilder(bounds_factor=1.05)
@@ -310,5 +362,29 @@ for az in 0:20:180
     )
     add_frame(video, frame)
 end
-save(video, "elastic_c//elastic.mp4")
+save(video, "$rel_path//RS_SYM//RS_SYM.mp4")
 
+chart = Chart(
+    xlabel = "`u_z` [mm]",
+    ylabel = "`F_x` [kN]",
+)
+#=
+for (i, lg) in enumerate(loggers)
+    add_line(chart,
+        -lg.table[:uz] .* 1e3,      # m → mm
+        -lg.table[:fz] .* 1e-3;     # N → kN
+        mark  = :circle,
+        label = "LVDT $i",
+    )
+end
+save(chart, "$rel_path//RS_SYM//LVDT_load_disp.pdf")
+=#
+
+add_line(chart,
+    logger1.table[:uz] .*  1e3,
+    logger1.table[:fx] .* 1e-3,
+    mark = :circle,
+    label = "LVDT 1"
+)
+
+save(chart, "$rel_path//RS_SYM//LVDT_load_disp.pdf")
