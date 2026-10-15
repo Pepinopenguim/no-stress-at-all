@@ -12,7 +12,7 @@ h  = 0.34    # altura viga direção y
 
 # Geometria
 
-geo = GeoModel()
+geo = GeoModel(size=1)
 
 p1 = add_point(geo, [0, 0, 0])
 p2 = add_point(geo, [x1, 0, 0])
@@ -177,7 +177,7 @@ add_logger(ana, :node, (x==l/2, y==0), "flecha-base.table")
 add_monitor(ana, :ipgroup, "barras-ips", :(σx´, σx´>$fya), "barras-ips.table")
 add_monitor(ana, :ipgroup, "cabo-ips", :(σx´, σx´>$fyp), "cabo-ips.table")
 add_monitor(ana, :ipgroup, "coesivos-ips", :(up, up>0), "coesivos-ips.table")
-add_monitor(ana, :ipgroup, "cont-barras-ips", :(s, s>$speak10), "cont-barras.table")
+#add_monitor(ana, :ipgroup, "cont-barras-ips", :(s, s>$speak10), "cont-barras.table")
 
 # Estágio 01: Protensão
 

@@ -23,6 +23,8 @@ const N = 1
 const MPa = 1e6
 const GPa = 1e9
 
+const approx = .999
+
 # ===========================================================
 # ----------------- SLAB DEFINITION -------------------------
 # ===========================================================
@@ -172,7 +174,22 @@ create_ubars(geo, [ℓ, b, h], "uBar", "barInt", C, 250mm, 16mm, "y", 16)
 
 
 # TODO
-p = add_point(geo, [275mm, 0, h * .999]; embedded=true, tag="logger1")
+
+# LVDT positions on the slab top surface (x, y) [mm]
+logger_X = [
+     275  0
+     475  0
+     725  0
+    1170  0
+] * mm
+
+logger_points = []
+
+for (i, (xv, yv)) in enumerate(eachrow(logger_X))
+    p = add_point(geo, [xv, yv, h*approx]; embedded=true, tag="logger$i")
+    push!(logger_points, p)
+end
+
 
 
 # ===========================================================
@@ -181,9 +198,6 @@ p = add_point(geo, [275mm, 0, h * .999]; embedded=true, tag="logger1")
 
 # define mesh
 mesh = Mesh(geo)
-
-# >> Select the solid cells that can be cracked
-select(mesh.elems, :bulk, tag="bulk")
 
 # >> Cohesive elements creation
 add_cohesive_elements(mesh, (z >= 0, z <= h); tag="cohesive")
@@ -275,17 +289,6 @@ add_bc(
 # ----------------- LVDT LOGGERS & MONITORS -----------------
 # ===========================================================
 
-# LVDT positions on the slab top surface (x, y) [mm]
-logger_X = [
-     275  0
-     475  0
-     725  0
-    1170  0
-]
-
-loggers  = Vector{Any}(undef, size(logger_X, 1))
-monitors = Vector{Any}(undef, size(logger_X, 1))
-
 #=
 for i in axes(logger_X, 1)
     xv = logger_X[i, 1]      
@@ -309,8 +312,15 @@ l1, l2, l3, l4 = loggers
 
 =#
 
-logger1 = add_logger(ana, :nodalreduce, "logger1", "logger1.dat")
-# monitor1 = add_logger(ana, :node, "logger1", :uz)
+loggers, monitors = [], []
+
+for (i, _) in enumerate(logger_points)
+    l = add_logger(ana, :nodalreduce, "logger$i", "logger$i.dat")
+    push!(loggers, l)
+
+    m = add_monitor(ana, :node, "logger$i", :uz)
+    push!(monitors, m)
+end
 
 # ===========================================================
 # ----------------- ANÁLISE ---------------------------------
@@ -318,17 +328,6 @@ logger1 = add_logger(ana, :nodalreduce, "logger1", "logger1.dat")
 
 run(ana)
 
-# plot_kwargs = (
-#     field      = "uz",
-#     colormap   = :spectral,
-#     diverging  = true,
-#     field_mult = 1e3,
-#     line_width = 0.1,
-#     colorbar   = :bottom,
-#     warp = 10,
-#     label      = "`u_(z)` [mm]",
-#     view_mode   = :surface
-# )
 plot_kwargs = (
     field      = "σzz",
     field_mult = 1e-6,
@@ -368,23 +367,12 @@ chart = Chart(
     xlabel = "`u_z` [mm]",
     ylabel = "`F_x` [kN]",
 )
-#=
 for (i, lg) in enumerate(loggers)
     add_line(chart,
         -lg.table[:uz] .* 1e3,      # m → mm
-        -lg.table[:fz] .* 1e-3;     # N → kN
+        -lg.table[:fx] .* 1e-3;     # N → kN
         mark  = :circle,
         label = "LVDT $i",
     )
 end
-save(chart, "$rel_path//RS_SYM//LVDT_load_disp.pdf")
-=#
-
-add_line(chart,
-    logger1.table[:uz] .*  1e3,
-    logger1.table[:fx] .* 1e-3,
-    mark = :circle,
-    label = "LVDT 1"
-)
-
 save(chart, "$rel_path//RS_SYM//LVDT_load_disp.pdf")
