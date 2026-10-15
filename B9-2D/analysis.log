@@ -1,7 +1,7 @@
 Serendip - Finite Element Simulation Log
 
 Mechanical analysis  Stage 1
-Time 2026-10-14T10:43:33.322
+Time 2026-10-15T14:08:41.428
 unknown dofs: 13759
 inc 1  output 0  T=0.0   ΔT=0.01
     it 1  residue: 4.0372e-01  relative correction: 1.0000e+00
@@ -63,7 +63,7 @@ inc 20  output 1  T=0.9457   ΔT=0.05429
     it 2  residue: 1.8708e-02  relative correction: 1.7437e-02
 
 Mechanical analysis  Stage 2
-Time 2026-10-14T10:43:39.455
+Time 2026-10-15T14:08:47.358
 unknown dofs: 13753
 inc 1  output 2  T=0.0   ΔT=0.01
     it 1  residue: 1.1082e+02  relative correction: 1.0000e+00
@@ -189,8 +189,8 @@ inc 35  output 4  T=0.0543   ΔT=0.0003497
     it 2  residue: 3.3252e-01  relative correction: 4.1807e-02
 inc 36  output 4  T=0.0547   ΔT=0.0003846
     it 1  residue: 1.1401e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2068e+01  relative correction: 7.0790e-02
-    it 3  residue: 1.2791e+01  relative correction: 7.8005e-02
+    it 2  residue: 1.2068e+01  relative correction: 7.0789e-02
+    it 3  residue: 1.2791e+01  relative correction: 7.8006e-02
       increment failed
 inc 36  output 4  T=0.0547   ΔT=7.69e-5
     it 1  residue: 1.1401e+02  relative correction: 1.0000e+00
@@ -227,13 +227,13 @@ inc 46  output 4  T=0.0559   ΔT=0.0001995
     it 2  residue: 5.0003e-01  relative correction: 6.9865e-02
 inc 47  output 4  T=0.0561   ΔT=0.0002194
     it 1  residue: 1.1402e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0760e-01  relative correction: 6.4212e-02
+    it 2  residue: 1.0178e-01  relative correction: 6.4212e-02
 inc 48  output 4  T=0.0563   ΔT=0.0002413
     it 1  residue: 1.1403e+02  relative correction: 1.0000e+00
     it 2  residue: 5.3734e-02  relative correction: 5.8693e-02
 inc 49  output 4  T=0.0566   ΔT=0.0002655
     it 1  residue: 1.1405e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.7277e-01  relative correction: 5.4189e-02
+    it 2  residue: 1.7279e-01  relative correction: 5.4189e-02
 inc 50  output 4  T=0.0568   ΔT=0.000292
     it 1  residue: 1.1406e+02  relative correction: 1.0000e+00
     it 2  residue: 1.8432e+01  relative correction: 5.0013e-02
@@ -257,7 +257,7 @@ inc 54  output 4  T=0.0576   ΔT=8.555e-5
     it 2  residue: 5.7947e-02  relative correction: 1.5960e-01
 inc 55  output 4  T=0.0577   ΔT=9.41e-5
     it 1  residue: 1.1409e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.4696e-02  relative correction: 1.4908e-01
+    it 2  residue: 5.4698e-02  relative correction: 1.4908e-01
 inc 56  output 4  T=0.0578   ΔT=0.0001035
     it 1  residue: 1.1409e+02  relative correction: 1.0000e+00
     it 2  residue: 4.4168e-02  relative correction: 1.3859e-01
@@ -266,10 +266,10 @@ inc 57  output 4  T=0.0579   ΔT=0.0001139
     it 2  residue: 3.9052e-02  relative correction: 1.2780e-01
 inc 58  output 4  T=0.058   ΔT=0.0001252
     it 1  residue: 1.1409e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.6205e-02  relative correction: 1.1811e-01
+    it 2  residue: 8.6203e-02  relative correction: 1.1811e-01
 inc 59  output 4  T=0.0581   ΔT=0.0001378
     it 1  residue: 1.1409e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.4976e-01  relative correction: 1.0740e-01
+    it 2  residue: 1.4977e-01  relative correction: 1.0740e-01
 inc 60  output 4  T=0.0582   ΔT=0.0001516
     it 1  residue: 1.1410e+02  relative correction: 1.0000e+00
     it 2  residue: 9.6809e-02  relative correction: 8.8372e-02
@@ -311,584 +311,182 @@ inc 72  output 5  T=0.0605   ΔT=0.0001965
     it 2  residue: 3.8506e-02  relative correction: 8.0727e-02
 inc 73  output 5  T=0.0607   ΔT=0.0002162
     it 1  residue: 1.1420e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.3680e-01  relative correction: 9.2732e-02
+    it 2  residue: 2.3681e-01  relative correction: 9.2732e-02
 inc 74  output 5  T=0.0609   ΔT=0.0002378
     it 1  residue: 1.1421e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.0872e+00  relative correction: 7.0896e-02
+    it 2  residue: 2.0871e+00  relative correction: 7.0896e-02
 inc 75  output 5  T=0.0611   ΔT=0.0002616
     it 1  residue: 1.1423e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8595e-01  relative correction: 8.5298e-02
+    it 2  residue: 1.8736e-01  relative correction: 8.5298e-02
 inc 76  output 5  T=0.0614   ΔT=0.0002878
     it 1  residue: 1.1425e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.9665e-01  relative correction: 4.8692e-02
+    it 2  residue: 1.8345e-01  relative correction: 4.8692e-02
 inc 77  output 5  T=0.0617   ΔT=0.0003165
     it 1  residue: 1.1427e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.7974e-02  relative correction: 4.5495e-02
+    it 2  residue: 7.7962e-02  relative correction: 4.5495e-02
 inc 78  output 5  T=0.062   ΔT=0.0003482
     it 1  residue: 1.1429e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.0476e-02  relative correction: 4.2046e-02
+    it 2  residue: 8.0479e-02  relative correction: 4.2048e-02
 inc 79  output 5  T=0.0624   ΔT=0.000383
     it 1  residue: 1.1431e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.6762e-01  relative correction: 6.4201e-02
+    it 2  residue: 2.6754e-01  relative correction: 6.4198e-02
 inc 80  output 5  T=0.0627   ΔT=0.0004213
     it 1  residue: 1.1434e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.4326e-01  relative correction: 1.0134e-01
+    it 2  residue: 8.4335e-01  relative correction: 1.0134e-01
 inc 81  output 5  T=0.0632   ΔT=0.0004634
     it 1  residue: 1.1438e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.4708e-01  relative correction: 5.5732e-02
+    it 2  residue: 2.4709e-01  relative correction: 5.5732e-02
 inc 82  output 5  T=0.0636   ΔT=0.0005098
     it 1  residue: 1.1441e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.9338e-01  relative correction: 3.1272e-02
+    it 2  residue: 7.9340e-01  relative correction: 3.1273e-02
 inc 83  output 5  T=0.0641   ΔT=0.0005608
     it 1  residue: 1.1446e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.5623e-01  relative correction: 2.7551e-02
+    it 2  residue: 1.5622e-01  relative correction: 2.7551e-02
 inc 84  output 5  T=0.0647   ΔT=0.0006168
     it 1  residue: 1.1451e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.1011e-01  relative correction: 2.4445e-02
+    it 2  residue: 7.2294e-01  relative correction: 2.4446e-02
 inc 85  output 5  T=0.0653   ΔT=0.0006785
     it 1  residue: 1.1456e+02  relative correction: 1.0000e+00
     it 2  residue: 4.7052e-01  relative correction: 2.2191e-02
 inc 86  output 5  T=0.066   ΔT=0.0007464
     it 1  residue: 1.1462e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.0762e+01  relative correction: 2.9892e-02
-    it 3  residue: 9.2768e-01  relative correction: 3.9689e-02
+    it 2  residue: 9.0763e+01  relative correction: 2.9893e-02
+    it 3  residue: 9.2775e-01  relative correction: 3.9685e-02
 inc 87  output 5  T=0.0667   ΔT=0.000821
     it 1  residue: 1.1469e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.7523e-01  relative correction: 2.7355e-02
+    it 2  residue: 3.7520e-01  relative correction: 2.7363e-02
 inc 88  output 5  T=0.0676   ΔT=0.0009031
     it 1  residue: 1.1477e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.9074e-01  relative correction: 1.7649e-02
+    it 2  residue: 9.9056e-01  relative correction: 1.7649e-02
 inc 89  output 5  T=0.0685   ΔT=0.0009934
     it 1  residue: 1.1485e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.3089e+01  relative correction: 4.6176e-02
-    it 3  residue: 1.3438e+00  relative correction: 3.9214e-02
+    it 2  residue: 2.3085e+01  relative correction: 4.6418e-02
+    it 3  residue: 7.7487e-01  relative correction: 3.9188e-02
 inc 90  output 5  T=0.0695   ΔT=0.001093
     it 1  residue: 1.1495e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.4207e+02  relative correction: 4.3131e-02
+    it 2  residue: 2.2769e+02  relative correction: 4.0860e-02
       increment failed
 inc 90  output 5  T=0.0695   ΔT=0.000219
     it 1  residue: 1.1495e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3806e+00  relative correction: 7.9529e-02
+    it 2  residue: 4.1445e-01  relative correction: 7.9730e-02
 inc 91  output 5  T=0.0697   ΔT=0.0002409
     it 1  residue: 1.1496e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.7837e-02  relative correction: 7.0648e-02
+    it 2  residue: 9.7321e-02  relative correction: 7.0622e-02
 inc 92  output 5  T=0.0699   ΔT=0.000265
     it 1  residue: 1.1498e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.1218e-01  relative correction: 6.3445e-02
+    it 2  residue: 4.2356e-02  relative correction: 6.3430e-02
 inc 93  output 5  T=0.0702   ΔT=0.0002915
     it 1  residue: 1.1500e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.7027e-02  relative correction: 5.6930e-02
+    it 2  residue: 3.7324e-02  relative correction: 5.6946e-02
 inc 94  output 5  T=0.0705   ΔT=0.0003206
     it 1  residue: 1.1502e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.4087e-02  relative correction: 5.1128e-02
+    it 2  residue: 3.4204e-02  relative correction: 5.1160e-02
 inc 95  output 5  T=0.0708   ΔT=0.0003527
     it 1  residue: 1.1504e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.4951e-01  relative correction: 4.5807e-02
+    it 2  residue: 9.4219e-01  relative correction: 4.5802e-02
 inc 96  output 5  T=0.0711   ΔT=0.000388
     it 1  residue: 1.1507e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.1220e-02  relative correction: 4.0688e-02
+    it 2  residue: 6.1317e-02  relative correction: 4.0678e-02
 inc 97  output 5  T=0.0715   ΔT=0.0004268
     it 1  residue: 1.1510e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.7383e-01  relative correction: 3.6385e-02
+    it 2  residue: 6.8728e-01  relative correction: 3.6253e-02
 inc 98  output 5  T=0.072   ΔT=0.0004694
     it 1  residue: 1.1514e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3713e-01  relative correction: 3.2691e-02
+    it 2  residue: 1.3431e-01  relative correction: 3.2667e-02
 inc 99  output 5  T=0.0724   ΔT=0.0005164
     it 1  residue: 1.1518e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.4034e+00  relative correction: 2.9458e-02
+    it 2  residue: 3.2197e+00  relative correction: 2.9450e-02
 inc 100  output 5  T=0.0729   ΔT=0.000568
     it 1  residue: 1.1522e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.6428e+00  relative correction: 2.7024e-02
+    it 2  residue: 2.5497e+00  relative correction: 2.6986e-02
 inc 101  output 5  T=0.0735   ΔT=0.0006248
     it 1  residue: 1.1528e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2700e-01  relative correction: 2.5390e-02
+    it 2  residue: 1.3642e-01  relative correction: 2.4973e-02
 inc 102  output 5  T=0.0741   ΔT=0.0006873
-    it 1  residue: 1.1533e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3389e-01  relative correction: 2.3605e-02
+    it 1  residue: 1.1534e+02  relative correction: 1.0000e+00
+    it 2  residue: 1.0907e+00  relative correction: 8.5619e-02
 inc 103  output 5  T=0.0748   ΔT=0.000756
     it 1  residue: 1.1540e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.4262e-01  relative correction: 2.1989e-02
+    it 2  residue: 6.3789e-01  relative correction: 2.1383e-02
 inc 104  output 5  T=0.0756   ΔT=0.0008317
-    it 1  residue: 1.1548e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.2692e+01  relative correction: 4.4456e-02
-    it 3  residue: 7.1911e-01  relative correction: 7.4938e-02
+    it 1  residue: 1.1547e+02  relative correction: 1.0000e+00
+    it 2  residue: 1.0203e+00  relative correction: 2.8676e-02
 inc 105  output 5  T=0.0764   ΔT=0.0009148
     it 1  residue: 1.1556e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8300e-01  relative correction: 1.6918e-02
+    it 2  residue: 2.0776e+01  relative correction: 5.9349e-02
+    it 3  residue: 8.0123e-01  relative correction: 3.3473e-02
 inc 106  output 5  T=0.0773   ΔT=0.001006
     it 1  residue: 1.1565e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.9330e-01  relative correction: 1.5313e-02
+    it 2  residue: 1.5165e+01  relative correction: 1.9961e-02
+    it 3  residue: 1.4152e-01  relative correction: 7.1081e-03
 inc 107  output 5  T=0.0783   ΔT=0.001107
     it 1  residue: 1.1575e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.6267e+00  relative correction: 9.6754e-02
+    it 2  residue: 2.0263e-01  relative correction: 1.4113e-02
 inc 108  output 5  T=0.0794   ΔT=0.0005628
     it 1  residue: 1.1586e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.6368e-01  relative correction: 2.7519e-02
+    it 2  residue: 9.4707e-02  relative correction: 2.7855e-02
 inc 109  output 6  T=0.08   ΔT=0.0005535
     it 1  residue: 1.1592e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.0944e-02  relative correction: 2.8278e-02
+    it 2  residue: 1.2678e+00  relative correction: 2.7262e-02
 inc 110  output 6  T=0.0806   ΔT=0.0006088
     it 1  residue: 1.1597e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.7686e-01  relative correction: 2.6603e-02
+    it 2  residue: 7.7632e-02  relative correction: 2.5109e-02
 inc 111  output 6  T=0.0812   ΔT=0.0006697
-    it 1  residue: 1.1602e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.6211e-01  relative correction: 2.3919e-02
+    it 1  residue: 1.1603e+02  relative correction: 1.0000e+00
+    it 2  residue: 1.7418e-01  relative correction: 2.3855e-02
 inc 112  output 6  T=0.0818   ΔT=0.0007367
     it 1  residue: 1.1609e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.4045e-01  relative correction: 2.1406e-02
+    it 2  residue: 1.6449e-01  relative correction: 2.1537e-02
 inc 113  output 6  T=0.0826   ΔT=0.0008103
-    it 1  residue: 1.1616e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.7513e+00  relative correction: 2.0199e-02
+    it 1  residue: 1.1617e+02  relative correction: 1.0000e+00
+    it 2  residue: 1.0756e+01  relative correction: 2.8563e-02
+    it 3  residue: 3.9197e+00  relative correction: 2.2843e-02
 inc 114  output 6  T=0.0834   ΔT=0.0008914
     it 1  residue: 1.1625e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.1416e-01  relative correction: 1.7822e-02
+    it 2  residue: 1.7228e-01  relative correction: 2.1571e-02
 inc 115  output 6  T=0.0843   ΔT=0.0009805
     it 1  residue: 1.1634e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.4800e-01  relative correction: 3.3341e-02
+    it 2  residue: 2.8799e+00  relative correction: 4.0120e-02
 inc 116  output 6  T=0.0853   ΔT=0.001079
     it 1  residue: 1.1644e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1086e+00  relative correction: 2.0057e-02
+    it 2  residue: 1.4350e+00  relative correction: 3.9036e-02
 inc 117  output 6  T=0.0863   ΔT=0.001186
     it 1  residue: 1.1655e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.2933e+00  relative correction: 1.3494e-02
+    it 2  residue: 3.5363e+00  relative correction: 1.3557e-02
 inc 118  output 6  T=0.0875   ΔT=0.001305
     it 1  residue: 1.1668e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2158e+00  relative correction: 2.9537e-02
+    it 2  residue: 1.0021e+00  relative correction: 2.8062e-02
 inc 119  output 6  T=0.0888   ΔT=0.001436
     it 1  residue: 1.1682e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2467e+01  relative correction: 1.0940e-02
-    it 3  residue: 4.5087e-01  relative correction: 1.5988e-02
+    it 2  residue: 1.3194e+01  relative correction: 1.0850e-02
+    it 3  residue: 5.2834e-01  relative correction: 1.3916e-02
 inc 120  output 6  T=0.0903   ΔT=0.001579
     it 1  residue: 1.1697e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.7668e+00  relative correction: 2.3172e-02
+    it 2  residue: 1.0166e+00  relative correction: 2.3568e-02
 inc 121  output 6  T=0.0918   ΔT=0.001737
     it 1  residue: 1.1714e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.5530e+00  relative correction: 1.3363e-02
+    it 2  residue: 2.3021e+00  relative correction: 1.3338e-02
 inc 122  output 6  T=0.0936   ΔT=0.001911
     it 1  residue: 1.1733e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.7909e-01  relative correction: 2.4201e-02
+    it 2  residue: 3.9502e-01  relative correction: 8.5998e-03
 inc 123  output 6  T=0.0955   ΔT=0.002102
     it 1  residue: 1.1754e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.1718e-01  relative correction: 1.2204e-02
-inc 124  output 6  T=0.0976   ΔT=0.002312
-    it 1  residue: 1.1777e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.2188e+00  relative correction: 1.4305e-02
-    it 3  residue: 2.5269e+02  relative correction: 2.9600e-02
+    it 2  residue: 6.9486e+01  relative correction: 4.6469e-02
+    it 3  residue: 6.0875e+00  relative correction: 1.2760e-02
       increment failed
-inc 124  output 6  T=0.0976   ΔT=0.000462
-    it 1  residue: 1.1777e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.8180e-02  relative correction: 3.4130e-02
-inc 125  output 6  T=0.098   ΔT=0.0005082
-    it 1  residue: 1.1781e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.0486e-02  relative correction: 3.1071e-02
-inc 126  output 6  T=0.0986   ΔT=0.000559
-    it 1  residue: 1.1786e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8490e+00  relative correction: 2.8118e-02
-inc 127  output 6  T=0.0991   ΔT=0.0006149
-    it 1  residue: 1.1791e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.2445e+00  relative correction: 2.5456e-02
-inc 128  output 6  T=0.0997   ΔT=0.0002709
-    it 1  residue: 1.1797e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.9085e-02  relative correction: 5.8276e-02
-inc 129  output 7  T=0.1   ΔT=0.0003075
-    it 1  residue: 1.1799e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.1128e-02  relative correction: 5.1516e-02
-inc 130  output 7  T=0.1003   ΔT=0.0003382
-    it 1  residue: 1.1801e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0980e-01  relative correction: 4.6715e-02
-inc 131  output 7  T=0.1006   ΔT=0.000372
-    it 1  residue: 1.1804e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.5270e-01  relative correction: 4.2800e-02
-inc 132  output 7  T=0.101   ΔT=0.0004092
-    it 1  residue: 1.1807e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0627e-01  relative correction: 3.8938e-02
-inc 133  output 7  T=0.1014   ΔT=0.0004502
-    it 1  residue: 1.1811e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0823e+00  relative correction: 3.5162e-02
-inc 134  output 7  T=0.1019   ΔT=0.0004952
-    it 1  residue: 1.1815e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.4394e+00  relative correction: 3.1621e-02
-inc 135  output 7  T=0.1024   ΔT=0.0005447
-    it 1  residue: 1.1819e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.9011e-01  relative correction: 2.8914e-02
-inc 136  output 7  T=0.1029   ΔT=0.0005992
-    it 1  residue: 1.1824e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.8094e-02  relative correction: 2.6318e-02
-inc 137  output 7  T=0.1035   ΔT=0.0006591
-    it 1  residue: 1.1830e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.9647e-02  relative correction: 2.3948e-02
-inc 138  output 7  T=0.1042   ΔT=0.000725
-    it 1  residue: 1.1837e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.7088e-02  relative correction: 2.1826e-02
-inc 139  output 7  T=0.1049   ΔT=0.0007975
-    it 1  residue: 1.1844e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.6224e-02  relative correction: 1.9907e-02
-inc 140  output 7  T=0.1057   ΔT=0.0008772
-    it 1  residue: 1.1852e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.5878e-02  relative correction: 1.8187e-02
-inc 141  output 7  T=0.1066   ΔT=0.0009649
-    it 1  residue: 1.1861e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0770e-01  relative correction: 1.6538e-02
-inc 142  output 7  T=0.1075   ΔT=0.001061
-    it 1  residue: 1.1871e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.7061e+00  relative correction: 1.4996e-02
-inc 143  output 7  T=0.1086   ΔT=0.001168
-    it 1  residue: 1.1882e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3236e+01  relative correction: 1.3804e-02
-    it 3  residue: 2.3181e-01  relative correction: 4.1724e-03
-inc 144  output 7  T=0.1098   ΔT=0.001284
-    it 1  residue: 1.1894e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.0146e+02  relative correction: 7.8423e-02
-      increment failed
-inc 144  output 7  T=0.1098   ΔT=0.000257
-    it 1  residue: 1.1894e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.9267e-02  relative correction: 6.2316e-02
-inc 145  output 7  T=0.11   ΔT=0.0002827
-    it 1  residue: 1.1896e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.0664e+00  relative correction: 5.6845e-02
-    it 3  residue: 2.4974e-01  relative correction: 1.0660e-02
-inc 146  output 7  T=0.1103   ΔT=0.000311
-    it 1  residue: 1.1898e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.0234e-02  relative correction: 5.1860e-02
-inc 147  output 7  T=0.1106   ΔT=0.0003421
-    it 1  residue: 1.1901e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.0086e-02  relative correction: 4.6386e-02
-inc 148  output 7  T=0.111   ΔT=0.0003763
-    it 1  residue: 1.1903e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.0941e-01  relative correction: 4.1717e-02
-inc 149  output 7  T=0.1113   ΔT=0.0004139
-    it 1  residue: 1.1907e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.5761e-02  relative correction: 3.7957e-02
-inc 150  output 7  T=0.1118   ΔT=0.0004553
-    it 1  residue: 1.1910e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.2268e-02  relative correction: 3.4515e-02
-inc 151  output 7  T=0.1122   ΔT=0.0005008
-    it 1  residue: 1.1915e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.7362e-02  relative correction: 3.1414e-02
-inc 152  output 7  T=0.1127   ΔT=0.0005509
-    it 1  residue: 1.1919e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.4136e-02  relative correction: 2.8552e-02
-inc 153  output 7  T=0.1133   ΔT=0.000606
-    it 1  residue: 1.1925e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2906e-01  relative correction: 2.6230e-02
-inc 154  output 7  T=0.1139   ΔT=0.0006666
-    it 1  residue: 1.1931e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1344e-01  relative correction: 2.3988e-02
-inc 155  output 7  T=0.1145   ΔT=0.0007333
-    it 1  residue: 1.1937e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2946e-01  relative correction: 2.1846e-02
-inc 156  output 7  T=0.1153   ΔT=0.0008066
-    it 1  residue: 1.1945e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1751e-01  relative correction: 1.9878e-02
-inc 157  output 7  T=0.1161   ΔT=0.0008872
-    it 1  residue: 1.1953e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2018e-01  relative correction: 1.8107e-02
-inc 158  output 7  T=0.117   ΔT=0.000976
-    it 1  residue: 1.1962e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3541e-01  relative correction: 1.6554e-02
-inc 159  output 7  T=0.1179   ΔT=0.001074
-    it 1  residue: 1.1973e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.4945e-01  relative correction: 1.5130e-02
-inc 160  output 7  T=0.119   ΔT=0.0009921
-    it 1  residue: 1.1984e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.5465e-01  relative correction: 1.6527e-02
-inc 161  output 8  T=0.12   ΔT=0.0005368
-    it 1  residue: 1.1994e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.4318e-02  relative correction: 3.0705e-02
-inc 162  output 8  T=0.1205   ΔT=0.0005905
-    it 1  residue: 1.2000e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.7912e-02  relative correction: 2.7854e-02
-inc 163  output 8  T=0.1211   ΔT=0.0006495
-    it 1  residue: 1.2005e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8123e-01  relative correction: 2.5248e-02
-inc 164  output 8  T=0.1218   ΔT=0.0007144
-    it 1  residue: 1.2012e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.8706e-01  relative correction: 2.3031e-02
-inc 165  output 8  T=0.1225   ΔT=0.0007859
-    it 1  residue: 1.2019e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3630e+01  relative correction: 2.0815e-02
-    it 3  residue: 9.6301e-02  relative correction: 3.7949e-03
-inc 166  output 8  T=0.1233   ΔT=0.0008645
-    it 1  residue: 1.2027e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.5798e-02  relative correction: 1.8949e-02
-inc 167  output 8  T=0.1241   ΔT=0.0009509
-    it 1  residue: 1.2036e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.7289e-01  relative correction: 1.7214e-02
-inc 168  output 8  T=0.1251   ΔT=0.001046
-    it 1  residue: 1.2046e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1613e-01  relative correction: 1.5577e-02
-inc 169  output 8  T=0.1261   ΔT=0.001151
-    it 1  residue: 1.2057e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.2048e-01  relative correction: 1.4247e-02
-inc 170  output 8  T=0.1273   ΔT=0.001266
-    it 1  residue: 1.2070e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.0523e-01  relative correction: 1.2954e-02
-inc 171  output 8  T=0.1286   ΔT=0.001392
-    it 1  residue: 1.2083e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.2097e-01  relative correction: 1.1796e-02
-inc 172  output 8  T=0.1299   ΔT=0.001531
-    it 1  residue: 1.2099e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1597e+00  relative correction: 1.0770e-02
-inc 173  output 8  T=0.1315   ΔT=0.001685
-    it 1  residue: 1.2116e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.4928e+00  relative correction: 1.1061e-02
-inc 174  output 8  T=0.1332   ΔT=0.001853
-    it 1  residue: 1.2134e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.7417e-01  relative correction: 1.3467e-02
-inc 175  output 8  T=0.135   ΔT=0.002038
-    it 1  residue: 1.2155e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8529e+01  relative correction: 3.4522e-02
-    it 3  residue: 3.9352e+01  relative correction: 4.1438e-02
-      increment failed
-inc 175  output 8  T=0.135   ΔT=0.000408
-    it 1  residue: 1.2155e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.5239e-01  relative correction: 4.1523e-02
-inc 176  output 8  T=0.1354   ΔT=0.0004488
-    it 1  residue: 1.2158e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.0933e+00  relative correction: 3.8120e-02
-inc 177  output 8  T=0.1359   ΔT=0.0004937
-    it 1  residue: 1.2162e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.4574e+00  relative correction: 3.5304e-02
-inc 178  output 8  T=0.1364   ΔT=0.000543
-    it 1  residue: 1.2167e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3946e+01  relative correction: 3.6183e-02
-    it 3  residue: 2.9183e-01  relative correction: 1.0004e-01
-inc 179  output 8  T=0.1369   ΔT=0.0005974
-    it 1  residue: 1.2172e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.7040e-01  relative correction: 5.4252e-02
-inc 180  output 8  T=0.1375   ΔT=0.0006571
-    it 1  residue: 1.2177e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.9660e-01  relative correction: 8.1834e-02
-inc 181  output 8  T=0.1382   ΔT=0.0007228
-    it 1  residue: 1.2184e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.5029e+00  relative correction: 4.8519e-02
-    it 3  residue: 5.3436e-01  relative correction: 5.4153e-02
-inc 182  output 8  T=0.1389   ΔT=0.0007951
-    it 1  residue: 1.2191e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.2544e-01  relative correction: 4.7191e-02
-inc 183  output 8  T=0.1397   ΔT=0.0003178
-    it 1  residue: 1.2199e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.1557e+00  relative correction: 1.0240e-01
-inc 184  output 9  T=0.14   ΔT=0.0003975
-    it 1  residue: 1.2201e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.3493e+01  relative correction: 1.4957e-01
-    it 3  residue: 9.8082e+00  relative correction: 6.9139e-02
-      increment failed
-inc 184  output 9  T=0.14   ΔT=7.95e-5
-    it 1  residue: 1.2201e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.7683e+01  relative correction: 2.1142e-01
-    it 3  residue: 4.5217e+00  relative correction: 1.2602e-01
-inc 185  output 9  T=0.1401   ΔT=8.745e-5
-    it 1  residue: 1.2202e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.8381e-02  relative correction: 2.0600e-01
-inc 186  output 9  T=0.1402   ΔT=9.62e-5
-    it 1  residue: 1.2201e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.9057e-02  relative correction: 1.8944e-01
-inc 187  output 9  T=0.1403   ΔT=0.0001058
-    it 1  residue: 1.2201e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.9659e-02  relative correction: 1.7425e-01
-inc 188  output 9  T=0.1404   ΔT=0.0001164
-    it 1  residue: 1.2202e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.0992e-02  relative correction: 1.6013e-01
-inc 189  output 9  T=0.1405   ΔT=0.000128
-    it 1  residue: 1.2202e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.2208e-02  relative correction: 1.4682e-01
-inc 190  output 9  T=0.1406   ΔT=0.0001408
-    it 1  residue: 1.2202e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.8424e-02  relative correction: 1.3456e-01
-inc 191  output 9  T=0.1408   ΔT=0.0001549
-    it 1  residue: 1.2202e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.5250e-02  relative correction: 1.2322e-01
-inc 192  output 9  T=0.1409   ΔT=0.0001704
-    it 1  residue: 1.2203e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.2285e-02  relative correction: 1.1268e-01
-inc 193  output 9  T=0.1411   ΔT=0.0001875
-    it 1  residue: 1.2204e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.1694e-01  relative correction: 9.7892e-02
-inc 194  output 9  T=0.1413   ΔT=0.0002062
-    it 1  residue: 1.2204e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.2099e-02  relative correction: 8.6950e-02
-inc 195  output 9  T=0.1415   ΔT=0.0002268
-    it 1  residue: 1.2206e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.7955e-02  relative correction: 7.8032e-02
-inc 196  output 9  T=0.1417   ΔT=0.0002495
-    it 1  residue: 1.2207e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.6478e-01  relative correction: 7.0163e-02
-inc 197  output 9  T=0.1419   ΔT=0.0002745
-    it 1  residue: 1.2208e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.4203e-01  relative correction: 6.5713e-02
-inc 198  output 9  T=0.1422   ΔT=0.0003019
-    it 1  residue: 1.2210e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.7138e-01  relative correction: 5.9713e-02
-inc 199  output 9  T=0.1425   ΔT=0.0003321
-    it 1  residue: 1.2213e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.1832e-02  relative correction: 5.2949e-02
-inc 200  output 9  T=0.1429   ΔT=0.0003653
-    it 1  residue: 1.2215e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.6293e-02  relative correction: 4.7376e-02
-inc 201  output 9  T=0.1432   ΔT=0.0004018
-    it 1  residue: 1.2218e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.7238e-01  relative correction: 4.3160e-02
-inc 202  output 9  T=0.1436   ΔT=0.000442
-    it 1  residue: 1.2222e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.9938e-01  relative correction: 3.9804e-02
-inc 203  output 9  T=0.1441   ΔT=0.0004862
-    it 1  residue: 1.2226e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.1826e-01  relative correction: 3.5824e-02
-inc 204  output 9  T=0.1446   ΔT=0.0005348
-    it 1  residue: 1.2230e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.3807e-01  relative correction: 4.2712e-02
-inc 205  output 9  T=0.1451   ΔT=0.0005883
-    it 1  residue: 1.2235e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0877e-01  relative correction: 3.0680e-02
-inc 206  output 9  T=0.1457   ΔT=0.0006472
-    it 1  residue: 1.2241e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.8059e-01  relative correction: 3.1072e-02
-inc 207  output 9  T=0.1463   ΔT=0.0007119
-    it 1  residue: 1.2247e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.4442e-01  relative correction: 2.9755e-02
-inc 208  output 9  T=0.147   ΔT=0.0007831
-    it 1  residue: 1.2254e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.7620e+00  relative correction: 2.8873e-02
-inc 209  output 9  T=0.1478   ΔT=0.0008614
-    it 1  residue: 1.2262e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.7786e-01  relative correction: 2.5072e-02
-inc 210  output 9  T=0.1487   ΔT=0.0009475
-    it 1  residue: 1.2271e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.2692e+00  relative correction: 1.9303e-02
-    it 3  residue: 8.6455e+00  relative correction: 2.1204e-02
-      increment failed
-inc 210  output 9  T=0.1487   ΔT=0.000189
-    it 1  residue: 1.2271e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.2519e-02  relative correction: 9.6593e-02
-inc 211  output 9  T=0.1489   ΔT=0.0002079
-    it 1  residue: 1.2272e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.4032e-02  relative correction: 8.7649e-02
-inc 212  output 9  T=0.1491   ΔT=0.0002287
-    it 1  residue: 1.2274e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.8672e-01  relative correction: 7.9590e-02
-inc 213  output 9  T=0.1493   ΔT=0.0002516
-    it 1  residue: 1.2275e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.8701e-02  relative correction: 7.2169e-02
-inc 214  output 9  T=0.1496   ΔT=0.0002767
-    it 1  residue: 1.2277e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.6229e-01  relative correction: 6.5571e-02
-inc 215  output 9  T=0.1498   ΔT=0.0003044
-    it 1  residue: 1.2279e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.6849e-02  relative correction: 5.9493e-02
-inc 216  output 9  T=0.1501   ΔT=0.0003348
-    it 1  residue: 1.2281e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.5693e-02  relative correction: 5.4006e-02
-inc 217  output 9  T=0.1505   ΔT=0.0003683
-    it 1  residue: 1.2284e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.4483e-02  relative correction: 4.8942e-02
-inc 218  output 9  T=0.1508   ΔT=0.0004051
-    it 1  residue: 1.2287e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.0828e+00  relative correction: 4.5235e-02
-    it 3  residue: 9.3048e+00  relative correction: 5.4676e-02
-      increment failed
-inc 218  output 9  T=0.1508   ΔT=8.1e-5
-    it 1  residue: 1.2287e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0951e-02  relative correction: 2.2545e-01
-inc 219  output 9  T=0.1509   ΔT=8.91e-5
-    it 1  residue: 1.2287e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.5002e-01  relative correction: 2.0493e-01
-inc 220  output 9  T=0.151   ΔT=9.801e-5
-    it 1  residue: 1.2286e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.3608e-01  relative correction: 1.8623e-01
-inc 221  output 9  T=0.1511   ΔT=0.0001078
-    it 1  residue: 1.2286e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.3902e+00  relative correction: 1.7548e-01
-inc 222  output 9  T=0.1512   ΔT=0.0001186
-    it 1  residue: 1.2286e+02  relative correction: 1.0000e+00
-    it 2  residue: 6.8877e-03  relative correction: 1.4456e-01
-inc 223  output 9  T=0.1513   ΔT=0.0001305
-    it 1  residue: 1.2287e+02  relative correction: 1.0000e+00
-    it 2  residue: 7.4462e-03  relative correction: 1.3135e-01
-inc 224  output 9  T=0.1515   ΔT=0.0001435
-    it 1  residue: 1.2287e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.7623e-02  relative correction: 1.1938e-01
-inc 225  output 9  T=0.1516   ΔT=0.0001578
-    it 1  residue: 1.2287e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.1035e-03  relative correction: 1.0845e-01
-inc 226  output 9  T=0.1518   ΔT=0.0001736
-    it 1  residue: 1.2288e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0033e-02  relative correction: 9.8512e-02
-inc 227  output 9  T=0.1519   ΔT=0.000191
-    it 1  residue: 1.2289e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1021e-02  relative correction: 8.9479e-02
-inc 228  output 9  T=0.1521   ΔT=0.0002101
-    it 1  residue: 1.2290e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.0170e-02  relative correction: 8.1456e-02
-inc 229  output 9  T=0.1523   ΔT=0.0002311
-    it 1  residue: 1.2291e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.2211e-02  relative correction: 7.4329e-02
-inc 230  output 9  T=0.1526   ΔT=0.0002542
-    it 1  residue: 1.2292e+02  relative correction: 1.0000e+00
-    it 2  residue: 8.8837e-03  relative correction: 6.7528e-02
-inc 231  output 9  T=0.1528   ΔT=0.0002796
-    it 1  residue: 1.2294e+02  relative correction: 1.0000e+00
-    it 2  residue: 9.4116e-03  relative correction: 6.1328e-02
-inc 232  output 9  T=0.1531   ΔT=0.0003076
-    it 1  residue: 1.2296e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1598e-02  relative correction: 5.5679e-02
-inc 233  output 9  T=0.1534   ΔT=0.0003384
-    it 1  residue: 1.2298e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1347e-02  relative correction: 5.0557e-02
-inc 234  output 9  T=0.1538   ΔT=0.0003722
-    it 1  residue: 1.2301e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.4898e-02  relative correction: 4.5930e-02
-inc 235  output 9  T=0.1541   ΔT=0.0004094
-    it 1  residue: 1.2304e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.4011e-02  relative correction: 4.1699e-02
-inc 236  output 9  T=0.1545   ΔT=0.0004504
-    it 1  residue: 1.2308e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.5709e-02  relative correction: 3.7855e-02
-inc 237  output 9  T=0.155   ΔT=0.0004954
-    it 1  residue: 1.2312e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.1899e+02  relative correction: 1.6701e-01
-    it 3  residue: 1.8270e+01  relative correction: 1.8586e-01
-      increment failed
-inc 237  output 9  T=0.155   ΔT=9.91e-5
-    it 1  residue: 1.2312e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.0409e-03  relative correction: 1.7189e-01
-inc 238  output 9  T=0.1551   ΔT=0.000109
-    it 1  residue: 1.2312e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.0966e+00  relative correction: 1.5162e-01
-inc 239  output 9  T=0.1552   ΔT=0.0001199
-    it 1  residue: 1.2312e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.5950e-03  relative correction: 1.4129e-01
-inc 240  output 9  T=0.1553   ΔT=0.0001319
-    it 1  residue: 1.2312e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.6142e-03  relative correction: 1.2843e-01
-inc 241  output 9  T=0.1554   ΔT=0.0001451
-    it 1  residue: 1.2312e+02  relative correction: 1.0000e+00
-    it 2  residue: 2.8263e-03  relative correction: 1.1673e-01
-inc 242  output 9  T=0.1556   ΔT=0.0001596
-    it 1  residue: 1.2313e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.1007e-03  relative correction: 1.0612e-01
-inc 243  output 9  T=0.1557   ΔT=0.0001756
-    it 1  residue: 1.2313e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8515e+00  relative correction: 9.6268e-02
-inc 244  output 9  T=0.1559   ΔT=0.0001931
-    it 1  residue: 1.2314e+02  relative correction: 1.0000e+00
-    it 2  residue: 1.8033e-02  relative correction: 8.7831e-02
-inc 245  output 9  T=0.1561   ΔT=0.0002124
-    it 1  residue: 1.2315e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.3407e-02  relative correction: 8.0338e-02
-inc 246  output 9  T=0.1563   ΔT=0.0002337
-    it 1  residue: 1.2316e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.3946e-02  relative correction: 7.2745e-02
-inc 247  output 9  T=0.1566   ΔT=0.000257
-    it 1  residue: 1.2318e+02  relative correction: 1.0000e+00
-    it 2  residue: 3.6339e-02  relative correction: 6.5902e-02
-inc 248  output 9  T=0.1568   ΔT=0.0002827
-    it 1  residue: 1.2320e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.0393e-02  relative correction: 5.9998e-02
-inc 249  output 9  T=0.1571   ΔT=0.000311
-    it 1  residue: 1.2322e+02  relative correction: 1.0000e+00
-    it 2  residue: 4.7437e-02  relative correction: 5.4471e-02
-inc 250  output 9  T=0.1574   ΔT=0.0003421
-    it 1  residue: 1.2324e+02  relative correction: 1.0000e+00
-    it 2  residue: 5.5908e-02  relative correction: 4.9454e-02
-inc 251  output 9  T=0.1578   ΔT=0.0003763
+inc 123  output 6  T=0.0955   ΔT=0.00042
+    it 1  residue: 1.1754e+02  relative correction: 1.0000e+00
+    it 2  residue: 3.1726e+00  relative correction: 3.7999e-02
+inc 124  output 6  T=0.0959   ΔT=0.000462
+    it 1  residue: 1.1757e+02  relative correction: 1.0000e+00
+    it 2  residue: 4.9299e-02  relative correction: 3.4501e-02
+inc 125  output 6  T=0.0964   ΔT=0.0005082
+    it 1  residue: 1.1762e+02  relative correction: 1.0000e+00
+    it 2  residue: 8.7880e-02  relative correction: 3.0447e-02
+inc 126  output 6  T=0.0969   ΔT=0.000559
+    it 1  residue: 1.1766e+02  relative correction: 1.0000e+00
+    it 2  residue: 8.7419e-02  relative correction: 2.7730e-02
+inc 127  output 6  T=0.0974   ΔT=0.0006149
+    it 1  residue: 1.1772e+02  relative correction: 1.0000e+00
+    it 2  residue: 8.7522e-02  relative correction: 2.5266e-02
+inc 128  output 6  T=0.098   ΔT=0.0006764

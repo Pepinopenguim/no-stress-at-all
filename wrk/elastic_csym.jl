@@ -9,10 +9,11 @@ Objectives:
 =#
 
 using Serendip
-using LinearAlgebra: sind, cosd
+using LinearAlgebra: sind, cosd, tand
 
 
-rel_path = "wrk" # no backstick
+rel_path = "wrk/" # work directory
+proj_folder = "RS_SYM/" # this project's dir
 
 # units of measure
 const mm = 1e-3
@@ -36,7 +37,7 @@ h = 180.0mm     # z direction
 
 
 # >> Define slab
-geo = GeoModel(size=.1)
+geo = GeoModel(size=.04)
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 
@@ -165,7 +166,6 @@ function create_ubars(geo::GeoModel, box_dim::AbstractVector{<:Real}, tag::Strin
 
     edges_u = [add_line(geo,points_u[i],points_u[i+1]) for i in 1:3]
     path_u = add_path(geo, edges_u; tag=tag, interface_tag=interface_tag)
-    println("nx=$ny, ny=$nx")
     add_array(geo, path_u; nx=nx, ny=ny, dx=sx, dy=sy)
 end
 
@@ -212,7 +212,7 @@ for az in 0:20:180
     add_plot(frame, mesh, "uBar";view_mode=:wireframe, line_color=:red)
     add_frame(video, frame)
 end
-save(video, "$rel_path//RS_SYM//view_c.mp4")
+save(video, "$rel_path//$proj_folder/view_c.mp4")
 
 
 
@@ -224,7 +224,8 @@ save(video, "$rel_path//RS_SYM//view_c.mp4")
 Ec    = 29.9MPa
 nu    = 0.2
 ft    = 1.8MPa # Tensile strength, obtained from TABLE 4
-GF    = .134N/mm # Fracture Energy, same table. TODO - Review!!!
+GF    = .134N/mm # Fracture Energy, same table.
+μ     = tand(55) # TODO - Review
 
 # >> Steel ϕ16.0
 Es1   = 196.9GPa
@@ -239,7 +240,7 @@ fy2   = 515.0MPa
 mapper = RegionMapper()
 
 add_mapping(mapper, "bulk"            , MechSolid, LinearElastic, E=Ec, nu=nu) 
-add_mapping(mapper, "cohesive"        , MechCohesive, LinearCohesive, E=Ec, nu=nu) 
+add_mapping(mapper, "cohesive"        , MechCohesive, MohrCoulombCohesive, E=Ec, nu=nu, ft=ft, GF=GF, mu=μ) 
 add_mapping(mapper, "loadPlate"      , MechSolid, LinearElastic, E=900GPa)
 add_mapping(mapper, "topReinforcement", MechBar, VonMises, d=16mm, E=Es1, fy=fy1) 
 add_mapping(mapper, "botReinforcement", MechBar, VonMises, d=10mm, E=Es2, fy=fy2)
@@ -281,36 +282,13 @@ add_bc(
         stage,
         :face,
         "loading";  
-        uz = -3cm
+        uz = -2cm
     )
 
 
 # ===========================================================
 # ----------------- LVDT LOGGERS & MONITORS -----------------
 # ===========================================================
-
-#=
-for i in axes(logger_X, 1)
-    xv = logger_X[i, 1]      
-    yv = logger_X[i, 2]
-    tag = "logger$i"
-
-    # Embedded reference point at the LVDT location
-    add_point(geo, [xv, yv, h]; embedded=true, tag=tag)
-
-    # Spatial selector using Serendip's coordinate symbols
-    sel = (x == xv, y == yv)
-
-    # Nodal-reduce logger → totals uz / fz over the selected nodes
-    loggers[i] = add_logger(ana, :nodalreduce, sel, "logger$i.dat")
-
-    # Single-node monitor for real-time uz (like a raw LVDT channel)
-    monitors[i] = add_monitor(ana, :node, sel, :uz)
-end 
-
-l1, l2, l3, l4 = loggers
-
-=#
 
 loggers, monitors = [], []
 
@@ -326,17 +304,17 @@ end
 # ----------------- ANÁLISE ---------------------------------
 # ===========================================================
 
-run(ana)
+run(ana, autoinc=true)
 
 plot_kwargs = (
-    field      = "σzz",
+    field      = "σxx",
     field_mult = 1e-6,
     warp       = 10,
     colormap   = :spectral,
     diverging  = true,
     line_color = :gray,
-    colorbar   = :bottom,
-    label      = "`σ_(z z)` [MPa]",
+    colorbar   = :right,
+    label      = "`σ_(x x)` [MPa]",
 )
 
 plot = DomainPlot(
@@ -346,7 +324,7 @@ plot = DomainPlot(
 add_plot(plot, model;
     plot_kwargs...
 )
-save(plot, "$rel_path//RS_SYM//RS_SYM.pdf")
+save(plot, "$rel_path//$proj_folder/RS_SYM.pdf")
 
 
 video = VideoBuilder(bounds_factor=1.05)
@@ -361,7 +339,7 @@ for az in 0:20:180
     )
     add_frame(video, frame)
 end
-save(video, "$rel_path//RS_SYM//RS_SYM.mp4")
+save(video, "$rel_path//$proj_folder/RS_SYM.mp4")
 
 chart = Chart(
     xlabel = "`u_z` [mm]",
@@ -375,4 +353,4 @@ for (i, lg) in enumerate(loggers)
         label = "LVDT $i",
     )
 end
-save(chart, "$rel_path//RS_SYM//LVDT_load_disp.pdf")
+save(chart, "$rel_path//$proj_folder/LVDT_load_disp.pdf")
