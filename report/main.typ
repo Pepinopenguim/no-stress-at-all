@@ -5,7 +5,7 @@
 
 #show: relatório.with(
     título: "Modelagem Numérica da Punção em Lajes de Concreto Armado usando Elementos Finitos",
-    subtítulo: "Seminário de mestrado em estruturas e construção civil",
+    subtítulo: highlight(["Seminário de mestrado em estruturas e construção civil"]),
     tipo: "TCC", // "Tese", "Dissertação", "TCC", "Seminário"
     programa: "Programa de Pós-Graduação em Estruturas e Construção Civil",
     departamento: "Departamento de Engenharia Civil e Ambiental",

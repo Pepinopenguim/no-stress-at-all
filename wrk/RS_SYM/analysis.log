@@ -1,62 +1,15 @@
 Serendip - Finite Element Simulation Log
 
 Mechanical analysis  Stage 1
-Time 2026-10-15T16:51:35.274
-unknown dofs: 421306
+Time 2026-10-16T17:23:59.878
+unknown dofs: 28439
 inc 1  output 0  T=0.0   ΔT=0.01
-    it 1  residue: 6.4959e-07  relative correction: 1.0000e+00
+    it 1  residue: 4.6036e-10  relative correction: 1.0000e+00
 inc 2  output 0  T=0.01   ΔT=0.02
-    it 1  residue: 1.0178e-06  relative correction: 1.0000e+00
-inc 3  output 0  T=0.03   ΔT=0.04
-    it 1  residue: 1.3964e-06  relative correction: 1.0000e+00
-inc 4  output 0  T=0.07   ΔT=0.08
-    it 1  residue: 2.6298e-06  relative correction: 1.0000e+00
-inc 5  output 0  T=0.15   ΔT=0.05
-    it 1  residue: 1.2257e-06  relative correction: 1.0000e+00
-inc 6  output 1  T=0.2   ΔT=0.06
-    it 1  residue: 1.7454e-06  relative correction: 1.0000e+00
-inc 7  output 1  T=0.26   ΔT=0.12
-    it 1  residue: 3.7162e-06  relative correction: 1.0000e+00
-inc 8  output 1  T=0.38   ΔT=0.02
-    it 1  residue: 1.3736e-06  relative correction: 1.0000e+00
-inc 9  output 2  T=0.4   ΔT=0.09
-    it 1  residue: 1.7966e-06  relative correction: 1.0000e+00
-inc 10  output 2  T=0.49   ΔT=0.11
-    it 1  residue: 3.4735e-06  relative correction: 1.0000e+00
-inc 11  output 3  T=0.6   ΔT=0.0675
-    it 1  residue: 2.6157e-06  relative correction: 1.0000e+00
-inc 12  output 3  T=0.6675   ΔT=0.1325
-    it 1  residue: 3.8610e-06  relative correction: 1.0000e+00
-inc 13  output 4  T=0.8   ΔT=0.05062
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 13  output 4  T=0.8   ΔT=0.0354
-    it 1  residue: 9.1765e-07  relative correction: 1.0000e+00
-inc 14  output 4  T=0.8354   ΔT=0.0708
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.0496
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.0347
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.0243
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.017
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.0119
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.00833
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.00583
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.00408
-MohrCoulombCohesive: plastic update failed.
-      increment failed
-inc 14  output 4  T=0.8354   ΔT=0.00286
+    it 1  residue: 8.6953e+01  relative correction: 1.0000e+00
+    it 2  residue: 1.0824e+00  relative correction: 2.4254e-03
+inc 3  output 0  T=0.03   ΔT=0.022
+    it 1  residue: 9.0351e+02  relative correction: 1.0000e+00
+    it 2  residue: 2.7247e+01  relative correction: 2.1424e-02
+    it 3  residue: 3.2758e+00  relative correction: 7.5167e-04
+inc 4  output 0  T=0.052   ΔT=0.0242

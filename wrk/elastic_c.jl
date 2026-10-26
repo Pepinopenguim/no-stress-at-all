@@ -158,7 +158,7 @@ save(video, "elastic_c//view_c.mp4")
 # ===========================================================
 
 # >> Concrete
-Ec    = 29.9MPa
+Ec    = 21.551GPa
 nu    = 0.2
 ft    = 1.8MPa # Tensile strength, obtained from TABLE 4
 GF    = .134N/mm # Fracture Energy, same table. TODO - Review!!!

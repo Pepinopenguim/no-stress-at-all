@@ -1,3 +1,5 @@
+#import "helpers.typ": todo
+
 
 = Introdução
 
@@ -27,6 +29,8 @@
 ]  
 
 == Objetivos
+
+    A presente pesquisa busca realizar a análise numérica de uma laje sob efeitos de punção por meio do Método dos Elementos Finitos. A simulação será realizada pela linguagem de programação julia, por meio do pacote _Serendip_, desenvolvido 
 
     #highlight()[
     Os objetivos expressam as intenções e metas do projeto/relatório científico tanto em termos amplos (objetivo geral) quanto em passos práticos (objetivos específicos).

@@ -48,7 +48,7 @@
     resumo-ing: none,
     resumo-pt: none,
     agradecimentos: none,
-    publicação: "G.TD-",
+    publicação: highlight([TODO]),
     data: datetime(day:1, month:1, year:2024),
     bibliografia: none,
     estilo: none,

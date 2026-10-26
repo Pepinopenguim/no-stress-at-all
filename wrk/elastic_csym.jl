@@ -37,7 +37,7 @@ h = 180.0mm     # z direction
 
 
 # >> Define slab
-geo = GeoModel(size=.04)
+geo = GeoModel(size=.1)
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 
@@ -181,6 +181,10 @@ logger_X = [
      475  0
      725  0
     1170  0
+    0     275
+    0     475
+    0     725
+    0     1170
 ] * mm
 
 logger_points = []
@@ -206,7 +210,7 @@ add_cohesive_elements(mesh, (z >= 0, z <= h); tag="cohesive")
 video = VideoBuilder(bounds_factor=1.05)
 for az in 0:20:180
     frame = DomainPlot(azimuth=az)
-    add_plot(frame, mesh, "bulk";view_mode=:outline, line_color=:gray)
+    add_plot(frame, mesh, "bulk";view_mode=:wireframe, line_color=:gray)
     add_plot(frame, mesh, "topReinforcement";view_mode=:wireframe, line_elem_color=:blue)
     add_plot(frame, mesh, "botReinforcement";view_mode=:wireframe, line_elem_color=darken(Color(:green), .6))
     add_plot(frame, mesh, "uBar";view_mode=:wireframe, line_color=:red)
@@ -221,7 +225,7 @@ save(video, "$rel_path//$proj_folder/view_c.mp4")
 # ===========================================================
 
 # >> Concrete
-Ec    = 29.9MPa
+Ec    = 21.551GPa
 nu    = 0.2
 ft    = 1.8MPa # Tensile strength, obtained from TABLE 4
 GF    = .134N/mm # Fracture Energy, same table.
@@ -254,7 +258,7 @@ add_mapping(mapper, "barInt"          , MechBondSlip, LinearBondSlip, ks=1e10, k
 model = FEModel(mesh, mapper; g=9.81)
 ana = MechAnalysis(model; outkey="RS_SYM", outdir="$rel_path//RS_SYM")
 
-stage = add_stage(ana, nincs=50, nouts=5)
+stage = add_stage(ana, nincs=100, nouts=5)
 
 # ===========================================================
 # ----------------- BOUNDARY CONDITIONS ---------------------
@@ -282,7 +286,7 @@ add_bc(
         stage,
         :face,
         "loading";  
-        uz = -2cm
+        uz = -1mm
     )
 
 

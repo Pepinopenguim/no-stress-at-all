@@ -1,0 +1,1 @@
+#let todo(body) = highlight()[#body]
