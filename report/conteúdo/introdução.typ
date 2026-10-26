@@ -5,6 +5,20 @@
 
     A falha por punção é um dos estados limites mais recorrentes em estruturas de concreto armado, ocorrendo principalmente em conexões laje-pilar. Seu comportamento é complexo, de difícil previsibilidade, o que apresenta um grande desafio na engenharia estrutural.
 
+    Laje lisa
+    - Ocorre quando um pavimento é apoiado diretamente em pilares, sem auxílio de vigas
+    - tempo de execução mais rápido
+    - Facilidade na execução da armadura
+    - lançamento, adensamento e desforma do concreto
+    - simplificação arquitetônica do revestimento
+
+    Punção
+    - modo de ruptura caracterizado pela concentração de cargas e reações em uma região de pequena área, no caso, no pilar
+    - desenvolvimento de altos esforços de cisalhamento 
+    - risco de ruptura sem aviso
+    - esforço característico de lajes lisas
+     
+
     Uma das principais formas de se abordar o tema 
 
 == Objetivos
