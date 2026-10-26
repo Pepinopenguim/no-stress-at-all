@@ -3,59 +3,21 @@
 
 = Introdução
 
-    A falha por punção é um dos estados limites mais recorrentes em estruturas de concreto armado, ocorrendo principalmente em conexões laje-pilar. Seu comportamento é complexo, de difícil previsibilidade, o que apresenta um grande desafio na engenharia estrutural como um todo.
+    A falha por punção é um dos estados limites mais recorrentes em estruturas de concreto armado, ocorrendo principalmente em conexões laje-pilar. Seu comportamento é complexo, de difícil previsibilidade, o que apresenta um grande desafio na engenharia estrutural.
 
-    Uma das principais formas de se abordar o tema  adsf
-
-    #highlight()[
-    A introdução é a seção do projeto/relatório que responde à pergunta #emph[o quê?]
-    Ela deve apresentar o tema da pesquisa, o problema a ser investigado, os objetivos e a justificativa do estudo, de forma clara e coerente.
-
-    O texto da introdução deve conter os seguintes itens:
-
-    / Contextualização: Descreve o tópico do problema estabelecendo a delimitação espacial, temporal e temática. Destaca a importância do tópico, sua relevância social, tecnológica ou científica, e evidencia como se insere no campo de pesquisa atual.
-
-    / Identificação do problema: Dentro do contexto previamente apresentado, especifica uma falha, lacuna ou carência no conhecimento existente ou nas técnicas atualmente utilizadas relacionadas ao tema. Deve ser formulado de modo a permitir a elaboração de hipóteses e objetivos claros.
-
-    / Breve revisão do estado da arte: Apresenta um resumo do conhecimento atual sobre o tema, indicando como outros pesquisadores têm abordado o problema. Deve apontar convergências, divergências e lacunas que justificam a pesquisa proposta.
-
-    / Objetivos e justificativa: Expõe os objetivos gerais e específicos do projeto/relatório, deixando claro o propósito da pesquisa. Justifica a necessidade do estudo proposto, destacando benefícios esperados no âmbito científico, tecnológico, social, econômico ou ambiental.
-
-    / Metodologia (síntese): Descreve de forma breve a abordagem que será utilizada para atingir os objetivos,
-        como métodos experimentais, simulações, análises estatísticas ou estudos de caso. A versão detalhada da metodologia será apresentada em seção própria.
-
-    / Estrutura do trabalho (opcional): Pode-se indicar brevemente como o projeto/relatório está organizado,
-        facilitando a leitura e compreensão do documento.
-]  
+    Uma das principais formas de se abordar o tema 
 
 == Objetivos
 
-    A presente pesquisa busca realizar a análise numérica de uma laje sob efeitos de punção por meio do Método dos Elementos Finitos. A simulação será realizada pela linguagem de programação julia, por meio do pacote _Serendip_, desenvolvido 
+    A presente pesquisa busca realizar a análise numérica de uma laje lisa sob efeitos de ruptura de punção por meio do Método dos Elementos Finitos, com a utilização de elementos coesivos de junta. O objetivo central da pesquisa será analisar a eficiciência do método, assim como definir parâmetros para o auxílio de simulações posteriores.
 
-    #highlight()[
-    Os objetivos expressam as intenções e metas do projeto/relatório científico tanto em termos amplos (objetivo geral) quanto em passos práticos (objetivos específicos).
-    Servem como guia para a escolha da metodologia, para a execução das etapas e, ao final, para avaliar se o estudo alcançou o que foi proposto.
-
-    / Objetivo geral: Parágrafo que especifica a finalidade central da pesquisa sob um ponto de vista abrangente. Responde à pergunta _para quê?_ e sintetiza a intenção maior do trabalho. O objetivo geral deve ser único e abrangente, formulado de maneira clara, factível e coerente com o problema apresentado na introdução.
-
-    / Objetivos específicos: Têm caráter mais _concreto_ e _operacional_. Correspondem a etapas ou metas que precisam ser cumpridas para alcançar o objetivo geral.
-        Devem ser redigidos como ações práticas (ex.: analisar, avaliar, identificar, comparar, desenvolver, propor) e expressar resultados verificáveis.
-    ]
+    A simulação será realizada pela linguagem de programação _julia_, por meio do pacote _Serendip_, desenvolvido por #todo[Durant et al]. Os resultados obtidos serão diretamente comparados com as simulações realizadas por @de_Azevedo_Palhares_2022, que utilizou o software _ABAQUS/CDPM_ para analisar o mesmo caso, assim como os resultados experimentais obtidos pelos ensaios de @Lima2021.
 
 == Justificativa
-    #highlight()[
 
-    Sua função é evidenciar a relevância científica, tecnológica, social, econômica ou ambiental da pesquisa.
-    É um componente essencial, pois contribui diretamente para a aceitação e credibilidade da pesquisa
-    perante avaliadores, agências de fomento ou a comunidade acadêmica.
+    A ruptura por punção em lajes lisas é um evento potencialmente catastrófico para a estabilidade local e global da estrutura, além de apresentar comportamento analiticamente complexo de se definir. Deste modo, o estudo desse fenômeno vêm crescendo no âmbito acadêmico, especialmente com a utilização de elementos finitos @Schimanowski_2025, como forma de se analisar o comportamento e a resistência estrutural do parâmetro. Porém, realizar uma análise numérica precisa é um desafio significativo, em função da não linearidade natural ao problema e à complexidade do estado tridimensional de tensões na região de ligação laje-pilar.
 
-    Uma boa justificativa deve:
-    - Explicitar a importância do tema escolhido e suas possíveis aplicações práticas.
-    - Apontar as lacunas no conhecimento que a pesquisa pretende preencher.
-    - Demonstrar a originalidade ou inovação em relação a estudos já realizados.
-    - Destacar os benefícios esperados, tanto no avanço da ciência quanto no impacto social ou tecnológico.
+    Nesse contexto, os modelos tradicionais de dano contínuo, embora amplamente utilizados, apresentam uma alta dependência à malha utilizada e dificuldade na representação de deformações discretas (fissuras). A utlização de elementos coesivos surge como uma outra abordagem para o problema, ao simular a rigidez (e sua eventual perda) na interface entre elementos sólidos. Isso traz uma forma natural de observar o desenvolvimento e propagação de fissuras além de possibilitar a visualização do processo de fraturamento e do comportamento pós-ruptura da estrutura. Adicionalmente, a solução numérica proposta não apresenta necessidade de compatibilizar a malha na formulação de interface barra-sólido @Durand_2021, o que viabiliza uma modelagem eficiente da aderência e deslizamento entre armadura e concreto.
 
-    A justificativa pode ser apresentada de forma breve na introdução ou em uma seção própria,
-    dependendo da complexidade da pesquisa e da exigência da instituição.
-    Nos dois casos, deve estar claramente articulada com os objetivos e com a metodologia proposta.
-    ]
+    Deste modo, a presente pesquisa se justifica pela necessidade de avaliar a capacidade desses elementos coesivos em reproduzir com fidelidade o comportamento experimental de uma laje lisa submetida à punção. Espera-se, com isso, contribuir para o avanço das técnicas de modelagem numérica de estruturas de concreto, fornecendo uma ferramenta mais realista para a previsão de modos de falha e dimensionamento seguro de ligações laje-pilar.
+
