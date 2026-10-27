@@ -3,23 +3,14 @@
 
 = Introdução
 
-    A falha por punção é um dos estados limites mais recorrentes em estruturas de concreto armado, ocorrendo principalmente em conexões laje-pilar. Seu comportamento é complexo, de difícil previsibilidade, o que apresenta um grande desafio na engenharia estrutural.
+    A falha por punção é um dos estados limites mais recorrentes em estruturas tradicionais de concreto armado, especialmente em lajes lisas. Seu comportamento é caracterizado pela concentração de cargas e reações em uma região de pequena área, em torno do pilar, que leva ao desenvolvimento de altos esforços de cisalhamento e alto risco de ruptura repentina.
 
-    Laje lisa
-    - Ocorre quando um pavimento é apoiado diretamente em pilares, sem auxílio de vigas
-    - tempo de execução mais rápido
-    - Facilidade na execução da armadura
-    - lançamento, adensamento e desforma do concreto
-    - simplificação arquitetônica do revestimento
+    Apesar disso, a adoção de lajes lisas, sistemas estruturais laminares apoiados diretamente em pilares, sem o auxílio de vigas, em estruturas cotidianas se provou um grande facilitador durante a fase de execução da obra, em função de um tempo de armação e concretagem reduzido, além da simplificação na aplicação de revestimento @Junior_2021. Essas economias provam-se suficientes para justificar a maior minuciosidade no cálculo, que prova-se muitas vezes de difícil previsibilidade. 
 
-    Punção
-    - modo de ruptura caracterizado pela concentração de cargas e reações em uma região de pequena área, no caso, no pilar
-    - desenvolvimento de altos esforços de cisalhamento 
-    - risco de ruptura sem aviso
-    - esforço característico de lajes lisas
-     
-
-    Uma das principais formas de se abordar o tema 
+    
+    Uma das principais formas de se abordar o problema, portanto, está na análise numérica, tradicionalmente realizada por meio do Método dos Elementos Finitos (MEF). O MEF consiste na discretização do domínio contínuo em um conjunto de elementos interconectados por nós, sobre os quais se aplicam as equações constitutivas e as condições de contorno do problema. Essa abordagem permite aproximar a solução de problemas estruturais complexos, cujas soluções analíticas são inviáveis ou inexistentes, possibilitando a avaliação de tensões, deformações e deslocamentos em regiões críticas. No contexto da punção em lajes lisas, o MEF se destaca por permitir a análise do estado tridimensional de tensões na ligação laje-pilar e a simulação de diferentes cenários de carregamento e configurações geométricas, complementando os ensaios experimentais, que, embora fundamentais, apresentam elevado custo e limitações de escala. 
+    
+    Contudo, a precisão dos resultados numéricos está diretamente condicionada à escolha do modelo constitutivo, ao tipo de elemento finito e à qualidade da malha adotada, aspectos que serão discutidos ao longo deste trabalho.
 
 == Objetivos
 

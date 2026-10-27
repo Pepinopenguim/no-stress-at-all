@@ -18,6 +18,7 @@ proj_folder = "RS_SYM/" # this project's dir
 # units of measure
 const mm = 1e-3
 const cm = 1e-2
+const m = 1
 
 const N = 1
 
@@ -38,7 +39,7 @@ h = 180.0mm     # z direction
 
 
 # >> Define slab
-geo = GeoModel(size=0.07)
+geo = GeoModel(size=(msh_size=0.1))
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 
@@ -124,8 +125,8 @@ end
 C = [20mm, 20mm, 25mm]
 
 
-create_grid(geo, [ℓ, b, h], "topReinforcement", "barInt", 16, h - 25mm, C)
-create_grid(geo, [ℓ, b, h], "botReinforcement", "barInt", 16,     25mm, C)
+create_grid(geo, [ℓ, b, h], "topReinforcement", "barInt16", 16, h - 25mm, C)
+create_grid(geo, [ℓ, b, h], "botReinforcement", "barInt10", 16,     25mm, C)
 
 # ===========================================================
 # ----------------- U BARS DEFINTION ------------------------
@@ -171,11 +172,8 @@ function create_ubars(geo::GeoModel, box_dim::AbstractVector{<:Real}, tag::Strin
     add_array(geo, path_u; nx=nx, ny=ny, dx=sx, dy=sy)
 end
 
-create_ubars(geo, [ℓ, b, h], "uBar", "barInt", C, 250mm, 16mm, "x", 16)
-create_ubars(geo, [ℓ, b, h], "uBar", "barInt", C, 250mm, 16mm, "y", 16)
-
-
-# TODO
+create_ubars(geo, [ℓ, b, h], "uBar", "barInt16", C, 250mm, 16mm, "x", 16)
+create_ubars(geo, [ℓ, b, h], "uBar", "barInt16", C, 250mm, 16mm, "y", 16)
 
 # LVDT positions on the slab top surface (x, y) [mm]
 logger_X = [
@@ -196,11 +194,42 @@ for (i, (xv, yv)) in enumerate(eachrow(logger_X))
     push!(logger_points, p)
 end
 
+# ===========================================================
+# ----------------- COLUMN BARS DEFINITION ------------------
+# ===========================================================
+
+for (x, y, tag, int_tag) in [
+    (ℓ_col / 2 - 20mm, b_col / 2 - 20mm, "ColReinforcement", "barInt16"),
+    (ℓ_col / 2 - 20mm,                0, "halfColRfcmnt", "halfBarInt16"),
+    (               0, b_col / 2 - 20mm, "halfColRfcmnt", "halfBarInt16"),
+]
+    p_low = add_point(geo,  [x, y, -low_col_h])
+    p_high = add_point(geo, [x, y, upp_col_h])
+    bar_line = add_line(geo, p_low, p_high)
+    bar_path = add_path(geo, [bar_line], tag=tag, interface_tag=int_tag)
+end
+
+# >> adding of shearing reinforcements along column
+points = [
+        add_point(geo, [ℓ_col / 2 - 20mm,                0, -low_col_h]),
+        add_point(geo, [ℓ_col / 2 - 20mm, b_col / 2 - 20mm, -low_col_h]),
+        add_point(geo, [               0, b_col / 2 - 20mm, -low_col_h]),
+]
+edges = [
+    add_line(geo,points[1],points[2]),
+    add_line(geo,points[2],points[3]),
+]
+path = add_path(geo, edges; tag="ColReinforcement", interface_tag="barInt16")
+add_array(geo, path; nz=18, dz=80mm)
 
 
 # ===========================================================
 # ----------------- MESH, COHESIVE AND VIDEO DEF. -----------
 # ===========================================================
+
+# set refinement to improve mesh on region more crack sensitive
+set_refinement(geo, [0, 0, h/2], ℓ/2, b/2, h/2, msh_size/20, msh_size, transition=0.8, roundness=0.2)
+
 
 # define mesh
 mesh = Mesh(geo)
@@ -215,14 +244,14 @@ add_cohesive_elements(mesh, "bulk"; tag="cohesive")
 video = VideoBuilder(bounds_factor=1.05)
 for az in 0:20:180
     frame = DomainPlot(azimuth=az)
-    add_plot(frame, mesh, "bulk";view_mode=:outline, line_color=:gray)
+    add_plot(frame, mesh, "bulk";view_mode=:wireframe, line_color=:gray)
     add_plot(frame, mesh, "topReinforcement";view_mode=:wireframe, line_elem_color=:blue)
     add_plot(frame, mesh, "botReinforcement";view_mode=:wireframe, line_elem_color=darken(Color(:green), .6))
+    add_plot(frame, mesh, "colReinforcement";view_mode=:wireframe, line_elem_color=darken(Color(:green), .6))
     add_plot(frame, mesh, "uBar";view_mode=:wireframe, line_color=:red)
     add_frame(video, frame)
 end
-save(video, "$rel_path//$proj_folder/view_c.mp4")
-
+save(video, "$rel_path//$proj_folder/RS_SYM_view.mp4")
 
 
 # ===========================================================
@@ -248,13 +277,17 @@ fy2   = 515.0MPa
 
 mapper = RegionMapper()
 
-add_mapping(mapper, "bulk"            , MechSolid, LinearElastic, E=Ec, nu=nu) 
-add_mapping(mapper, "cohesive"        , MechCohesive, MohrCoulombCohesive, E=Ec, nu=nu, ft=ft, GF=GF, mu=μ) 
-add_mapping(mapper, "loadPlate"      , MechSolid, LinearElastic, E=900GPa)
-add_mapping(mapper, "topReinforcement", MechBeam, VonMises, d=16mm, E=Es1, fy=fy1) 
-add_mapping(mapper, "botReinforcement", MechBeam, VonMises, d=10mm, E=Es2, fy=fy2)
-add_mapping(mapper, "uBar"            , MechBeam, VonMises, d=16mm, E=Es1, fy=fy1)
-add_mapping(mapper, "barInt"          , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=0.01) # TODO - Review values
+add_mapping(mapper, "bulk"                , MechSolid,    LinearElastic, E=Ec, nu=nu) 
+add_mapping(mapper, "cohesive"            , MechCohesive, MohrCoulombCohesive, E=Ec, nu=nu, ft=ft, GF=GF, mu=μ) 
+add_mapping(mapper, "loadPlate"           , MechSolid,    LinearElastic, E=900GPa)
+add_mapping(mapper, "topReinforcement"    , MechBeam,     VonMises, d=16mm, E=Es1, fy=fy1) 
+add_mapping(mapper, "botReinforcement"    , MechBeam,     VonMises, d=10mm, E=Es2, fy=fy2)
+add_mapping(mapper, "ColReinforcement"    , MechBar,      VonMises, d=16mm, E=Es1, fy=fy1)
+add_mapping(mapper, "halfColRfcmnt", MechBar,      VonMises, A=(π*(16mm/2)^2)/2, E=Es1, fy=fy1)
+add_mapping(mapper, "uBar"                , MechBeam,     VonMises, d=16mm, E=Es1, fy=fy1)
+add_mapping(mapper, "barInt16"            , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=π*16mm) # TODO - Review values for ks and kn
+add_mapping(mapper, "barInt10"            , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=π*10mm) # TODO - Review values for ks and kn
+add_mapping(mapper, "halfBarInt16"          , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=π/2*16mm) # TODO - Review values for ks and kn
 
 # ===========================================================
 # ----------------- FEModel ---------------------------------
