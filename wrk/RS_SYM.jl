@@ -48,7 +48,7 @@ slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 ℓ_col = 300.0mm             # x
 b_col = 300.0mm             # y
 # respectively, lower bound, upper bound, slab height
-h_col = (low_col_h = 600.0mm) + (upp_col_h = 800.0mm) + h # z
+h_col = (low_col_h = 300.0mm) + (upp_col_h = 400.0mm) + h # z
 
 # reference point for the column
 column = add_box(geo, [0,0,-low_col_h], ℓ_col/2, b_col/2, h_col; tag="bulk")
@@ -220,7 +220,7 @@ edges = [
     add_line(geo,points[2],points[3]),
 ]
 path = add_path(geo, edges; tag="ColReinforcement", interface_tag="barInt16")
-add_array(geo, path; nz=18, dz=80mm)
+add_array(geo, path; nz=10, dz=80mm)
 
 
 # ===========================================================
@@ -235,6 +235,11 @@ set_refinement(geo, [0, 0, h/2], ℓ/2, b/2, h/2, msh_size/20, msh_size, transit
 mesh = Mesh(geo)
 
 
+# save defined mesh as vtu
+save(mesh, "$rel_path/$proj_folder/mesh.vtu")
+
+# temporary exit to prevent further execution
+exit()
 
 # >> Cohesive elements creation
 # add_cohesive_elements(mesh, (z >= 0, z <= h); tag="cohesive")
@@ -338,7 +343,7 @@ for (i, _) in enumerate(logger_points)
     l = add_logger(ana, :nodalreduce, "logger$i", "logger$i.dat")
     push!(loggers, l)
 
-    m = add_monitor(ana, :node, "logger$i", :uz)
+    add_monitor(ana, :node, "logger$i", :uz)
     push!(monitors, m)
 end
 
