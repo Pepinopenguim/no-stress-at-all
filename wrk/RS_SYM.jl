@@ -39,7 +39,8 @@ h = 180.0mm     # z direction
 
 
 # >> Define slab
-geo = GeoModel(size=(msh_size=0.1))
+#geo = GeoModel(size=(msh_size=0.1))
+geo = GeoModel(size=(msh_size=.1))
 
 slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 
@@ -48,7 +49,7 @@ slab = add_box(geo, [0.0, 0.0, 0.0], ℓ/2, b/2, h; tag="bulk")
 ℓ_col = 300.0mm             # x
 b_col = 300.0mm             # y
 # respectively, lower bound, upper bound, slab height
-h_col = (low_col_h = 300.0mm) + (upp_col_h = 400.0mm) + h # z
+h_col = (low_col_h = 600.0mm) + (upp_col_h = 800.0mm) + h # z
 
 # reference point for the column
 column = add_box(geo, [0,0,-low_col_h], ℓ_col/2, b_col/2, h_col; tag="bulk")
@@ -73,6 +74,9 @@ for θ in load_θs
     corner = plate_coord .- plate_dim[1:2] ./ 2
     plate  = add_box(geo, [corner..., h], plate_dim...; tag="loadPlate")
     push!(plates, plate)
+
+    add_point(geo, [plate_coord..., 2cm+h], embedded=true) # forcing points so add_bc works without errors 
+
     push!(plate_coords, plate_coord)
 end
 
@@ -220,7 +224,7 @@ edges = [
     add_line(geo,points[2],points[3]),
 ]
 path = add_path(geo, edges; tag="ColReinforcement", interface_tag="barInt16")
-add_array(geo, path; nz=10, dz=80mm)
+add_array(geo, path; nz=18, dz=80mm)
 
 
 # ===========================================================
@@ -228,7 +232,7 @@ add_array(geo, path; nz=10, dz=80mm)
 # ===========================================================
 
 # set refinement to improve mesh on region more crack sensitive
-set_refinement(geo, [0, 0, h/2], ℓ/2, b/2, h/2, msh_size/20, msh_size, transition=0.8, roundness=0.2)
+set_refinement(geo, [0, 0, h/2], ℓ/2, b/2, 2h, msh_size/5, msh_size, transition=0.8, roundness=0.8)
 
 
 # define mesh
@@ -239,7 +243,7 @@ mesh = Mesh(geo)
 save(mesh, "$rel_path/$proj_folder/mesh.vtu")
 
 # temporary exit to prevent further execution
-exit()
+# exit()
 
 # >> Cohesive elements creation
 # add_cohesive_elements(mesh, (z >= 0, z <= h); tag="cohesive")
@@ -290,9 +294,9 @@ add_mapping(mapper, "botReinforcement"    , MechBeam,     VonMises, d=10mm, E=Es
 add_mapping(mapper, "ColReinforcement"    , MechBar,      VonMises, d=16mm, E=Es1, fy=fy1)
 add_mapping(mapper, "halfColRfcmnt", MechBar,      VonMises, A=(π*(16mm/2)^2)/2, E=Es1, fy=fy1)
 add_mapping(mapper, "uBar"                , MechBeam,     VonMises, d=16mm, E=Es1, fy=fy1)
-add_mapping(mapper, "barInt16"            , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=π*16mm) # TODO - Review values for ks and kn
-add_mapping(mapper, "barInt10"            , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=π*10mm) # TODO - Review values for ks and kn
-add_mapping(mapper, "halfBarInt16"          , MechBondSlip, LinearBondSlip, ks=1e10, kn=1e9, p=π/2*16mm) # TODO - Review values for ks and kn
+add_mapping(mapper, "barInt16"            , MechBondSlip, LinearBondSlip, ks=1e11, kn=1e13, p=π*16mm) # TODO - Review values for ks and kn
+add_mapping(mapper, "barInt10"            , MechBondSlip, LinearBondSlip, ks=1e11, kn=1e13, p=π*10mm) # TODO - Review values for ks and kn
+add_mapping(mapper, "halfBarInt16"          , MechBondSlip, LinearBondSlip, ks=1e11, kn=1e13, p=π/2*16mm) # TODO - Review values for ks and kn
 
 # ===========================================================
 # ----------------- FEModel ---------------------------------
@@ -326,7 +330,7 @@ for plate_coord in plate_coords
     add_bc(
         stage,
         :node,
-        (x==plate_coord[1], y==plate_coord[2], z==h + plate_dim[3]);  
+        (x==plate_coord[1], y==plate_coord[2], z==z_top);  
         uz = -25mm
     )
 end
