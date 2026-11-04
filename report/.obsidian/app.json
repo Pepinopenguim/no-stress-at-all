@@ -1,5 +1,6 @@
 {
-  "showUnsupportedFiles": true,
+  "defaultViewMode": "source",
   "alwaysUpdateLinks": true,
-  "attachmentFolderPath": "+"
+  "attachmentFolderPath": "./+",
+  "spellcheck": false
 }

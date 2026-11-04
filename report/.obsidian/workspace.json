@@ -1,32 +1,78 @@
 {
   "main": {
-    "id": "b005f5136fd3e662",
+    "id": "d3f0b57de024feaf",
     "type": "split",
     "children": [
       {
-        "id": "21df4aecd76a8765",
+        "id": "909cf259d1e9632c",
         "type": "tabs",
         "children": [
           {
-            "id": "3b954f6461be560f",
+            "id": "f7a32aaf2fc9cc42",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "terminal:terminal",
+              "state": {
+                "terminal:terminal": {
+                  "cwd": "/home/ppno/Obsidian Vault",
+                  "focus": false,
+                  "profile": {
+                    "args": [
+                      "--login"
+                    ],
+                    "environment": [],
+                    "executable": "/usr/sbin/fish",
+                    "followTheme": true,
+                    "name": "fish",
+                    "platforms": {
+                      "darwin": true,
+                      "linux": true
+                    },
+                    "pythonExecutable": "python3",
+                    "restoreHistory": false,
+                    "rightClickAction": "copyPaste",
+                    "successExitCodes": [
+                      "0",
+                      "SIGINT",
+                      "SIGTERM"
+                    ],
+                    "terminalOptions": {
+                      "documentOverride": null
+                    },
+                    "type": "integrated",
+                    "win32Backend": "conpty"
+                  },
+                  "profileSourceId": "8907fdb1-9bee-4ec5-b9ee-f0901e0ba5de",
+                  "serial": null,
+                  "userTitle": ""
+                }
+              },
+              "pinned": true,
+              "icon": "terminal:tab-bezel",
+              "title": "~/Obsidian Vault - fish"
+            }
+          },
+          {
+            "id": "e0527fd156d6f667",
             "type": "leaf",
             "state": {
               "type": "typst-source",
               "state": {
-                "file": "main.typ"
+                "file": "conteúdo/metodologia.typ"
               },
               "icon": "file-type",
-              "title": "main"
+              "title": "metodologia"
             }
           }
         ]
       },
       {
-        "id": "937d8cbba900f2cd",
+        "id": "b8c43051c38df86a",
         "type": "tabs",
         "children": [
           {
-            "id": "32081e2940b0b4d8",
+            "id": "2223d354224d02e1",
             "type": "leaf",
             "state": {
               "type": "typst-preview",
@@ -45,21 +91,21 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "fecfb7c8a6eac523",
+    "id": "c1b34148912c666a",
     "type": "split",
     "children": [
       {
-        "id": "0a4c51b5478a1a3a",
+        "id": "5d685131d1a348a4",
         "type": "tabs",
         "children": [
           {
-            "id": "4952fd304ecf09d0",
+            "id": "bb74a1892316499a",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false,
+                "autoReveal": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
@@ -68,12 +114,12 @@
             }
           },
           {
-            "id": "23d7ef3214394734",
+            "id": "9373ed2a4e687c3a",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "file:",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +131,7 @@
             }
           },
           {
-            "id": "89a6dc1034f86ffa",
+            "id": "46f5d1ccb9856131",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -101,28 +147,29 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
-    "id": "ccd19750f03a1183",
+    "id": "00ff4ead2e6d441d",
     "type": "split",
     "children": [
       {
-        "id": "a0ba2663d6d5bb0a",
+        "id": "10c3092a50e03f79",
         "type": "tabs",
         "children": [
           {
-            "id": "689826f32b191b32",
+            "id": "e3caa7eb36f80b2f",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "TCC/Método dos Elementos Finitos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
-                "backlinkCollapsed": true,
+                "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
@@ -130,7 +177,7 @@
             }
           },
           {
-            "id": "5a853fe281386fda",
+            "id": "9d3e4ec6930f055b",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
@@ -143,7 +190,7 @@
             }
           },
           {
-            "id": "b5e8cadde09f885a",
+            "id": "07bc832d28c5f72a",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -158,7 +205,7 @@
             }
           },
           {
-            "id": "9d1cb97fe8c6b002",
+            "id": "49dd401dec3a408d",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -172,11 +219,12 @@
             }
           },
           {
-            "id": "3028fa4057272bd1",
+            "id": "5569f0e77ff5edf6",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
+                "file": "TCC/No Stress at All!.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -184,8 +232,19 @@
               "icon": "lucide-list",
               "title": "Outline"
             }
+          },
+          {
+            "id": "9ca720a9367780d8",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -200,21 +259,55 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "terminal:Open terminal": false
     }
   },
-  "active": "3b954f6461be560f",
+  "active": "f7a32aaf2fc9cc42",
   "lastOpenFiles": [
-    "unb-templante.typ",
-    "conteúdo/redação.typ",
-    "conteúdo/conclusões.typ",
     "conteúdo/metodologia.typ",
-    "main.typ",
-    "rascunho.typ",
     "conteúdo/introdução.typ",
+    "conteúdo/conclusões.typ",
     "conteúdo/cronograma.typ",
-    "conteúdo/apendices.typ",
+    "ref.bib",
+    "main.typ",
     "main.pdf",
-    "Untitled.base"
+    "conteúdo/helpers.typ",
+    "Simulação.md",
+    "TCC/No Stress at All!.md",
+    "Calendar/04_11_2026.md",
+    "Calendar/Calendar.md",
+    "Calendar/24_10_2026.md",
+    "Calendar/29_10_2026.md",
+    "Calendar/27_10_2026.md",
+    "Boring Stuff.md",
+    "Calendar/30_10_2026.md",
+    "Untitled.typ",
+    "temp.typ",
+    "TODO.md",
+    "Untitled.md",
+    "Excalidraw/Drawing 2026-10-29 20.02.14.excalidraw.md",
+    "TCC/Modelo Constitutivo.md",
+    "TCC/refs/Durand-2019.md",
+    "sei la oq.md",
+    "TCC/refs/+/amolecimento_hordjark.png",
+    "TCC/refs/+/lens_modelo_const.png",
+    "TCC/Método dos Elementos Finitos.md",
+    "TCC/refs/+",
+    "Calendar/28_10_2026.md",
+    "TCC/Elementos Coesivos.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "Excalidraw/Drawing 2026-10-28 16.11.00.excalidraw.md",
+    "Excalidraw/Drawing 2026-10-28 16.10.58.excalidraw.md",
+    "Excalidraw/mohrco.md",
+    "Excalidraw/Drawing 2026-10-27 15.10.46.excalidraw.md",
+    "2026-10-27.md",
+    "TCC/refs/Durand-2021a.md",
+    "TCC/refs/Durand-2021b.md",
+    "TCC/+/laje_2.png",
+    "TCC/+/laje_1.png",
+    "Untitled 2.canvas"
   ]
 }
