@@ -41,20 +41,21 @@ $
 
 As forças internas dependem do estado atual do material, e por isso o sistema não pode ser resolvido diretamente. A solução é obtida de forma incremental e iterativa, pelo método de Newton-Raphson: aplica-se a carga em pequenos passos e, em cada passo, corrige-se a solução até que o resíduo seja suficientemente pequeno. Essa correção ocorre pela alteração da rigidez interna do material, ditada pelo modelo constitutivo apropriado.
 
-Em problemas com amolecimento acentuado — como a punção —, a matriz tangente pode se tornar indefinida e o método pode falhar. Nesses casos, técnicas de continuação (como arc-length e métodos de passo automático) e esquemas de integração implícita, como os adotados em @Durand_2019 e @Durand_2021_3D, são necessários para acompanhar o caminho de equilíbrio após o pico de carga. 
-
-
+Em problemas com amolecimento acentuado, no caso da punção, a matriz tangente pode se tornar indefinida e o método pode falhar. Nesses casos, técnicas de continuação (como arc-length e métodos de passo automático) e esquemas de integração implícita, como os adotados em @Durand_2019 e @Durand_2021_3D, são necessários para acompanhar o caminho de equilíbrio após o pico de carga.
 
 === Elementos Coesivos e a Mecânica da Fratura
 
-É exatamente nesse contexto que os Elementos Coesivos se inserem: eles fornecem a lei constitutiva local que governa a perda de rigidez na fissura, alimentando o resíduo e a matriz tangente globais a cada iteração.
+A modelagem de elementos frágeis possui duas principais vertentes, a de fratura distribuida, onde a influência da fratura é espalhada ao longo do elemento finito (p. ex. Modelos de Dano) e fratura discreta, onde fratura, ou seu potencial, é representada por elemento de interface próprio. 
 
-Diferentemente de outros métodos (modelos de Dano de Fratura e XFEM), a metodologia de elementos coesivos utiliza elementos de interface, a forma que esse elemento se comportará dependerá diretamente do modelo constitutivo escolhido, e será essencial na correta simulação de formação de fissuras.
+Os elementos coesivos se inserem no contexto de abordagens discretas da ruptura. Eles fornecem a lei constitutiva local que governa a perda de rigidez na fissura, alimentando o resíduo e a matriz tangente global a cada iteração. O elemento é iniciado com espessura nula, sendo sujeito às variações nas tensões do problema. Quando as condições do modelo constitutivo forem atingidas, haverá o início da ruptura na interface entre os elementos. 
+
+Essa dependência do modelo constitutivo faz parte da natureza dos elementos coesivos, e sua formulação deve ser eficiente e suficientemente representativa do material frágil sendo analisado. 
+
+
 
 === Modelos Constitutivos
 
-==== O modelo 2D de Durand & Silva (2019)
-//Superfície de Mohr-Coulomb
+==== O modelo 2D de Durand & Silva
 
 O texto de @Durand_2019 apresenta um modelo bidimensional para elementos de interface modelados de acordo com a função de escoamento de Mohr-Coulomb. Além disso, os autores utilizam modelos de fratura não-lineares para representar o amolecimento (_softening_) da fratura ao longo de sua separação. 
 
@@ -95,16 +96,27 @@ A matriz constitutiva elastoplástica $D_"ep"$ relaciona o incremento de tensão
 
 $ D_(e p) = D_e - (D_e r v^T D_e) / (v^T D_e r - y m norm(r)) $
 
-Onde:
-- $D_e$ é a matriz constitutiva elástica.
-- \($v = (partial f) / (partial sigma)$\) e \($y = (partial f) / (partial sigma_max)$\).
-- \($r = (partial g) / (partial sigma)$\) é a direção do fluxo plástico.
-- \($m = (partial sigma_max) / (partial u_p)$\).
+Onde $D_e$ é a matriz constitutiva elástica do elemento, $v = (partial f) / (partial sigma)$ e $y = (partial f) / (partial sigma_max)$ são derivadas da função de escoamento em função das tensões, $r = (partial g) / (partial sigma)$ é o fluxo plástico e $m = (partial sigma_max) / (partial u_p)$ é a derivada da tensão máxima em relação à abertura do elemento.
 
-==== Interface barra-sólido (Durand et al., 2021a)
+// atualização de tensões e integração implícita
+Na análise não-linear de elementos finitos, e especialmente para um modelo matematicamente sensível como os elementos coesivos, a atualização de tensões é parte fundamental do processo iterativo. No modelo de @Durand_2019, essa atualização dependerá do deslocamento relativo $Delta bold(w)$ de tal modo que, dado o valor da tensão na iteração atual $bold(sigma)^n$, a tensão de teste $bold(sigma)^(t r)$ será 
+
+$
+  bold(sigma)^(t r) = bold(sigma)^n + bold(D)_e Delta bold(w)
+$
+
+A tensão de teste apenas será válida se a condição de escoamento não for atingida, ou seja, se $f(bold(sigma)^(t r), sigma^n_"max") <= 0$. Se for o caso, $bold(sigma)^(t r) = bold(sigma)^(n + 1)$. Caso contrário ($f(bold(sigma)^(t r), sigma^n_"max") > 0$), o incremento será elastoplástico e haverá fissuração, alterando o valor de $sigma_"max"^(n + 1)$.
+
+#figure(
+  image("../figuras/atualiz_tensoes.png", width: 100%),
+  caption: [Atualização de tensões #todo[revisar necessidade de mudar imagem]]
+)
+
+
+==== Interface barra-sólido
 [O problema da aderência aço-concreto, modelo de bond-slip, tip bearing]
 
-==== O modelo 3D de Durand & Silva (2021b)
+==== O modelo 3D de Durand & Silva
 [O salto para o estado triaxial, o potencial 3D, as técnicas numéricas (Runge-Kutta e passo automático)]
 
 == Estado da Arte

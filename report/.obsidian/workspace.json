@@ -64,8 +64,21 @@
               "icon": "file-type",
               "title": "metodologia"
             }
+          },
+          {
+            "id": "777dd4d4c3759134",
+            "type": "leaf",
+            "state": {
+              "type": "typst-source",
+              "state": {
+                "file": "conteúdo/revisão.typ"
+              },
+              "icon": "file-type",
+              "title": "revisão"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "b8c43051c38df86a",
@@ -264,15 +277,15 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "f7a32aaf2fc9cc42",
+  "active": "777dd4d4c3759134",
   "lastOpenFiles": [
+    "main.typ",
+    "main.pdf",
     "conteúdo/metodologia.typ",
     "conteúdo/introdução.typ",
     "conteúdo/conclusões.typ",
     "conteúdo/cronograma.typ",
     "ref.bib",
-    "main.typ",
-    "main.pdf",
     "conteúdo/helpers.typ",
     "Simulação.md",
     "TCC/No Stress at All!.md",
