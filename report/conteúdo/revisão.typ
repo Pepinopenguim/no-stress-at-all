@@ -4,9 +4,13 @@
 
 == Referencial Teórico
 
+=== Punção em Lajes Lisas
+
+
+
 === O Método dos Elementos Finitos (MEF)
 
-#todo["Após realizar algumas simulações, revisar este texto para descrever partes do processo de elementos finitos que causaram problema / são interessantes."]
+#todo[Após realizar algumas simulações, revisar este texto para descrever partes do processo de elementos finitos que causaram problema / são interessantes.]
 
 
 O Método dos elementos finitos é um método de solução numérica para problemas de valor de contorno usado amplamente e históricamente na engenharia civil. Baseia-se na discretização de domínios complexos em elementos discretos, uma aproximação que será bem sucedida em função da qualidade da malha (a união dos elementos em nós, linhas, faces e volumes) e modelos constitutivos (que representam as qualidades físicas do material) adotados. 
@@ -78,12 +82,12 @@ $
 
 // Hordijk
 
-Para representar o amolecimento da fratura, isto é, a translação da @esc_f para a esquerda, ao longo do eixo $sigma_n$, em relação à abertura da fissura $u_p$, os autores analisaram duas curvas apresentadas por @Hordijk1992:
+Para representar o amolecimento da fratura, isto é, a translação da @esc_f para a esquerda, ao longo do eixo $sigma_n$, em relação à abertura da fissura $u_p$, os autores utilizaram a seguinte curva, definida @Hordijk1992. que relaciona a abertura de tração com a tensão máxima do modelo:
 
 #figure(
   image("../figuras/amolecimento_hordjark.png", width: 80%),
-  caption: [Curva de amolecimento de Hordijk #todo[revisar necessidade de mudar imagem]]
-)
+  caption: [Curva de amolecimento de Hordijk #todo[revisar necessidade de mudar imagem]] 
+) <hordijk>
 
 #figure(
   image("../figuras/amolecimento_modelo.png"),
@@ -94,9 +98,9 @@ Para representar o amolecimento da fratura, isto é, a translação da @esc_f pa
 
 A matriz constitutiva elastoplástica $D_"ep"$ relaciona o incremento de tensão com o incremento de deslocamento relativo. Sua derivação parte da decomposição aditiva dos deslocamentos e da condição de consistência. A matriz final é expressa como: 
 
-$ D_(e p) = D_e - (D_e r v^T D_e) / (v^T D_e r - y m norm(r)) $
+$ bold(D)_(e p) = bold(D)_e - (bold(D)_e bold(r) bold(v)^T bold(D)_e) / (bold(v)^T bold(D)_e bold(r) - bold(y) bold(m) norm(bold(r))) $ <eq_Dep>
 
-Onde $D_e$ é a matriz constitutiva elástica do elemento, $v = (partial f) / (partial sigma)$ e $y = (partial f) / (partial sigma_max)$ são derivadas da função de escoamento em função das tensões, $r = (partial g) / (partial sigma)$ é o fluxo plástico e $m = (partial sigma_max) / (partial u_p)$ é a derivada da tensão máxima em relação à abertura do elemento.
+Onde $bold(D)_e$ é a matriz constitutiva elástica do elemento, $bold(v) = (partial f) / (partial sigma)$ e $bold(y) = (partial f) / (partial sigma_max)$ são derivadas da função de escoamento em função das tensões, $bold(r) = (partial g) / (partial sigma)$ é o fluxo plástico e $bold(m) = (partial sigma_max) / (partial u_p)$ é a derivada da tensão máxima em relação à abertura do elemento.
 
 // atualização de tensões e integração implícita
 Na análise não-linear de elementos finitos, e especialmente para um modelo matematicamente sensível como os elementos coesivos, a atualização de tensões é parte fundamental do processo iterativo. No modelo de @Durand_2019, essa atualização dependerá do deslocamento relativo $Delta bold(w)$ de tal modo que, dado o valor da tensão na iteração atual $bold(sigma)^n$, a tensão de teste $bold(sigma)^(t r)$ será 
@@ -105,19 +109,110 @@ $
   bold(sigma)^(t r) = bold(sigma)^n + bold(D)_e Delta bold(w)
 $
 
-A tensão de teste apenas será válida se a condição de escoamento não for atingida, ou seja, se $f(bold(sigma)^(t r), sigma^n_"max") <= 0$. Se for o caso, $bold(sigma)^(t r) = bold(sigma)^(n + 1)$. Caso contrário ($f(bold(sigma)^(t r), sigma^n_"max") > 0$), o incremento será elastoplástico e haverá fissuração, alterando o valor de $sigma_"max"^(n + 1)$.
+A tensão de teste apenas será válida se a condição de escoamento não for atingida, ou seja, se $f(bold(sigma)^(t r), sigma^n_"max") <= 0$. Neste caso o material ainda trabalhará como elástico, logo $bold(sigma)^(t r) = bold(sigma)^(n + 1)$. Caso contrário ($f(bold(sigma)^(t r), sigma^n_"max") > 0$), o incremento será elastoplástico e haverá fissuração, alterando o valor de $sigma_"max"^(n + 1)$. A @tens_update representa a atualização de tensões quando o material trabalha no regime elastoplástico. 
 
 #figure(
   image("../figuras/atualiz_tensoes.png", width: 100%),
   caption: [Atualização de tensões #todo[revisar necessidade de mudar imagem]]
-)
-
-
-==== Interface barra-sólido
-[O problema da aderência aço-concreto, modelo de bond-slip, tip bearing]
+) <tens_update>
 
 ==== O modelo 3D de Durand & Silva
-[O salto para o estado triaxial, o potencial 3D, as técnicas numéricas (Runge-Kutta e passo automático)]
+
+Seguindo a aplicação e análise feita nos modelos coesivos em @Durand_2019, que apresentou uma abordagem bidimensional do modelo, que se mostra uma limitação natural do modelo. Assim, para superar essa limitação, @Durand_2021_3D apresenta uma extensão tridimensioal do modelo constitutivo, que é a base utilizada nesse trabalho para analisar a punção em lajes lisas.
+
+// extensão para o estado triaxial de tensões
+
+A extensão para o modelo tridimensioal parte da substituição do elemento de interface de quatro nós (2D) por um elemento quadrilateral de oito nós com espessura nula. onsequentemente, o estado de tensões no ponto de integração deixa de ser representado por duas componentes ($sigma_n$ e $tau$) e passa a incluir duas componentes cisalhantes ortogonais no plano da fissura ($tau_s$ e $tau_t$). O vetor de tensões locais passa a ser:
+
+$
+  bold(sigma) = chevron.l sigma_n, tau_s, tau_t chevron.r
+$
+
+Esse fator também afetará a função de escoamento, que sofrerá influência do esforço cisalhante resultante:
+
+$
+  f(bold(sigma), sigma_max) = sqrt(tau_s^2 + tau_t^2) + (sigma_n - sigma_max) tan(phi) = 0
+$
+
+Assim como no modelo anterior, a variável $sigma_max$ representa a resistência à tração atual do material e é responsável por simular a perda de resistência por fissuração. O deslocamento plástico relativo efetivo, que governa a evolução de $sigma_max$, também é generalizado para o estado triaxial:
+
+$
+  u_p = integral_0^t
+  norm(dot(bold(w))_p) d t
+  = integral_0^t
+  sqrt(dot(w)_(n p)^2
+  +
+  dot(w)_(s p)^2 + dot(w)_(t p)^2) d t
+$
+
+Onde $dot(bold(w)_p)$ é o vetor que contém a taxa de deslocamento plástico relativo em coordenadas locais $chevron.l n, s, t chevron.r$. A curva de amolecimento utilizada é a mesma da @hordijk.
+
+// formulação potencial plástico 3D
+
+Para formulação da matriz constitutiva no fluxo plástico, adota-se uma regra não associada, similar ao modelo 2D. Na compressão, o fluxo plástico depende puramente dos esforços cisalhantes, e na tração, considera-se a influência da tensão e do ângulo de atrito. A função de potencial plástico $g$ assume a forma:
+
+$
+  g(bold(sigma), sigma_max) = cases(
+    tau_s^2 + tau_t^2 - tau_max^2 = 0 & "para " sigma_n <= 0,
+    sigma_n^2 tan^2(phi) + tau_s^2 + tau_t^2 - tau_max^2 = 0 & "para " sigma_n > 0
+  )
+$
+
+As derivadas necessárias para o cálculo da matriz elastoplástica $bold(D)_(e p)$ são generalizadas para o vetor tridimensional. O vetor normal à superfície de escoamento $bold(v)$ e o vetor de fluxo plástico $bold(r)$ passam a ter três componentes:
+
+$
+  bold(v) = ((partial f)/(partial sigma_n), (partial f)/(partial tau_s), (partial f)/(partial tau_t)) = (tan(phi), tau_s / sqrt(tau_s^2 + tau_t^2), tau_t / sqrt(tau_s^2 + tau_t^2))
+$
+
+$
+  bold(r) = ((partial g)/(partial sigma_n), (partial g)/(partial tau_s), (partial g)/(partial tau_t)) = (2 sigma_n tan^2(phi), 2 tau_s, 2 tau_t) quad "para " sigma_n > 0
+$
+
+A matriz constitutiva elastoplástica $bold(D)_(e p)$ mantém a mesma estrutura da @eq_Dep (do modelo 2D), porém agora operando com vetores de três componentes. 
+
+
+// técnicas de solução numérica
+//    -> runge kutta
+//    -> passo automático
+
+Problemas altamente não-lineares podem apresentar, próximos da carga máxima, variações bruscas na rigidez, o que levará a erros na solução de elementos finitos se um procedimento padrão de Newton-Raphson for aplicado. Para lidar com essa complexidade, @Durand_2021_3D incorporam duas técnicas avançadas de solução numérica.
+
+*Runge-Kutta (Método de Ralston):* Em vez de avaliar a matriz de rigidez global $bold(K)$ apenas no início de cada incremento, o método de Ralston faz duas avaliações: uma no início ($bold(K)_1 = bold(K)(bold(U)^n)$) e outra em um ponto intermediário do incremento ($bold(K)_2 = bold(K)(bold(U)^n + 2/3 Delta bold(U))$). A matriz de rigidez final é uma média ponderada:
+
+$
+  tilde(bold(K)) = 1/4 bold(K)_1 + 3/4 bold(K)_2
+$
+
+Essa aproximação melhora significativamente a acurácia da solução e reduz o número de iterações necessárias para a convergência.
+
+*Passo Automático (Automatic Stepping):* O tamanho do incremento de carga $Delta T$ é ajustado dinamicamente com base no erro de truncamento $e r r = norm(Delta bold(F)_"ext" - Delta bold(F)_"int")$. Se o incremento converge com sucesso, o passo é aumentado; se falha, é reduzido. O fator de escala $q$ é definido como:
+
+$
+  q = (1 + tanh(log_10 (t o l) / (e r r)))
+$
+
+O novo passo é calculado como $Delta T^(n+1) = q Delta T^n$, com limites para evitar passos muito pequenos ($0.2$) ou muito grandes ($0.9$). Essa técnica permite que a análise avance de forma eficiente nas regiões estáveis e desacelere automaticamente próximo ao pico de carga e no ramo de amolecimento.
+
+
+// aplicação
+
+O modelo 3D foi validado por @Durand_2021_3D por meio de ensaios de tração e cisalhamento puros (patch tests) e, posteriormente, aplicado à simulação de experimentos clássicos da literatura, como vigas entalhadas submetidas à torção e placas com duplo entalhe em modo misto. Os resultados demonstraram boa concordância com as curvas experimentais de carga-CMOD, incluindo o ramo de amolecimento, e padrões de fissuração compatíveis com os observados experimentalmente.
+
+É importante destacar que o modelo 3D apresenta uma limitação em relação ao tipo de elemento de volume utilizado: @Durand_2021_3D observaram que elementos hexaédricos interferem no desenvolvimento das fissuras, tendendo a aumentar a carga de pico ou gerar múltiplas fissuras em regiões onde se esperava apenas uma. Por outro lado, elementos tetraédricos e piramidais proporcionaram padrões de fissuração mais realistas. Essa observação é particularmente relevante para o presente trabalho, pois a escolha do tipo de elemento de volume na malha da laje influenciará diretamente a qualidade dos resultados da simulação de punção.
+
+==== Interface barra-sólido
+
+// problema de compatibilidade malha entre aço e concreto
+
+// elemento de interface contínuo
+
+// modelo cíclico de bond slip
+
+// restrição de ponta
+
+// Aplicação
+
+
 
 == Estado da Arte
 
