@@ -6,7 +6,19 @@
 
 === Punção em Lajes Lisas
 
+==== Definição e contexto construtivo
 
+==== Mecânica da ruptura por punção
+
+==== Modos de ruptura e fissuração
+
+==== Parâmetros que influenciam na resistência à punção
+
+===== Resistência à compressão do concreto
+===== Taxa de armadura de flexão
+===== Geometria e dimensão do pilar
+===== Efeito de escala (size effect)
+===== Armadura de cisalhamento
 
 === O Método dos Elementos Finitos (MEF)
 
