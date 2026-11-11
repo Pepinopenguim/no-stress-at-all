@@ -4,13 +4,65 @@
 
 == Referencial Teórico
 
+O presente capítulo apresenta uma revisão atualizada do contexto atual da engenharia estrutural no que se refere à punção de lajes lisas. Depois, será apresentada uma introdução básica ao método dos elementos finitos, focada em aspectos interessantes para o caso simulado. Por fim, serão observados os modelos matemáticos utilizados na simulação.
+
 === Punção em Lajes Lisas
 
-==== Definição e contexto construtivo
+As lajes lisas são sistemas estruturais laminares apoiados exclusivamente por pilares @albuquerque2015punção. O acúmulo de esforços e tensões, especialmente em torno da conexão laje-pila, causa uma região de grande potencial de ruptura. De acordo com @melges1995, o acúmulo de tensões nessa região pode ser extremo a ponto da ruptura ocorrer antes do escoamento do aço, caracterizando uma ruptura frágil. 
+
+Apesar disso, a conveniência na sua execução justifica seu uso, especialmente em função da: supressão de vigas, que simplifica a execução em obra do concreto armado, obtendo-se uma execução mais ágil do projeto, redução de formas, além da economia de materiais e mão de obra; redução do pé-direito, fator que aumenta o número de pavimentos a serem executados para uma mesma altura; Simplificação do projeto de ventilação, iluminação e resistência à incêndios, por diminuição dos obstáculos e assim, concentração de calor @palhares2018.
+
+A ruptura por punção é um evento potencialmente catastrófico: por ocorrer de forma frágil, sem aviso prévio, pode desencadear o colapso progressivo da estrutura, uma vez que a redistribuição de esforços resultante é direcionada a regiões que não foram dimensionadas para absorvê-la. Casos históricos incluem o colapso parcial do edifício Pipers Row Multi-Storey Car Park (Reino Unido, 1997) e do Skyline Plaza (EUA, 1973), ambos associados a falhas em ligações laje-pilar @palhares2018.
+
+#figure(
+  grid(
+    columns: 2,
+    column-gutter: 1cm,
+    image("../figuras/skyline.png", height: 20%),
+    image("../figuras/wolverhampton.jpg", height: 20%),
+  ),
+  caption: [
+    Acidentes históricos de ruptura por punção em lajes lisas.
+    (a) Colapso parcial do Pipers Row Multi-Storey Car Park,
+    Wolverhampton, Reino Unido, 1997.
+    (b) Colapso do Skyline Plaza, Virgínia, EUA, 1973.
+    Fonte: (a) Sagban et al. (2019); (b) Donini (2016).
+  ]
+)
+
 
 ==== Mecânica da ruptura por punção
 
+Sob carregamento crescente, a região da ligação laje-pilar desenvolve um estado triaxial de tensões no qual a componente cisalhante predomina. Quando a resistência à tração diagonal do concreto é atingida, inicia-se a formação de uma fissura inclinada que, propagando-se da face tracionada em direção à face comprimida, delimita um sólido aproximadamente cônico ao redor do pilar — o chamado tronco de cone de punção @melges1995.
+
+A superfície de ruptura inclina-se tipicamente entre $25 degree$ e $30 degree$ em relação ao plano da laje, conforme observado experimentalmente por @regan1981 e confirmado por @palhares2018. A extensão horizontal dessa superfície é da ordem de $2 d$ a $3 d$, onde $d$ é a altura útil da laje.
+
+#figure(
+  image("../figuras/tronco_puncao.png", width: 70%),
+  caption: [Formação do tronco de cone de punção ao redor do pilar. @palhares2018 #todo[substituir por figura própria se necessário]]
+) <fig_tronco_cone>
+
+Do ponto de vista mecânico, a resistência à punção mobiliza diferentes mecanismos: a contribuição do concreto íntegro na zona comprimida, o engrenamento dos agregados nas fissuras inclinadas, o efeito de pino das barras de flexão e, quando presente, a contribuição da armadura de cisalhamento @Sacramento_2012. A falha ocorre quando a soma dessas parcelas é superada pela demanda cisalhante atuante na seção crítica.
+
+// #figure(
+//   image("../figuras/mecanismos_resistencia.png", width: 70%),
+//   caption: [Mecanismos de resistência à punção: concreto íntegro, engrenamento de agregados, efeito de pino e armadura de cisalhamento. #todo[substituir por figura própria ou adaptada de @palhares2018]]
+// ) <fig_mecanismos>
+
 ==== Modos de ruptura e fissuração
+
+A fissuração de lajes lisas submetidas à punção segue uma sequência característica. As primeiras fissuras a surgir são as radiais, que partem do contorno do pilar em direção às bordas da laje; elas marcam o fim da fase elástica do comportamento e o início da não linearidade global @melges1995. Com o aumento do carregamento, o padrão radial se intensifica. Apenas nos estágios finais, imediatamente antes da ruptura, surgem as fissuras tangenciais, que delimitam o contorno do cone de punção @regan1981.
+
+// #figure(
+//   image("../figuras/fissuracao_radial_tangencial.png", width: 70%),
+//   caption: [Padrão de fissuração: fissuras radiais (fase inicial) e tangenciais (imediatamente antes da ruptura). #todo[substituir por figura própria ou adaptada de @melges1995]]
+// ) <fig_fissuracao>
+
+A depender da taxa de armadura de flexão e das condições de contorno, três modos de ruptura podem ser identificados: *Punção pura:* ruptura frágil, sem escoamento da armadura de flexão, com formação clara do tronco de cone; *Flexo-punção:* ruptura mista, em que parte da armadura de flexão escoa antes do colapso, conferindo alguma ductilidade; *Flexão pura:* ruptura dúctil, com ampla fissuração, típica de lajes com baixa taxa de armadura de flexão.
+
+Para o caso de lajes lisas usuais, a punção pura é o modo predominante e o mais crítico, por ocorrer subitamente @Sacramento_2012.
+
+
 
 ==== Parâmetros que influenciam na resistência à punção
 
@@ -224,7 +276,9 @@ O modelo 3D foi validado por @Durand_2021_3D por meio de ensaios de tração e c
 
 // Aplicação
 
+==== Fib bond-Slip
 
+A característica essencial do concreto armado está na contribuição do aço para a resistência do concreto, especialmente na tração. No caso de punção de lajes lisas, a flexão 
 
 == Estado da Arte
 
