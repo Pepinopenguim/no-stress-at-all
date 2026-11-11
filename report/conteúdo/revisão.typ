@@ -265,20 +265,32 @@ O modelo 3D foi validado por @Durand_2021_3D por meio de ensaios de tração e c
 É importante destacar que o modelo 3D apresenta uma limitação em relação ao tipo de elemento de volume utilizado: @Durand_2021_3D observaram que elementos hexaédricos interferem no desenvolvimento das fissuras, tendendo a aumentar a carga de pico ou gerar múltiplas fissuras em regiões onde se esperava apenas uma. Por outro lado, elementos tetraédricos e piramidais proporcionaram padrões de fissuração mais realistas. Essa observação é particularmente relevante para o presente trabalho, pois a escolha do tipo de elemento de volume na malha da laje influenciará diretamente a qualidade dos resultados da simulação de punção.
 
 ==== Interface barra-sólido
-
 // problema de compatibilidade malha entre aço e concreto
+Segundo @Durand_2021, a modelagem de armaduras em meios sólidos por elementos finitos apresenta duas problemáticas clássicas: A primeira, em relação à dificuldade de representar o elemento numericamente, isto é, sua relação geométrica com a discretização do problema, e a segunda, referente à definição de um modelo de interface adequado para modelar a ligação entre aço e concreto, incluindo o escorregamento. 
 
-// elemento de interface contínuo
+Atualmente existem três abordagens para a questão geométrica: discreta, distribuida e embutida (_embedded_), cada uma apresentando limitações. A abordagem discreta depende implicitamente da malha gerada, por representar seus elementos ao longo de contatos de elementos. O distribuido implicitamente assume aderência perfeita, e utiliza-se uma rigidez equivalente no elemento de volume para representar a contribuição do aço, o que dificulta a recuperação de tensões na barra. O embutido adota um elemento de barra como próprio, independente da malha, o que dificulta a aplicação direta de condições de contorno nas extremidades das armaduras, mas permite a recuperação de tensões.
 
-// modelo cíclico de bond slip
+Para superar essas limitações, especialmente em simulações tridimensionais, @Durand_2021 propõe um elemento embutido de *interface contínuo barra-sólido* (_rod-solid interface element_) que dispensa a compatibilidade de malha e permite a aplicação direta de condições de contorno nos nós da barra. O elemento é formulado a partir de pontos de controle virtuais interiores ao elemento de volume, localizados, inicialmente, nas mesmas coordenadas espaciais dos nós da barra. A partir desses pontos, calcula-se o deslocamento relativo entre barra e sólido por interpolação das funções de forma do elemento de volume, obtendo-se o vetor de deslocamentos relativos $tilde(bold(w))$ em coordenadas locais alinhadas com a barra. 
 
-// restrição de ponta
+A matriz $tilde(bold(B))$ relaciona os deslocamentos nodais do sólido e da barra aos deslocamentos relativos no ponto de integração, e a matriz de rigidez do elemento é obtida por integração numérica ao longo do comprimento da barra. Diferentemente de elementos de mola pontuais, as forças de contato são distribuídas continuamente ao longo do comprimento, o que permite recuperar a distribuição de tensões de aderência nos pontos de integração de forma análoga a elementos finitos convencionais.
 
-// Aplicação
+Para o comportamento constitutivo da interface, @Durand_2021 adota um modelo que combina o envelope monotônico do _fib Model Code_ @fib2020modelcode com o modelo cíclico de @Murcia_Delso_2013.
 
-==== Fib bond-Slip
+O envelope monotônico é definido por uma curva em quatro trechos: ascendente, patamar, descendente e residual, que podem ser observados na @fib_bond_slip.
 
-A característica essencial do concreto armado está na contribuição do aço para a resistência do concreto, especialmente na tração. No caso de punção de lajes lisas, a flexão 
+#figure(
+  image("../figuras/fib_bond_slip_monotonic.png", width: 80%),
+  caption: [Relação analítica entre tensão de aderência e deslizamento (carregamento monotônico) @fib2020modelcode]
+) <fib_bond_slip>
+
+Na figura, $tau_"bmax"$ é a tensão máxima de aderência, atingida ao final do trecho ascendente e mantida durante o patamar; $tau_"bu,split,1"$ e $tau_"bu,split,2"$ são as tensões de pico no modo de ruptura por *splitting*, respectivamente sem e com estribos de confinamento — valores inferiores a $tau_"bmax"$, que corresponde ao modo *pull-out* em concreto bem confinado. $tau_"bf"$ é a tensão residual de atrito após o colapso da aderência. Os deslocamentos $s_1$, $s_2$ e $s_3$ delimitam os quatro trechos da curva: $s_1$ marca o fim do trecho ascendente (pico), $s_2$ o fim do patamar (início do descendente) e $s_3$ o ponto em que a tensão residual $tau_"bf"$ é atingida. 
+
+O modelo cíclico acrescenta envelopes reduzidos, calibrados em função da amplitude de escorregamento e do acúmulo de dano, permitindo representar o comportamento sob carregamentos reversos. No entanto, para o problema de punção em lajes lisas, cujo carregamento é monotônico até a ruptura, apenas o envelope monotônico é mobilizado. Essa escolha é justificada pelo fato de que, no ensaio experimental de referência (@Lima2021; @palhares2018), a laje é empurrada monotonicamente até o colapso, sem reversão de carga — portanto, o modelo cíclico não é necessário para a simulação aqui proposta.
+
+Complementarmente, o elemento de restrição de ponta controla o deslocamento relativo na extremidade da armadura, cobrindo duas situações: pontas ancoradas, de deslocamento nulo, adotando-se penalidade, e pontas não ancoradas, que impedem apenas a penetração da barra no sólido. Para o caso de lajes lisas, esse elemento é particularmente útil para representar a ancoragem das barras de flexão nas extremidades da laje, onde ganchos em "U" impedem o escorregamento excessivo.
+
+Para o presente trabalho, a contribuição de @Durand_2021 é fundamental: o elemento de interface barra-sólido permite representar a armadura de flexão da laje sem a necessidade de compatibilizar a malha do concreto com a posição das barras, o que viabiliza a geração automática da malha e a variação do layout de armadura sem remalhamento. A aplicação ao caso da laje lisa de @palhares2018 é, portanto, direta: as barras de flexão (superior e inferior) e os ganchos em "U" podem ser discretizados como elementos de barra curva, conectados ao concreto por meio dos elementos de interface, com o envelope monotônico do fib governando a aderência.
+
 
 == Estado da Arte
 
