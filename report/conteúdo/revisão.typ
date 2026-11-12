@@ -293,7 +293,14 @@ Para o presente trabalho, a contribuição de @Durand_2021 é fundamental: o ele
 
 
 == Estado da Arte
+Este capítulo apresenta o estado atual das simulações numéricas de punção, com enfoque especial no Método dos Elementos Finitos (MEF). No contexto da modelagem numérica, observa-se que grande parte dos estudos que empregam elementos coesivos os utiliza para representar interfaces específicas entre materiais, não necessariamente para modelar diretamente a fissura diagonal característica do fenômeno da punção, como proposto na presente pesquisa.
+
+Inicialmente, será abordado o trabalho de @Schimanowski_2025, que apresenta uma extensa revisão da aplicação do MEF na simulação do fenômeno da punção em diferentes contextos. Será dada especial atenção às lajes lisas, buscando compreender como sua modelagem numérica evoluiu ao longo do tempo.
+
+Em seguida, será analisado o trabalho de @Palhares_2022, que constitui a principal referência e base de comparação para a presente pesquisa. Esse estudo analisa numericamente lajes ensaiadas experimentalmente por @palhares2018 e @Lima2021, investigando a influência de diferentes configurações de armadura de punção em comparação com uma laje de referência. Esta última será também considerada na presente pesquisa, permitindo uma comparação direta entre os resultados obtidos.
 
 === Cenário atual da modelagem numérica de punção
+
+
 
 === Simulação de punção via CDPM: O modelo de Palhares et al. (2022)

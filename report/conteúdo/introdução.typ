@@ -16,7 +16,7 @@
 
     A presente pesquisa busca realizar a análise numérica de uma laje lisa sob efeitos de ruptura de punção por meio do Método dos Elementos Finitos, com a utilização de elementos coesivos de junta. O objetivo central da pesquisa será analisar a eficiciência do método, assim como definir parâmetros para o auxílio de simulações posteriores.
 
-    A simulação será realizada pela linguagem de programação _julia_, por meio do pacote _Serendip_, desenvolvido por #todo[Durant et al]. Os resultados obtidos serão diretamente comparados com as simulações realizadas por @de_Azevedo_Palhares_2022, que utilizou o software _ABAQUS/CDPM_ para analisar o mesmo caso, assim como os resultados experimentais obtidos pelos ensaios de @Lima2021.
+    A simulação será realizada pela linguagem de programação _julia_, por meio do pacote _Serendip_, desenvolvido por #todo[Durant et al]. Os resultados obtidos serão diretamente comparados com as simulações realizadas por @Palhares_2022, que utilizou o software _ABAQUS/CDPM_ para analisar o mesmo caso, assim como os resultados experimentais obtidos pelos ensaios de @Lima2021.
 
 == Justificativa
 
