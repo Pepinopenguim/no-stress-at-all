@@ -1,0 +1,1 @@
+![[perimetros_c_abnt.png]]

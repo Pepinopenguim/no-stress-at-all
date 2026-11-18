@@ -1,49 +1,4 @@
-= Redação científica
-
-A redação científica é a modalidade de escrita formal e técnica utilizada para comunicar, de maneira clara, precisa, objetiva e imparcial, os processos, resultados e discussões de uma pesquisa. Mais do que um mero relato, trata-se da principal ferramenta para a disseminação do conhecimento.
-
-Antes de redigir um trabalho científico, o pesquisador deve ter o _pleno conhecimento_ do conteúdo que será apresentado. Isto pode ser desdobrado em três níveis de profundidade:
-
-+ *Domínio da própria pesquisa*: O autor deve conhecer detalhadamente a metodologia, os resultados, limitações e conclusões do seu trabalho.  
-+ *Conhecimento do estado da arte*: O autor deve estar familiarizado com os principais trabalhos relacionados ao tema, compreendendo as contribuições, lacunas e debates existentes na área.  
-+ *Contextualização ampla*: O autor deve entender o contexto mais amplo em que a pesquisa está inserida, incluindo implicações práticas, sociais e éticas.  
-
-== Características do texto científico
-
-A escrita de texto científico deve seguir algumas características fundamentais que garantem a clareza, precisão e objetividade da comunicação. As principais características são:
-
-- Impessoalidade
-- Objetividade
-- Coerência e coesão textual
-- Clareza e precisão
-- Sinteticidade
-
-== Equações
-
-As expressões matemáticas podem ser do tipo #emph[inline] e #[display]. 
-A expressões #emph[inline] aparecem ao longo do texto. Já as expressões do tipo #emph[display] são destacadas, ocupando uma linha inteira e centralizadas.
-Por exemplo, $F = m a$ é uma equação #emph[inline]. Já a seguinte equação é do tipo #emph[display]:
-$
-    ∫_(-1)^(+1) f(x) dif x 
-    ≈ ∑_(i=1)^n f(x_i) w_i
-$<eq:quadratura>
-onde, $f$ é a função a ser integrada numericamente, $n$ é o número de pontos de integração, $x_i$ são os pontos de integração e $w_i$ os pesos associados.
-
-Deve se observar que as equações #emph[display] são também parte integrante da frase, não devendo ser isoladas do parágrafo em que estão inseridas. Além disso, uma equação numerada nunca deve ser citada sem que tenha sido apresentada anteriormente no texto.
-
-
-As equaçães #emph[inline] são digitadas entre caracteres `$$`. Já as equações do tipo #emph[display] são digitadas entre caracteres `$ $` garantindo espaço após o primeiro `$` e antes do último `$`.
-
-Para referenciar equações, é necessário atribuir uma etiqueta a cada equação que se deseja referenciar. A etiqueta é definida logo após a equação, entre caracteres `< >`. Para citar a equação, utiliza-se o símbolo `@` seguido da etiqueta. Por exemplo, a @eq:quadratura é uma fórmula de quadratura numérica.
-
-== Tabelas e figuras
-
-Tabelas e figuras são elementos flutuantes na estrutura do texto. Isto é, elas podem ser posicionadas em locais diferentes do texto, dependendo do espaço disponível e da estética do documento. Diferentemente das equações, as tabelas e figuras não são parte de um parágrafo, mas sim elementos independentes que complementam o texto.
-
-As tabelas são criadas usando as funções `figure` e `table`.
-A função `figure` é usada para definir o elemento flutuante, incluindo a numeração e a legenda. Já a função `table` é usada para definir o conteúdo e formatação da tabela, incluindo as colunas, linhas e células.
-As figuras são etiquetadas usando `< >` após a definição da figura.
-Para referenciar a tabela, utiliza-se o símbolo `@` seguido da etiqueta. Por exemplo, a @tab:modelos apresenta as características dos modelos numéricos utilizados numa pesquisa. 
+= MODELOS DE TABELA E GRÁFICO
 
 #figure(placement:none,
   caption: [Características dos modelos numéricos utilizados.], 
@@ -65,11 +20,6 @@ Para referenciar a tabela, utiliza-se o símbolo `@` seguido da etiqueta. Por ex
     )
   ]
 )<tab:modelos>
-
-
-As figuras com são criadas também usando a função `figure` para incluir a numeração e a legenda.
-As figuras são etiquetadas e citadas da mesma forma que as tabelas.
-Por exemplo, a @fig:tração-separação apresenta as curvas de tração-separação para concreto segundo o modelo de Hordijk (1991) e um modelo bilinear simplificado.
 
 #figure(
     caption: [Função de tração-separação para concreto, um modelo bilinear simplificado.],
@@ -94,8 +44,4 @@ Por exemplo, a @fig:tração-separação apresenta as curvas de tração-separa�
         )
     ]
 )<fig:tração-separação>
-
-== Citações e bibliografia
-
-adsf
 

@@ -1,4 +1,4 @@
-= Análise e discussão dos resultados
+= Resultados Esperados
 
 A análise de resultados e a discussão constituem uma das partes centrais de um relatório de pesquisa, pois transformam os dados obtidos em conhecimento científico.  
 
