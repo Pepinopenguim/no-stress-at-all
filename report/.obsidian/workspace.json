@@ -50,10 +50,23 @@
               },
               "pinned": true,
               "icon": "terminal:tab-bezel",
-              "title": "~/Dev/no-stress-at-all - fish"
+              "title": "~/Obsidian Vault - fish"
+            }
+          },
+          {
+            "id": "2f097cbeb859007b",
+            "type": "leaf",
+            "state": {
+              "type": "typst-source",
+              "state": {
+                "file": "conteúdo/cronograma.typ"
+              },
+              "icon": "file-type",
+              "title": "cronograma"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "b8c43051c38df86a",
@@ -252,25 +265,25 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "f7a32aaf2fc9cc42",
+  "active": "2f097cbeb859007b",
   "lastOpenFiles": [
+    "conteúdo/redação.typ",
+    "conteúdo/metodologia.typ",
     "conteúdo/revisão.typ",
+    "main.typ",
+    "main.pdf",
+    "ref.bib",
     "conteúdo/apendices.typ",
     "conteúdo/conclusões.typ",
     "conteúdo/análise.typ",
-    "conteúdo/redação.typ",
-    "main.typ",
     "figuras/interface_element.png",
     "figuras/rod_interface_element.png",
     "figuras/discretization.png",
-    "conteúdo/metodologia.typ",
     "unb-templante.typ",
     "figuras/perimetros_c_eurocode.png",
     "figuras/perimetros_c_abnt.png",
     "Untitled.md",
     "+",
-    "Untitled.base",
-    "conteúdo/introdução.typ",
     "Simulação.md",
     "TCC/No Stress at All!.md",
     "Calendar/04_11_2026.md",

@@ -34,3 +34,4 @@
 #include("conteúdo/apendices.typ")
 
 // A bibliografia é gerada a partir dos arquivos `.bib` e `.csl` especificados na função `relatório`.
+

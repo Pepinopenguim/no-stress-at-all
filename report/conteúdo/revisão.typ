@@ -269,7 +269,7 @@ A tensão de teste apenas será válida se a condição de escoamento não for a
   caption: [Atualização de tensões #todo[revisar necessidade de mudar imagem]]
 ) <tens_update>
 
-==== Modelo tridimensional
+==== Modelo tridimensional <sec_cohesive_3d>
 
 Seguindo a aplicação e análise feita nos modelos coesivos em @Durand_2019, que apresentou uma abordagem bidimensional do modelo, que se mostra uma limitação natural do modelo. Assim, para superar essa limitação, @Durand_2021_3D apresenta uma extensão tridimensioal do modelo constitutivo, que é a base utilizada nesse trabalho para analisar a punção em lajes lisas.
 

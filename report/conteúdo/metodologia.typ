@@ -8,6 +8,20 @@ A metodologia adotada neste trabalho consiste em uma análise numérica comparat
 
 A análise numérica computacional traz benefícios consideráveis referentes ao custo e tempo associados a ensaios de punção em laje, especialmente para as dimensões apresentadas. Há, ainda, a possibilidade de isolar o efeito de cada parâmetro individualmente, o que é inviável experimentalmente. Por meio da disponibilidade de dados experimentais de alta qualidade (@palhares2018; @Lima2021), será possível realizar um benchmark de validação do modelo de forma eficiente.
 
+
+== Ferramentas computacionais utilizadas
+
+A simulação numérica do presente trabalho é realizada inteiramente no ecossistema da linguagem Julia, uma linguagem dinâmica, de alto nível e multi-paradigma, concebida especificamente para computação científica e numérica, mas com desempenho comparável ao de linguagens estaticamente tipadas como C e Fortran @julia_docs. Seu diferencial reside na combinação de agilidade computacional, obtida por meio de compilação just-in-time (JIT) especializada e inferência de tipos, que geram código de máquina eficiente para cada combinação de tipos de argumentos, com multiple dispatch, um paradigma em que a função a ser executada é escolhida dinamicamente com base no tipo de todos os argumentos, e não apenas no receptor. Esse modelo de despacho permite que um único nome tenha implementações distintas e especializadas para diferentes assinaturas, o que apresenta o Julia como uma linguagem onde a reutilização e a extensibilidade de códigos são extremamente fáceis de serem implantadas, por permitirem novas combinações de tipos para modificar comportamentos existentes, além de permitir que pacotes independentes funcionem imediatamente à importação @Bezanson_2018.
+
+O núcleo da análise é o Serendip, um pacote de elementos finitos escrito na linguagem de programação Julia, que permite ao usuário realizar análises bidimensionais e tridimensionais de problemas estáticos e dinâmicos, sendo atualmente mantido por Raul Durand, docente do curso de Engenharia Civil da Universidade de Brasília (UnB). Seu principal objetivo é oferecer uma plataforma versátil e objetiva para o desenvolvimento de novos algoritmos, tecnologias e modelos para o Método dos Elementos Finitos (MEF) @serendip_github.
+
+A geração de geometria e de malha é feita com o Gmsh, um gerador tridimensional de malhas de elementos finitos em código aberto, que busca apresentar uma ferramenta rápida, leve e simples de utilizar, com uso de entrada paramétrica e capacidades visuais flexíveis. A ferramenta é separada em quatro módulos — geometria, malha, solucionador e pós-processamento — que pode ser controlada com uma GUI (graphical user interface), linha de comando e arquivos de script. Além disso, o Gmsh disponibiliza uma API nativa para Julia, o que permite integrar a geração de malhas diretamente ao fluxo de simulação conduzido no Serendip @gmsh_docs.
+
+A integração entre essas ferramentas e o Serendip ocorre por meio das APIs disponíveis no ecossistema Julia. O Gmsh oferece uma API nativa em Julia, permitindo que a geometria e a malha sejam geradas de forma programática e importadas diretamente pelo Serendip. Já o OpenCASCADE Technology (OCCT), por ser primordialmente uma biblioteca C++, é acessado por wrappers ou bindings: no ecossistema Julia, existem iniciativas como o pacote OCCT_jll.jl, que fornece binários pré-compilados do OCCT, e muitos usuários acessam funcionalidades do OpenCASCADE indiretamente por meio do Gmsh.jl, que expõe operações de geometria e fragmentação booleana do OCCT no fluxo de geração de malhas. A literatura científica relata o uso de OCCT como base para frameworks de prototipagem e inspeção de modelos CAD, evidenciando sua aplicabilidade em ferramentas de pesquisa que posteriormente podem ser integradas a diferentes ambientes de programação @slyadnev2017. Dessa forma, o Serendip pode se beneficiar de um kernel geométrico robusto sem depender de implementações nativas em Julia.
+
+Por fim, a visualização e a inspeção dos resultados de simulação são realizadas no ParaView, uma aplicação de código aberto, multiplataforma e escalável para análise e visualização de dados científicos @paraview_readme, desenvolvida pela Kitware em colaboração com laboratórios como Los Alamos e Sandia, e construída sobre o Visualization Toolkit (VTK) como motor de processamento e renderização. No contexto de arquivos VTU — o formato XML de grade não estruturada do VTK —, o ParaView oferece suporte nativo por meio do XML Unstructured Grid Reader, que lê a extensão padrão .vtu e também séries de arquivos, permitindo carregar geometrias e campos de dados associados (pontos e células) para visualização direta. Na prática científica, isso faz do ParaView a ferramenta padrão para abrir e inspecionar resultados de simulação salvos em .vtu, frequentemente citado como o software de visualização recomendado para esse formato @ahrens2005.
+
+
 == Objeto de estudo
 
 O objeto de estudo é a laje lisa de referência ensaiada por @palhares2018 e posteriormente modelada numericamente por @Palhares_2022. Trata-se de uma laje quadrada de $2500 times 2500$ mm em planta, com espessura de $180$ mm, apoiada sobre um pilar central de seção quadrada $300 times 300$ mm. O pilar se estende $800$ mm acima e $600$ mm abaixo da laje, conforme as condições do ensaio original.
@@ -17,85 +31,186 @@ A armadura de flexão é composta por barras de $16$ mm de diâmetro na face tra
 O carregamento é aplicado por oito placas de aço de $100 times 100 times 20$ mm, dispostas simetricamente em torno do pilar a uma distância radial de $1124$ mm do centro. No modelo numérico, aproveita-se a simetria dupla da geometria e do carregamento: apenas um quarto da laje é discretizado, com condições de contorno de simetria nos planos $x = 0$ e $y = 0$.
 
 #figure(
-  image("../figuras/geometria_base.png", width: 80%),
-  caption: [Geometria do modelo numérico: quarto de laje com pilar central e placas de carregamento. #todo[melhorar aparência da figura]]
+  image("../figuras/geometria_base.pdf", width: 80%),
+  caption: [Geometria do modelo numérico: quarto de laje com pilar central (cinza escuro) e placas de carregamento (cinza claro).]
 ) <fig_geometria>
 
 == Geração de malha e elementos coesivos
 
-A malha é gerada no `GeoModel` do `Serendip` a partir de uma descrição geométrica em blocos (slab, column, loadPlate) e de caminhos de armadura (barras de flexão, ganchos em U, armadura do pilar). Utiliza-se um tamanho de elemento base de $200$ mm, refinado localmente na região da ligação laje-pilar por meio da função `set_refinement`, com tamanho interno de aproximadamente $67$ mm ($200/3$) na zona de influência do pilar. Esse refinamento é essencial para capturar o gradiente de tensões na região onde o cone de punção se forma.
+  A malha é gerada no `GeoModel` do `Serendip`, que utiliza funções base da biblioteca `Gmsh.jl` e `OpenCASCADE`, a partir de uma descrição geométrica em blocos e de caminhos de armadura. Utiliza-se um tamanho de elemento base de #todo[(valor não final) $200$ mm], refinado localmente na região da ligação laje-pilar, com tamanho interno de aproximadamente #todo[(valor não final)  $67$ mm ($20\/3$)] na zona de influência do pilar. Esse refinamento é essencial para capturar o gradiente de tensões na região onde o cone de punção se forma.
 
-Após a geração da malha de volume, os *elementos coesivos* são inseridos entre todos os elementos de volume adjacentes, por meio do algoritmo `add_cohesive_elements`. Conforme discutido na Seção 2.1.4.2, o modelo de @Durand_2021_3D adota uma abordagem *discreta* para a fratura: os elementos coesivos têm espessura nula e representam a interface potencial entre dois elementos de volume. A fissura só se desenvolve onde o estado de tensões atinge o critério de escoamento do modelo constitutivo coesivo, de modo que a localização da fissura é determinada pela física do problema, não pela topologia da malha.
+Após a geração da malha de volume, os elementos coesivos são inseridos entre todos os elementos de volume adjacentes. Conforme a @sec_cohesive_3d, o modelo de @Durand_2021_3D adota uma abordagem discreta para a fratura: os elementos coesivos têm espessura nula e representam a interface potencial entre dois elementos de volume. A fissura só se desenvolve onde o estado de tensões atinge o critério de escoamento do modelo constitutivo coesivo, de modo que a localização da fissura é determinada pela física do problema, não pela topologia da malha.
 
 // #figure(
 //   image("../figuras/malha_refinada.png", width: 80%),
 //   caption: [Malha de elementos finitos com refinamento na região da ligação laje-pilar e inserção de elementos coesivos. #todo[substituir por figura própria]]
 // ) <fig_malha>
 
-#todo[incluir imagem da malha refinada]
+#todo[incluir imagem da malha refinada pelo Serendip]
 
 == Modelos constitutivos
 
-A Tabela @tab_materiais resume os modelos constitutivos e parâmetros adotados para cada material. A escolha de manter o concreto de volume como linear elástico é justificada pela filosofia do modelo de @Durand_2021_3D: toda a não linearidade do concreto (fissuração e amolecimento) é concentrada nos elementos coesivos, enquanto o volume apenas transmite tensões entre fissuras. Essa separação evita a dupla contagem de não linearidade que ocorreria ao se combinar CDPM no volume com elementos coesivos na interface.
+A escolha dos modelos constitutivos adotados na simulação busca representar o comportamento dos materiais, evitando redundâncias numéricas. A filosofia central do modelo de @Durand_2021_3D é concentrar toda a não linearidade do concreto nos elementos coesivos. Dessa forma, o volume de concreto atua apenas transmitindo tensões entre fissuras. Essa separação evita a dupla contagem de não linearidade que ocorreria ao se combinar um modelo de dano contínuo no volume com elementos coesivos na interface. Os modelos e suas respectivas propriedades são detalhados a seguir.
 
-#figure(
-  table(
-    columns: 4,
-    align: center,
-    stroke: 0.5pt,
-    [*Material*], [*Modelo constitutivo*], [*Parâmetros*], [*Valores*],
-    [Concreto (volume)], [Elástico linear], [$E$; $nu$], [$21.551$ GPa; $0.2$],
-    [Concreto (coesivo)], [Mohr-Coulomb], [$f_t$; $G_F$; $mu$; $alpha$], [$1.8$ MPa; $0.134$ kN/m; $tan(55 degree)$; $5$],
-    [Armadura $phi 16$], [Von Mises], [$E_s$; $f_y$], [$196.9$ GPa; $549$ MPa],
-    [Armadura $phi 10$], [Von Mises], [$E_s$; $f_y$], [$126.6$ GPa; $515$ MPa],
-    [Placa de carga], [Elástico linear], [$E$], [$900$ GPa],
-    [Interface aço-concreto], [CEB bond-slip], [$tau_(b max)$; $tau_(b f)$; $s_1$; $s_2$; $s_3$; $alpha$], [$13.7$ MPa; $5.5$ MPa; $1$ mm; $1.1$ mm; $16$ mm; $0.58$],
-  ),
-  caption: [Modelos constitutivos e parâmetros adotados na simulação. #todo[melhorar aparência da tabela]]
-) <tab_materiais>
+#let Ec = 21.551
+#let nu = 0.2
+#let ft = 1.8
+#let GF = 0.134
+#let alpha_c = 5
 
-Os parâmetros do concreto coesivo seguem @Durand_2019 e @Durand_2021_3D: $f_t = 1.8$ MPa (resistência à tração), $G_F = 0.134$ kN/m (energia de fratura), $tan(phi) = tan(55 degree) approx 1.43$ (tangente do ângulo de atrito, consistente com a faixa experimental de $54 degree$ a $57 degree$ reportada pelos autores) e $alpha = 5$ (fator de controle dos deslocamentos elásticos relativos).
+#let Es1 = 196.9
+#let fy1 = 549
+#let Es2 = 126.6
+#let fy2 = 515
 
-Para a armadura, adota-se o critério de Von Mises com elastoplasticidade perfeita, calibrado com os valores experimentais de @palhares2018: $f_y = 549$ MPa para as barras de $16$ mm e $f_y = 515$ MPa para as barras de $10$ mm. A placa de carga é modelada como elástica linear com módulo de $900$ GPa, de modo a se comportar como um corpo rígido e distribuir uniformemente a carga aplicada.
+#let Eplate = 900
 
-== Modelo de aderência aço-concreto
+#let taumax = 13.7
+#let taures = 5.5
+#let s1 = 1
+#let s2 = 1.1
+#let s3 = 16
+#let alpha_aco = 0.58
 
-A interface entre armadura e concreto é simulada pelo *elemento de interface contínuo barra-sólido* de @Durand_2021, discutido na Seção 2.1.4.3. Para o comportamento constitutivo, adota-se o *envelope monotônico do fib Model Code 2020* (Seção 20.5.1), que é suficiente para o carregamento monotônico do ensaio. A curva é definida pelos parâmetros $tau_(b max)$, $tau_(b f)$, $s_1$, $s_2$, $s_3$ e $alpha$, conforme a Figura @fib_bond_slip.
+=== Concreto (Volume)
+O concreto de volume é modelado como elástico linear. Essa escolha segue as recomendações apresentadas por @Durand_2019 e @Durand_2021_3D, na qual a degradação do material e a propagação de fissuras são tratadas exclusivamente pelos elementos coesivos inseridos nas interfaces. Assim, o volume permanece íntegro e sua resposta mecânica depende apenas do módulo de elasticidade e do coeficiente de Poisson.
 
-Os valores adotados são baseados nas recomendações do fib MC2020 para o *modo de ruptura por splitting* (Seção 20.5.1, Tabela 20.5-1), uma vez que o cobrimento de $20$ mm é inferior a $5 phi$ (situação típica de lajes lisas com armadura passante). Adotou-se $tau_(b max) = 13.7$ MPa, $tau_(b f) = 5.5$ MPa, $s_1 = 1$ mm, $s_2 = 1.1$ mm, $s_3 = 16$ mm e $alpha = 0.58$, valores calibrados a partir das prescrições do código para o concreto da laje ($f_(c m) approx 30$ MPa) e o diâmetro das barras.
+#figure(placement: none,
+  caption: [Propriedades do concreto de volume.],
+  align(center)[
+    #table(
+      columns: (3),
+      align: (center, center, center),
+      stroke: none,
+      table.hline(),
+      table.header([*Parâmetro*], [*Símbolo*], [*Valor*]),
+      table.hline(stroke: 0.8pt),
+      [Módulo de elasticidade], [$E_c$], [$#Ec$ GPa],
+      [Coeficiente de Poisson], [$nu$], [$#nu$],
+      table.hline(),
+    )
+  ]
+)<tab_conc_vol>
 
-// #figure(
-//   image("../figuras/bond_slip.png", width: 70%),
-//   caption: [Envelope monotônico do bond-slip adotado, conforme fib Model Code 2020. #todo[substituir por figura própria]]
-// ) <fig_bond_slip>
+=== Concreto (Coesivo)
+Os elementos coesivos utilizam o critério de Mohr-Coulomb para governar a abertura e o deslizamento das fissuras. Os parâmetros foram calibrados seguindo as diretrizes de @Durand_2019 e @Durand_2021_3D. Adota-se a resistência à tração ($f_t$) e a energia de fratura ($G_F$). A tangente do ângulo de atrito ($tan(55 °)$) é consistente com a faixa experimental de 54° a 57° reportada pelos autores. Por fim, o parâmetro $alpha$ controla os deslocamentos elásticos relativos na interface.
 
-#todo[incluir imagem]
+#figure(placement: none,
+  caption: [Propriedades do concreto coesivo.],
+  align(center)[
+    #table(
+      columns: (3),
+      align: (center, center, center),
+      stroke: none,
+      table.hline(),
+      table.header([*Parâmetro*], [*Símbolo*], [*Valor*]),
+      table.hline(stroke: 0.8pt),
+      [Resistência à tração], [$f_t$], [$#ft$ MPa],
+      [Energia de fratura], [$G_F$], [$#GF$ kN/m],
+      [Tangente do ângulo de atrito], [$tan(55°)$], [$approx 1.43$],
+      [Fator de deslocamento elástico], [$alpha$], [$#alpha_c$],
+      table.hline(),
+    )
+  ]
+)<tab_conc_coes>
 
-A rigidez tangente inicial da interface é calculada como $k_s = 2 tau_(b max) / s_1$, seguindo a formulação de @Durand_2021, e a rigidez normal é adotada como $k_n = 150 k_s$, valor de penalidade suficiente para impedir a penetração da barra no concreto sem causar condicionamento excessivo do sistema.
+=== Armadura
+Para as barras de aço, adota-se o critério de Von Mises com elastoplasticidade perfeita. A escolha deste modelo se deve à sua ampla validação para o escoamento de metais dúcteis e à sua simplicidade numérica. A calibração das tensões de escoamento ($f_y$) e dos módulos de elasticidade ($E_s$) foi realizada com base nos valores experimentais reportados por @palhares2018, distinguindo as armaduras de 16 mm e 10 mm.
+
+#figure(placement: none,
+  caption: [Propriedades das armaduras.],
+  align(center)[
+    #table(
+      columns: (4),
+      align: (center, center, center, center),
+      stroke: none,
+      table.hline(),
+      table.header([*Armadura*], [*Parâmetro*], [*Símbolo*], [*Valor*]),
+      table.hline(stroke: 0.8pt),
+      table.cell(rowspan: 2)[$phi.alt 16$], [Módulo de elasticidade], [$E_s$], [$#Es1$ GPa],
+      [Tensão de escoamento], [$f_y$], [$#fy1$ MPa],
+      table.hline(stroke: 0.4pt),
+      table.cell(rowspan: 2)[$phi.alt 10$], [Módulo de elasticidade], [$E_s$], [$#Es2$ GPa],
+      [Tensão de escoamento], [$f_y$], [$#fy2$ MPa],
+      table.hline(),
+    )
+  ]
+)<tab_armadura>
+
+=== Placa de carga
+A placa de carga foi modelada como **elástica linear** com um módulo de elasticidade artificialmente elevado. O objetivo desta escolha é fazer com que a placa se comporte como um corpo rígido, garantindo que a carga aplicada seja distribuída de forma perfeitamente uniforme sobre a superfície do concreto, sem deformações locais significativas que pudessem distorcer os resultados.
+
+#figure(placement: none,
+  caption: [Propriedades da placa de carga.],
+  align(center)[
+    #table(
+      columns: (3),
+      align: (center, center, center),
+      stroke: none,
+      table.hline(),
+      table.header([*Parâmetro*], [*Símbolo*], [*Valor*]),
+      table.hline(stroke: 0.8pt),
+      [Módulo de elasticidade], [$E$], [$#Eplate$ GPa],
+      table.hline(),
+    )
+  ]
+)<tab_placa>
+
+=== Interface aço-concreto
+A interação entre a armadura e o concreto é descrita pelo modelo _CEB bond-slip_ (aderência-deslizamento). Este modelo é escolhido por capturar com precisão as fases de aderência e permitir a recuperação das tensões de aderência ao longo do comprimento de ancoragem. Os parâmetros adotados buscam representar o comportamento de barras nervuradas em condições normais de ancoragem, conforme implementado no pacote Serendip.
+
+#figure(placement: none,
+  caption: [Propriedades da interface aço-concreto (CEB bond-slip).],
+  align(center)[
+    #table(
+      columns: (3),
+      align: (center, center, center),
+      stroke: none,
+      table.hline(),
+      table.header([*Parâmetro*], [*Símbolo*], [*Valor*]),
+      table.hline(stroke: 0.8pt),
+      [Tensão máxima de aderência], [$tau_(b max)$], [$#taumax$ MPa],
+      [Tensão residual de aderência], [$tau_(b f)$], [$#taures$ MPa],
+      [Deslizamento inicial], [$s_1$], [$#s1$ mm],
+      [Deslizamento de pico], [$s_2$], [$#s2$ mm],
+      [Deslizamento residual], [$s_3$], [$#s3$ mm],
+      [Fator de forma], [$alpha$], [$#alpha_aco$],
+      table.hline(),
+    )
+  ]
+)<tab_bond_slip>
+
 
 == Condições de contorno e carregamento
 
 As condições de contorno refletem as condições do ensaio experimental e a simetria do modelo:
 
-- *Base do pilar* ($z = -600$ mm): deslocamentos $u_x = u_y = u_z = 0$ (apoio fixo, correspondente à fixação do pilar na mesa de ensaio).
-- *Topo do pilar* ($z = 800 + 180 = 980$ mm): $u_x = u_y = 0$ (restrição lateral, correspondente ao quadro metálico de reação do ensaio).
-- *Planos de simetria*: $u_x = 0$ em $x = 0$ e $u_y = 0$ em $y = 0$.
-- *Carregamento*: deslocamento prescrito de $-25$ mm em $z$ nos pontos de controle das placas, aplicado de forma incremental.
+#figure(placement: none,
+  caption: [Condições de contorno e carregamento adotados na simulação.],
+  align(center)[
+    #table(
+      columns: (3),
+      align: (center, center, left),
+      stroke: none,
+      table.hline(),
+      table.header(
+        [*Região*], [*Condição*], [*Descrição*]
+      ),
+      table.hline(stroke: 0.8pt),
+      
+      [Base do pilar], [$u_x = u_y = u_z = 0$], [Apoio fixo, correspondente à fixação do pilar na mesa de ensaio],
+      [Topo do pilar ], [$u_x = u_y = 0$], [Restrição lateral, correspondente ao quadro metálico de reação do ensaio],
+      [Planos de simetria], [$u_x = 0$ em $x = 0$ \ $u_y = 0$ em $y = 0$], [Restrição de deslocamento normal aos planos de corte],
+      [Placas de carregamento], [$u_z = -25$ mm \ (incremental)], [Deslocamento prescrito nos pontos de controle das placas],
+      
+      table.hline(),
+    )
+  ]
+)<tab_cc>
 
-Optou-se por *controle de deslocamento* em vez de controle de força, pois a resposta pós-pico da punção apresenta amolecimento acentuado (queda abrupta de carga). Com controle de força, o método de Newton-Raphson não conseguiria atravessar o ponto limite. O deslocamento de $25$ mm é suficiente para levar a laje à ruptura e capturar o ramo descendente.
+Optou-se por controle de deslocamento nas placas de carregamento, para melhor simular os ensaios realizados por @palhares2018 e @Lima2021, com deslocamento incremental de $25$ mm é suficiente para levar a laje à ruptura e capturar o ramo descendente.
 
-== Estratégia de solução não-linear
 
-A análise é realizada com o `MechAnalysis` do `Serendip`, que implementa o método de Newton-Raphson com *passo automático* (Seção 2.1.4.2, Eq. 2.16) e correção de deriva. Os parâmetros de controle são:
-
-- Número máximo de incrementos: $100$.
-- Número de saídas: $50$.
-- Tolerância de convergência: $1$ kN no resíduo de forças.
-
-A escolha do passo automático é particularmente importante para o problema de punção, pois a rigidez global sofre variações bruscas quando a fissura diagonal se propaga: próximo ao pico de carga, incrementos muito grandes causam divergência; incrementos muito pequenos tornam a análise proibitivamente cara. O passo automático ajusta $Delta T$ dinamicamente com base no erro de truncamento, permitindo atravessar o pico e capturar o ramo de amolecimento.
-
-== Estudo paramétrico
-#todo[definir processo de estudo paramétrico]
 
 == Pós-processamento
 
