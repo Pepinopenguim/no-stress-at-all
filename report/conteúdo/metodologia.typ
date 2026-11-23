@@ -150,7 +150,8 @@ A escolha dos modelos constitutivos adotados na simulação busca representar o 
 #let alpha_aco = 0.58
 
 === Concreto (Volume)
-O concreto de volume é modelado como elástico linear. Essa escolha segue as recomendações apresentadas por @Durand_2019 e @Durand_2021_3D, na qual a degradação do material e a propagação de fissuras são tratadas exclusivamente pelos elementos coesivos inseridos nas interfaces. Assim, o volume permanece íntegro e sua resposta mecânica depende apenas do módulo de elasticidade e do coeficiente de Poisson.
+
+O concreto de volume é modelado como elástico linear. Essa escolha segue as recomendações apresentadas por @Durand_2019 e @Durand_2021_3D, na qual a degradação do material e a propagação de fissuras são tratadas exclusivamente pelos elementos coesivos inseridos nas interfaces. Deste modo, como o problema é predominantemente dominado pela flexão e cisalhamento, assume-se a hipótese que a linearidade do concreto não teria efeito considerável no resultado global. Assim, o volume permanece íntegro e sua resposta mecânica depende apenas do módulo de elasticidade e do coeficiente de Poisson.
 
 #figure(placement: none,
   caption: [Propriedades do concreto de volume.],
