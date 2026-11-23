@@ -1,155 +1,122 @@
 
-#import "@preview/cetz:0.5.3"
+#import "@preview/cetz:0.5.1"
 
-#set page(width: auto, height: auto, margin: 0.5cm)
+#let sum-arr(a, b) = {
+  a.zip(b).map(((x, y)) => x + y)
+}
 
-#cetz.canvas(length: 0.004cm, {
-  import cetz.draw: *
 
-  // Change these angles to rotate the model
-  ortho(x: 110deg, y: 180deg, z: 225deg, {
+#let rebar = cetz.canvas({
+        import cetz.draw: *
+        import calc: pow
+        set-style(stroke: (paint:black, thickness:0.6pt), mark:(fill:black))
+        // let aux-line-style = (stroke: (paint: gray, thickness: 0.4pt))
 
-    // --- Palette ---
-    let slab-top   = rgb("d8dce8")
-    let slab-bottom = rgb("aab3c5")
-    let slab-side  = rgb("b0bcd0")
-    let slab-edge  = rgb("6f7d99")
-    let slab-back  = rgb("8997b0")
+        scale(1.4)
 
-    let col-top    = rgb("f0dcdc")
-    let col-bottom = rgb("c49b9b")
-    let col-side   = rgb("d0b0b0")
-    let col-edge   = rgb("a87a7a")
-    let col-back   = rgb("b88888")
+        let p1 = (0,0,0)
+        let p2 = (1,0,0)
+        let p3 = (0,1,0)
+        let p4 = (0.33,0.33,1)
 
-    // --- Load plate palette ---
-    let plate-top    = rgb("f5d78e")
-    let plate-bottom = rgb("c9a85e")
-    let plate-side   = rgb("dfbd72")
-    let plate-edge   = rgb("a98743")
-    let plate-back   = rgb("d5b366")
+        let pa = (0.0, 0.5, 0.4)
+        let pb = (0.5, 0.15, 0.4)
+        let pc = cetz.vector.scale(cetz.vector.add(pa,pb), 0.5)
 
-    let lw = 0.3pt
+        let bullet(p) = content(p, anchor:"center",  text(baseline:-0.8pt)[●])
 
-    // --- Dimensions (mm) ---
-    let lh  = 1250
-    let bh  = 1250
-    let h   = 180
+        perspective(x:-60deg, y:10deg, z:50deg, distance:1, sorted:false, {
+            scale(2.2)
+            set-style(stroke: (paint:black, thickness:0.6pt), mark:(fill:black, transform-shape:false, scale:0.9))
 
-    let lch = 150
-    let bch = 150
-    let zct = 980
+            // rebar
+            line(pa, pb, stroke:(paint:blue, thickness:1.2pt))
+            bullet(pa)
+            bullet(pb)
+            bullet(pc)
 
-    
+            content(pa, anchor:"north", padding:(x:0, y:0.1), text(gray)[$hat(bold(u))_1$])
+            content(pb, anchor:"north", padding:(x:0.05, y:0.1), text(gray)[$hat(bold(u))_2$])
+            content(pc, anchor:"north", padding:(x:0.05, y:0.1), text(gray)[$hat(bold(u))_3$])
+            content(pa, anchor:"south", padding:(x:0, y:0.1), text(blue)[$macron(bold(u))_1$])
+            content(pb, anchor:"south", padding:(x:0.05, y:0.1), text(blue)[$macron(bold(u))_2$])
+            content(pc, anchor:"south-east", padding:(x:-0.05, y:0.09), text(blue)[$macron(bold(u))_3$])
 
-    // --- Complete cuboid ---
-    // Draws all six faces, including top, bottom,
-    // front, back, left and right.
-    // 
-    content((lh/2,bh/2,0), [this is a test])
-    // 
+            // bulk
+            line(p1, p2, p3, close:true, fill:gray.lighten(95%))
+            line(p1, p4)
+            line(p2, p4)
+            line(p3, p4)
+            
+            bullet(p1)
+            bullet(p2)
+            bullet(p3)
+            bullet(p4)
+            
+            content(p1, anchor:"north-east", padding:(x:0, y:0.1), $bold(u)_1$)
+            content(p2, anchor:"north-west", padding:(x:0, y:0), $bold(u)_2$)
+            content(p3, anchor:"north-east", padding:(x:0, y:0), $bold(u)_3$)
+            content(p4, anchor:"south-east", padding:(x:0.1, y:0), $bold(u)_4$)
 
-    let box3(lo, hi, top, bottom, side, back, ec) = {
-      let (x0, y0, z0) = lo
-      let (x1, y1, z1) = hi
+        })
 
-      let st = (paint: ec, thickness: lw)
+        line((-0.1,1.3), (0.4,2.3), stroke: 0.5pt, mark: (start: ">>", fill:black, scale:0.6), name:"l")
+        content("l.end", anchor:"west", padding:0.1, [Elemento de Barra])
+        
+        line((0.45,0.3), (0.8,0.2), stroke: 0.5pt, mark: (start: ">>", fill:black, scale:0.6), name:"l")
+        content("l.end", anchor:"west", padding:0.1, [Elemento de Volume Tetrahétrico])
 
-      // Bottom face (-Z)
-      line(
-        (x0,y0,z0), (x1,y0,z0),
-        (x1,y1,z0), (x0,y1,z0),
-        close: true,
-        fill: bottom,
-        stroke: st
-      )
+        
+    })
 
-      // Top face (+Z)
-      line(
-        (x0,y0,z1), (x1,y0,z1),
-        (x1,y1,z1), (x0,y1,z1),
-        close: true,
-        fill: top,
-        stroke: st
-      )
 
-      // Front face (-Y)
-      line(
-        (x0,y0,z0), (x1,y0,z0),
-        (x1,y0,z1), (x0,y0,z1),
-        close: true,
-        fill: side,
-        stroke: st
-      )
+#let fib-pullout = {
+  import "@preview/lilaq:0.5.0" as lq
 
-      // Back face (+Y)
-      line(
-        (x0,y1,z0), (x1,y1,z0),
-        (x1,y1,z1), (x0,y1,z1),
-        close: true,
-        fill: back,
-        stroke: st
-      )
+  // Parâmetros do modelo (MPa e mm)
+  let tbmax = 13.7
+  let tbf = 5.5
 
-      // Left face (-X)
-      line(
-        (x0,y0,z0), (x0,y1,z0),
-        (x0,y1,z1), (x0,y0,z1),
-        close: true,
-        fill: side,
-        stroke: st
-      )
+  let s1 = 1.0
+  let s2 = 1.1
+  let s3 = 16
 
-      // Right face (+X)
-      line(
-        (x1,y0,z0), (x1,y1,z0),
-        (x1,y1,z1), (x1,y0,z1),
-        close: true,
-        fill: side,
-        stroke: st
-      )
+  let alpha = 0.58
+
+  let s = lq.linspace(0, 20.0)
+
+  // Lei de aderência-deslizamento fib
+  let fib(s) = {
+    if s <= s1 {
+      tbmax * calc.pow(s / s1, alpha)
+    } else if s <= s2 {
+      tbmax
+    } else if s <= s3 {
+      tbmax - (tbmax - tbf) * (s - s2) / (s3 - s2)
+    } else {
+      tbf
     }
+  }
 
-    
+  set text(size: 10pt)
 
-    // --- Slab ---
-    box3(
-      (0, 0, 0),
-      (lh, bh, h),
-      slab-top,
-      slab-bottom,
-      slab-side,
-      slab-back,
-      slab-edge
-    )
+  lq.diagram(
+    width: 7cm,
+    height: 4.5cm,
 
-    // --- Column ---
-    box3(
-      (0, 0, -zct/3),
-      (lch, bch, zct),
-      col-top,
-      col-bottom,
-      col-side,
-      col-back,
-      col-edge
-    )
+    xaxis: (subticks: none),
+    yaxis: (subticks: none),
 
-    on-layer(50, {
-      line((0,0,0),(bh*.8, 0, 0), mark: (end: "stealth"))
-      content((bh*.85, 0, 0), [$x$])
-      line((0,0,0),(0, lh*.8, 0), mark: (end: "stealth"))
-      content((0, lh*.85, 0), [$y$])
-      line((0,0,0), (0,0,zct*.8), mark: (end: "stealth"))
-      content((0, 0, zct*.85), [$z$])
-    })
+    xlabel: [$s$ [mm]],
+    ylabel: [$τ_b$ [MPa]],
 
-    // Draw foreground content
-    on-layer(100, {
-      content(( lh/2,     0,   h/2), [$u_x = 0$])
-      content((    0,  bh/2,   h/2), [$u_y = 0$])
-      content((    0,     0, zct*1.2), [$u_x = u_y = 0$])
-      content((    0,     0, -zct/3*1.1), [$u_x = u_y = u_z = 0$])
-    })
+    lq.plot(
+      s, fib,
+      color: red,
+      mark: none,
+      label: [Modelo fib pullout],
+    ),
+  )
+}
 
-  })
-})
+#fib-pullout

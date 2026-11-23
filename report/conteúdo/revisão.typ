@@ -155,7 +155,7 @@ O Método dos elementos finitos é um método de solução numérica para proble
 
 #figure(
   image("../figuras/discretization.png", width: 80%),
-  caption: [Discretização de um modelo geométrico CAD em uma malha de elementos finitos #todo[referenciar fonte da imagem :)]]
+  caption: [Discretização de um modelo geométrico CAD em uma malha de elementos finitos. Fonte: Durand (2025), Notas de aula.]
 )
 
 A base do método está no relacionamento desses elementos, e como as forças neles impostas definem a rigidez global da estrutura. Para a simulação de rupturas, observada na presente pesquisa, a interface desses elementos será a base da propagação de fraturas, e definirão o formato das mesmas ao longo da simulação1.
@@ -201,6 +201,11 @@ A modelagem de elementos quase-frágeis possui duas principais vertentes, a de f
 
 Os elementos coesivos se inserem no contexto de abordagens discretas da ruptura. Eles fornecem a lei constitutiva local que governa a perda de rigidez na fissura, alimentando o resíduo e a matriz tangente global a cada iteração. O elemento é iniciado com espessura nula, sendo sujeito às variações nas tensões do problema. Quando as condições do modelo constitutivo forem atingidas, haverá o início da ruptura na interface entre os elementos. 
 
+#figure(
+  image("../figuras/interface_element.png", width: 90%),
+  caption: [Elemento de interface de 8 nós (a) Em coordenadas globais (b) em coordenadas locais]
+)
+
 Essa dependência do modelo constitutivo faz parte da natureza dos elementos coesivos, e sua formulação deve ser eficiente e suficientemente representativa do material frágil sendo analisado. 
 
 
@@ -211,11 +216,6 @@ Essa dependência do modelo constitutivo faz parte da natureza dos elementos coe
 
 O texto de @Durand_2019 apresenta um modelo bidimensional para elementos de interface modelados de acordo com a função de escoamento de Mohr-Coulomb. Além disso, os autores utilizam modelos de fratura não-lineares para representar o amolecimento (_softening_) da fratura ao longo de sua separação.
 
-#figure(
-  image("../figuras/interface_element.png", width: 80%),
-  caption: [Elemento de interface de 8 nós (a) Em coordenadas globais (b) em coordenadas locais #todo[substituir por modelo no cetz se necessário]]
-)
-
 O modelo adota uma superfície de escoamento baseada no critério de Mohr-Coulomb com aderência, conforme proposto por @Lens_2009 A função de escoamento $f$ é definida no espaço de tensões normal ($sigma_n$) e cisalhante $tau$ como:
 
 $
@@ -223,8 +223,8 @@ $
 $ <esc_f>
 
 #figure(
-  image("../figuras/lens_modelo_const.png", width: 80%),
-  caption: [Função de escoamento (sólida) e potencial plástico (tracejada) de acordo com @Lens_2009 #todo[revisar necessidade de mudar imagem]]
+  image("../figuras/lens_modelo_const.png", width: 65%),
+  caption: [Função de escoamento (sólida) e potencial plástico (tracejada) de acordo com @Lens_2009]
 )
 
 A função de potencial plástico ($g$), utilizada para determinar a direção do fluxo do material durante deformações plásticas, é definina por
@@ -238,13 +238,13 @@ $
 Para representar o amolecimento da fratura, isto é, a translação da @esc_f para a esquerda, ao longo do eixo $sigma_n$, em relação à abertura da fissura $u_p$, os autores utilizaram a seguinte curva, definida @Hordijk1992. que relaciona a abertura de tração com a tensão máxima do modelo:
 
 #figure(
-  image("../figuras/amolecimento_hordjark.png", width: 80%),
-  caption: [Curva de amolecimento de Hordijk #todo[revisar necessidade de mudar imagem]] 
+  image("../figuras/amolecimento_hordjark.png", width: 60%),
+  caption: [Curva de amolecimento de Hordijk] 
 ) <hordijk>
 
 #figure(
   image("../figuras/amolecimento_modelo.png"),
-  caption: [Função de Escoamento (a) $u_p = 0$, (b) $u_c > u_p > 0$, (c) $u_p = u_c$ #todo[revisar necessidade de mudar imagem]]
+  caption: [Função de Escoamento (a) $u_p = 0$, (b) $u_c > u_p > 0$, (c) $u_p = u_c$ #todo[ajustar zoom / manter fontes consistentes]]
 )
 
 //  $ D_(e p)$
@@ -353,18 +353,37 @@ O modelo 3D foi validado por @Durand_2021_3D por meio de ensaios de tração e c
 
 É importante destacar que o modelo 3D apresenta uma limitação em relação ao tipo de elemento de volume utilizado: @Durand_2021_3D observaram que elementos hexaédricos interferem no desenvolvimento das fissuras, tendendo a aumentar a carga de pico ou gerar múltiplas fissuras em regiões onde se esperava apenas uma. Por outro lado, elementos tetraédricos e piramidais proporcionaram padrões de fissuração mais realistas. Essa observação é particularmente relevante para o presente trabalho, pois a escolha do tipo de elemento de volume na malha da laje influenciará diretamente a qualidade dos resultados da simulação de punção.
 
-==== Interface barra-sólido
+==== Modelagem da Fissuração do Concreto
 // problema de compatibilidade malha entre aço e concreto
 Segundo @Durand_2021, a modelagem de armaduras em meios sólidos por elementos finitos apresenta duas problemáticas clássicas: A primeira, em relação à dificuldade de representar o elemento numericamente, isto é, sua relação geométrica com a discretização do problema, e a segunda, referente à definição de um modelo de interface adequado para modelar a ligação entre aço e concreto, incluindo o escorregamento. 
 
-Atualmente existem três abordagens para a questão geométrica: discreta, distribuida e embutida (_embedded_), cada uma apresentando limitações. A abordagem discreta depende implicitamente da malha gerada, por representar seus elementos ao longo de contatos de elementos. O distribuido implicitamente assume aderência perfeita, e utiliza-se uma rigidez equivalente no elemento de volume para representar a contribuição do aço, o que dificulta a recuperação de tensões na barra. O embutido adota um elemento de barra como próprio, independente da malha, o que dificulta a aplicação direta de condições de contorno nas extremidades das armaduras, mas permite a recuperação de tensões.
+Atualmente existem três abordagens para a abordar a geometria e influência das barras no concreto armado: 
 
-Para superar essas limitações, especialmente em simulações tridimensionais, @Durand_2021 propõe um elemento embutido de interface contínuo barra-sólido (_rod-solid interface element_) que dispensa a compatibilidade de malha e permite a aplicação direta de condições de contorno nos nós da barra. O elemento é formulado a partir de pontos de controle virtuais interiores ao elemento de volume, localizados, inicialmente, nas mesmas coordenadas espaciais dos nós da barra. A partir desses pontos, calcula-se o deslocamento relativo entre barra e sólido por interpolação das funções de forma do elemento de volume, obtendo-se o vetor de deslocamentos relativos $tilde(bold(w))$ em coordenadas locais alinhadas com a barra. 
+- Distribuida, que assume uma rigidez equivalente para o elemento de volume, com a contribuição da barra, porém necessita da hipótese aderência perfeita, além de dificultar a recuperação de tensões específicas ao aço; 
+- Embutida, onde a barra é um elemento próprio, interior ao elemento de volume, ao custo do maior esforço computacional, e maior complexidade na aplicação de condições de contorno.
+- Discreta, que depende implicitamente da malha, por representar seus elementos ao longo de contatos de elementos, o que afeta diretamente a distribuição dos nós ao longo do volume, e impactaria diretamente no comportamento de fissuração do concreto;
 
 #figure(
-  image("../figuras/rod_interface_element.png", width: 80%),
-  caption: [Elemento de interface de barra, embutido em um elemento quadrado de oito nós #todo[substituir por modelo no cetz se necessário]]
+  caption: [Representação dos modelos (a) distribuídos, (b) embutido e (c) discretos @hipolito2016aplicacao],
+  image("../figuras/modelos_barras.png")
+) <fig:modelos_barras>
+
+
+Para superar essas limitações, especialmente em simulações tridimensionais, o modelo apresentado por @Durand_2021 utiliza um elemento semi-embutido de interface contínuo barra-sólido (_rod-solid interface element_) que dispensa a compatibilidade de malha e permite a aplicação direta de condições de contorno nos nós da barra. Diferentemente do modelo embutido apresentado na @fig:modelos_barras (b), o elemento é formulado a partir de pontos de controle virtuais interiores ao elemento de volume, localizados, inicialmente, nas mesmas coordenadas espaciais dos nós da barra. 
+
+#figure(
+  caption: [Modelo semi-embutido],
+  image("../figuras/modelos_barras_semi-embutido.png", width: 55%)
 )
+
+A partir desses pontos, calcula-se o deslocamento relativo entre barra e sólido por interpolação das funções de forma do elemento de volume, obtendo-se o vetor de deslocamentos relativos $tilde(bold(w))$ em coordenadas locais alinhadas com a barra. Para simulações tridimensionais, será adodotado o elemento expresso pela @fig:interface_tetra.
+
+#import "helpers.typ": rebar
+
+#figure(
+  rebar,
+  caption: [Elemento de interface de barra de 3 nós, embutido em um elemento tetrahétrico de 4 nós.]
+) <fig:interface_tetra>
 
 A matriz $tilde(bold(B))$ relaciona os deslocamentos nodais do sólido e da barra aos deslocamentos relativos no ponto de integração, e a matriz de rigidez do elemento é obtida por integração numérica ao longo do comprimento da barra. Diferentemente de elementos de mola pontuais, as forças de contato são distribuídas continuamente ao longo do comprimento, o que permite recuperar a distribuição de tensões de aderência nos pontos de integração de forma análoga a elementos finitos convencionais.
 
