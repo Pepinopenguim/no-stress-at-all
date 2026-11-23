@@ -28,25 +28,102 @@ O objeto de estudo é a laje lisa de referência ensaiada por @palhares2018 e po
 
 A armadura de flexão é composta por barras de $16$ mm de diâmetro na face tracionada (inferior) e $10$ mm na face comprimida (superior), espaçadas a $155$ mm em ambas as direções ortogonais, resultando em uma taxa de armadura $rho approx 0.92 percent$. O cobrimento adotado é de $20$ mm. Nas bordas livres, ganchos em "U" de $16$ mm ancoram a armadura superior, impedindo o escorregamento excessivo. A laje não possui armadura de cisalhamento — condição intencional, para isolar o comportamento da punção pura.
 
-O carregamento é aplicado por oito placas de aço de $100 times 100 times 20$ mm, dispostas simetricamente em torno do pilar a uma distância radial de $1124$ mm do centro. No modelo numérico, aproveita-se a simetria dupla da geometria e do carregamento: apenas um quarto da laje é discretizado, com condições de contorno de simetria nos planos $x = 0$ e $y = 0$.
+O carregamento é aplicado, na simulação, por oito placas de aço de $100 times 100 times 20$ mm, dispostas simetricamente em torno do pilar a uma distância radial de $1124$ mm do centro. No modelo numérico, aproveita-se a simetria dupla da geometria e do carregamento: apenas um quarto da laje é discretizado, com condições de contorno de simetria nos planos $x = 0$ e $y = 0$.
 
 #figure(
   image("../figuras/geometria_base.pdf", width: 80%),
   caption: [Geometria do modelo numérico: quarto de laje com pilar central (cinza escuro) e placas de carregamento (cinza claro).]
 ) <fig_geometria>
 
+As armaduras foram distribuidas de acordo com o projeto. Para melhor representar o comportamento das barras durante a ruptura de punção, especialmente o efeito pino, as barras de reforço da laje foram modeladas como vigas no modelo de elementos finitos. As barras restantes, dos pilares, foram dimensionadas como barras, para economia computacional. 
+
+
+#import "@preview/cetz:0.3.4"
+#figure(
+  grid(
+    columns: (1fr, 0.65fr),
+    gutter: 1em,
+
+    // Left: reinforcement figure
+    image("../figuras/bars.pdf", width: 100%),
+
+    // Right: legend
+    cetz.canvas(length: 1cm, {
+      import cetz.draw: *
+
+      let colors = (
+        (rgb("#E67E00"), [Reforço superior $phi.alt 16$]),
+        (rgb("#B41E2D"), [Reforço inferior $phi.alt 10$]),
+        (rgb("#00734B"), [Ganchos em U $phi.alt 16$]),
+        (rgb("#005AAA"), [Reforço de Coluna $phi.alt 16$]),
+      )
+
+      content((0, 0), [
+        *Legenda*
+      ], anchor: "west")
+
+      for i in range(colors.len()) {
+        let (color, label) = colors.at(i)
+        let y = -1.0 - i * 0.6
+
+        line(
+          (0, y),
+          (0.8, y),
+          stroke: (paint: color, thickness: 2pt)
+        )
+
+        content(
+          (1.1, y),
+          label,
+          anchor: "west"
+        )
+      }
+    })
+  ),
+  caption: [Layout do reforço estrutural],
+)
+
 == Geração de malha e elementos coesivos
 
-  A malha é gerada no `GeoModel` do `Serendip`, que utiliza funções base da biblioteca `Gmsh.jl` e `OpenCASCADE`, a partir de uma descrição geométrica em blocos e de caminhos de armadura. Utiliza-se um tamanho de elemento base de #todo[(valor não final) $200$ mm], refinado localmente na região da ligação laje-pilar, com tamanho interno de aproximadamente #todo[(valor não final)  $67$ mm ($20\/3$)] na zona de influência do pilar. Esse refinamento é essencial para capturar o gradiente de tensões na região onde o cone de punção se forma.
+A malha é gerada no `GeoModel` do `Serendip`, que utiliza funções base das bibliotecas `Gmsh.jl` e `OpenCASCADE`, a partir de uma descrição geométrica em blocos e de caminhos de armadura. Realiza-se aqui uma investigação paramétrica restrita a duas variáveis:
 
-Após a geração da malha de volume, os elementos coesivos são inseridos entre todos os elementos de volume adjacentes. Conforme a @sec_cohesive_3d, o modelo de @Durand_2021_3D adota uma abordagem discreta para a fratura: os elementos coesivos têm espessura nula e representam a interface potencial entre dois elementos de volume. A fissura só se desenvolve onde o estado de tensões atinge o critério de escoamento do modelo constitutivo coesivo, de modo que a localização da fissura é determinada pela física do problema, não pela topologia da malha.
+- Tamanho base do elemento, $s$;
+- Tamanho do elemento na zona de refino, na região de ruptura laje-pilar, $s_r$.
 
-// #figure(
-//   image("../figuras/malha_refinada.png", width: 80%),
-//   caption: [Malha de elementos finitos com refinamento na região da ligação laje-pilar e inserção de elementos coesivos. #todo[substituir por figura própria]]
-// ) <fig_malha>
+Adotam-se inicialmente $s in {100, 200} "mm"$ e $s_r in {s\/3, s\/5, s\/7}$. Assim, o refino local acompanha o tamanho base e evita que a comparação entre casos misture efeitos de tamanho global e tamanho local. A zona refinada é centrada em $[0, 0, h/2]$ e se estende por $2h$ na vertical. Esse refino é essencial para capturar o gradiente de tensões na região onde o cone de punção se forma.
 
-#todo[incluir imagem da malha refinada pelo Serendip]
+Após a geração da malha de volume, os elementos coesivos são inseridos entre todos os elementos de volume adjacentes. Conforme a @sec_cohesive_3d, o modelo de @Durand_2021_3D adota uma abordagem discreta para a fratura: os elementos coesivos têm espessura nula e representam a interface potencial entre dois elementos de volume. A fissura só se desenvolve onde o estado de tensões atinge o critério de escoamento do modelo constitutivo coesivo, de modo que a localização da fissura é determinada pela física do problema, não pela topologia da malha. O caso final será escolhido pela melhor relação entre precisão dos resultados — carga de pico, rigidez inicial, queda pós-pico e formação do cone de punção — e tempo de processamento, e não simplesmente pela malha mais refinada.
+
+#figure(
+  caption: [asdf],
+  table(
+    columns: 5,
+    align: (center, center, center, center, center),
+    stroke: none,
+    table.hline(),
+    table.header(
+      [Caso],
+      [$s$ (mm)],
+      [$s_r$ (mm)],
+      [Número de Nós],
+      [Papel no estudo],
+    ),
+    table.hline(stroke: 0.8pt),
+    [M100-R3], [100], [$s\/3 = 33.3$], [$approx 33k$], table.cell(rowspan: 3)[#todo()[asdf]],
+    [M100-R5], [100], [$s\/5 = 20.0$], [$approx 43k$],
+    [M100-R7], [100], [$s\/7 = 14.3$], [$approx 54k$],
+    table.hline(stroke: 0.6pt),
+    [M200-R3], [200], [$s\/3 = 66.7$], [9057], table.cell(rowspan: 3)[#todo()[asdf]],
+    [M200-R5], [200], [$s\/5 = 40.0$], [10401],
+    [M200-R7], [200], [$s\/7 = 28.6$], [12947],
+    table.hline(),
+  )
+)
+
+#figure(
+  image("../figuras/M200R7.pdf", width: 80%),
+  caption: [Malha M200-R7 com refinamento na ligação laje-pilar e inserção de elementos coesivos]
+) <fig_malha>
 
 == Modelos constitutivos
 
@@ -184,6 +261,161 @@ A interação entre a armadura e o concreto é descrita pelo modelo _CEB bond-sl
 == Condições de contorno e carregamento
 
 As condições de contorno refletem as condições do ensaio experimental e a simetria do modelo:
+
+#figure(
+  caption: [Condições de contorno aplicadas],
+  cetz.canvas(length: 0.004cm, {
+    import cetz.draw: *
+
+    // Change these angles to rotate the model
+    ortho(x: 110deg, y: 180deg, z: 225deg, {
+
+      // --- Palette ---
+      let slab-top   = rgb("d8dce8")
+      let slab-bottom = rgb("aab3c5")
+      let slab-side  = rgb("b0bcd0")
+      let slab-edge  = rgb("6f7d99")
+      let slab-back  = rgb("8997b0")
+
+      let col-top    = rgb("f0dcdc")
+      let col-bottom = rgb("c49b9b")
+      let col-side   = rgb("d0b0b0")
+      let col-edge   = rgb("a87a7a")
+      let col-back   = rgb("b88888")
+
+      // --- Load plate palette ---
+      let plate-top    = rgb("f5d78e")
+      let plate-bottom = rgb("c9a85e")
+      let plate-side   = rgb("dfbd72")
+      let plate-edge   = rgb("a98743")
+      let plate-back   = rgb("d5b366")
+
+      let lw = 0.3pt
+
+      // --- Dimensions (mm) ---
+      let lh  = 1250
+      let bh  = 1250
+      let h   = 180
+
+      let lch = 150
+      let bch = 150
+      let zct = 980
+
+      
+
+      // --- Complete cuboid ---
+      // Draws all six faces, including top, bottom,
+      // front, back, left and right.
+      // 
+      content((lh/2,bh/2,0), [this is a test])
+      // 
+
+      let box3(lo, hi, top, bottom, side, back, ec) = {
+        let (x0, y0, z0) = lo
+        let (x1, y1, z1) = hi
+
+        let st = (paint: ec, thickness: lw)
+
+        // Bottom face (-Z)
+        line(
+          (x0,y0,z0), (x1,y0,z0),
+          (x1,y1,z0), (x0,y1,z0),
+          close: true,
+          fill: bottom,
+          stroke: st
+        )
+
+        // Top face (+Z)
+        line(
+          (x0,y0,z1), (x1,y0,z1),
+          (x1,y1,z1), (x0,y1,z1),
+          close: true,
+          fill: top,
+          stroke: st
+        )
+
+        // Front face (-Y)
+        line(
+          (x0,y0,z0), (x1,y0,z0),
+          (x1,y0,z1), (x0,y0,z1),
+          close: true,
+          fill: side,
+          stroke: st
+        )
+
+        // Back face (+Y)
+        line(
+          (x0,y1,z0), (x1,y1,z0),
+          (x1,y1,z1), (x0,y1,z1),
+          close: true,
+          fill: back,
+          stroke: st
+        )
+
+        // Left face (-X)
+        line(
+          (x0,y0,z0), (x0,y1,z0),
+          (x0,y1,z1), (x0,y0,z1),
+          close: true,
+          fill: side,
+          stroke: st
+        )
+
+        // Right face (+X)
+        line(
+          (x1,y0,z0), (x1,y1,z0),
+          (x1,y1,z1), (x1,y0,z1),
+          close: true,
+          fill: side,
+          stroke: st
+        )
+      }
+
+      
+
+      // --- Slab ---
+      box3(
+        (0, 0, 0),
+        (lh, bh, h),
+        slab-top,
+        slab-bottom,
+        slab-side,
+        slab-back,
+        slab-edge
+      )
+
+      // --- Column ---
+      box3(
+        (0, 0, -zct/3),
+        (lch, bch, zct),
+        col-top,
+        col-bottom,
+        col-side,
+        col-back,
+        col-edge
+      )
+
+      on-layer(50, {
+        line((0,0,0),(bh*.8, 0, 0), mark: (end: "stealth"))
+        content((bh*.85, 0, 0), [$x$])
+        line((0,0,0),(0, lh*.8, 0), mark: (end: "stealth"))
+        content((0, lh*.85, 0), [$y$])
+        line((0,0,0), (0,0,zct*.8), mark: (end: "stealth"))
+        content((0, 0, zct*.85), [$z$])
+      })
+
+      // Draw foreground content
+      on-layer(100, {
+        content(( lh/2,     0,   h/2), [$u_x = 0$])
+        content((    0,  bh/2,   h/2), [$u_y = 0$])
+        content((    0,     0, zct*1.2), [$u_x = u_y = 0$])
+        content((    0,     0, -zct/3*1.1), [$u_x = u_y = u_z = 0$])
+      })
+
+    })
+  })
+
+)
 
 #figure(placement: none,
   caption: [Condições de contorno e carregamento adotados na simulação.],
