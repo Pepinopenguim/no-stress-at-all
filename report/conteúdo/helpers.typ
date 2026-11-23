@@ -293,3 +293,105 @@
         
     })
 
+
+#let fib-curve-tau(length) = cetz.canvas(length: length, {
+  import cetz.draw: *
+  import calc: pow
+
+  // Pull-out model parameters
+  let s1 = 1.2
+  let s2 = 2.5
+  let s3 = 5.2
+
+  let taumax = 3.5
+  let taubf = 0.7
+
+  // Axes
+  line((0, 0), (6.5, 0),
+    stroke: (paint: black, thickness: 1.3pt),
+    mark: (end: "stealth")
+  )
+  line((0, 0), (0, 4.5),
+    stroke: (paint: black, thickness: 1.3pt),
+    mark: (end: "stealth")
+  )
+
+  // Pull-out curve: initial nonlinear increase
+  let last = (0, 0)
+  for i in range(100) {
+    let si = s1 * i / 100
+    let yi = taumax * pow((si / s1), .3)
+    line(
+      last,
+      (si, yi),
+      stroke: (paint: red, thickness: 0.8pt)
+    )
+    last = (si, yi)
+  }
+
+
+  // Maximum bond stress plateau
+  line((s1, taumax), (s2, taumax),
+    stroke: (paint: red, thickness: 0.8pt)
+  )
+
+  // Descending branch
+  line((s2, taumax), (s3, taubf),
+    stroke: (paint: red, thickness: 0.8pt)
+  )
+
+  // Residual bond stress
+  line((s3, taubf), (6.3, taubf),
+    stroke: (paint: red, thickness: 0.8pt)
+  )
+
+  // Horizontal reference lines
+  for y in (taumax, taubf) {
+    line((0, y), (s3, y),
+      stroke: (paint: black, thickness: 0.6pt, dash: "dashed")
+    )
+  }
+
+  // Vertical reference lines
+  for x in (s1, s2, s3) {
+    line((x, 0), (x, if x == s3 {taubf} else {taumax}),
+      stroke: (paint: black, thickness: 0.6pt, dash: "dashed")
+    )
+  }
+
+  // Axis labels
+  content((6.75, 0), [$"slip"$ $s$],
+    anchor: "west"
+  )
+  content((0, 4.75), [$tau_b$],
+    anchor: "center"
+  )
+
+  // Stress labels
+  content((-0.08, taumax), [$tau_(b max)$],
+    anchor: "east"
+  )
+  content((-0.08, taubf), [$tau_("bf")$],
+    anchor: "east"
+  )
+
+  // Slip labels
+  content((s1, -0.35), [$s_1$],
+    anchor: "north"
+  )
+  content((s2, -0.35), [$s_2$],
+    anchor: "north"
+  )
+  content((s3, -0.35), [$s_3$],
+    anchor: "north"
+  )
+
+  // Legend
+  line((5.5, 2.7), (5.85, 2.7),
+    stroke: (paint: red, thickness: 0.8pt)
+  )
+  content((6, 2.7), [*pull-out*],
+    anchor: "west"
+  )
+
+})
