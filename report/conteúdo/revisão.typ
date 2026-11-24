@@ -446,32 +446,6 @@ Segundo @Durand_2021, a modelagem de armaduras em meios sólidos por elementos f
 
 Atualmente existem três abordagens para a abordar a geometria e influência das barras no concreto armado: 
 
-// #figure(
-//   caption: [asdf],
-//   table(
-//     columns: 5,
-//     align: (center, center, center, center, center),
-//     stroke: none,
-//     table.hline(),
-//     table.header(
-//       [Caso],
-//       [$s$ (mm)],
-//       [$s_r$ (mm)],
-//       [Número de Nós],
-//       [Papel no estudo],
-//     ),
-//     table.hline(stroke: 0.8pt),
-//     [M100-R3], [100], [$s\/3 = 33.3$], [$approx 33k$], table.cell(rowspan: 3)[#todo()[asdf]],
-//     [M100-R5], [100], [$s\/5 = 20.0$], [$approx 43k$],
-//     [M100-R7], [100], [$s\/7 = 14.3$], [$approx 54k$],
-//     table.hline(stroke: 0.6pt),
-//     [M200-R3], [200], [$s\/3 = 66.7$], [9057], table.cell(rowspan: 3)[#todo()[asdf]],
-//     [M200-R5], [200], [$s\/5 = 40.0$], [10401],
-//     [M200-R7], [200], [$s\/7 = 28.6$], [12947],
-//     table.hline(),
-//   )
-// )
-
 
 #figure(
   caption: [Abordagens para aplicação de barras em concreto armado no MEF],
@@ -568,3 +542,37 @@ Em síntese, a revisão de @Schimanowski_2025 evidencia que a modelagem numéric
 
 
 === Estudos experimentais sobre o comportamento à punção de lajes lisas
+
+A investigação experimental de lajes lisas de concreto armado desempenha um papel indispensável na compreensão dos mecanismos físicos de falha, e no desenvolvimento das formulações normativas. É com base nos resultados experimentais que se analisam padrões, criam-se hipóteses e desenvolvem-se modelos numéricos. Por se tratar de um fenômeno localizado e com elevado grau de triaxialidade de tensões na ligação laje-pilar, a realização de ensaios em escala real ou reduzida permite observar a progressão do dano, perda de rigidez e geometria da superfície de ruína.
+
+Devido às dimensões e complexidade de um pavimento completo, a prática experimental adota a simplificação de isolar a região do pilar delimitada pela linha de momentos fletores nulos. O elemento de ensaio típico consiste em uma laje quadrada ou circular apoiada sobre um trecho de pilar central (_stub column_), estendendo-se superior e inferiormente à laje.
+
+No contexto dos modelos numéricos desenvolvidos na presente pesquisa, adota-se como _benchmark_ a campanha experimental realizada por @palhares2018 e @Lima2021 no Laboratório de Estruturas da Universidade de Brasília (UnB), com  foco central na eficiência e no tipo de ancoragem da armadura de cisalhamento (estribos fechados em cruz) nas barras de flexão. A laje de referência possui dimensão de $2500 times 2500$ mm, com espessura total de 180 mm e altura útil $d approx 144$ mm, apoiada sobre um pilar central quadrado de $300 times 300$ mm. 
+
+#figure(
+  caption: [Esquema do sistema de Ensaios utilizado por Palhares (2018) e Lima (2021).],
+  image("../figuras/lima_palhares_laje.png", width: 100%)
+)
+
+A tese de @Lima2021 englobou o programa experimental completo com 20 lajes lisas, divididas em 5 séries de 4 lajes cada. A dissertação de @palhares2018 concentrou-se especificamente nos ensaios e análises detalhadas da Série 3 desse mesmo programa.
+
+
+
+Palhares observou que todas as lajes armadas romperam por punção com a superfície de ruptura cortando a região da armadura de cisalhamento. O padrão de fissuração iniciou com fissuras radiais a aproximadamente 25% da carga máxima e fissuras tangenciais a cerca de 70%.
+
+A alteração na ancoragem dos estribos não reduziu a resistência última à punção para a taxa testada ($rho_"sw" approx 0,13%$). A laje com ancoragem apenas na zona comprimida (FS-09) apresentou o melhor desempenho, indicando que estribos que não envolvem totalmente a armadura de flexão são uma opção construtiva viável e segura.
+
+Lima expandiu a verificação para 20 modelos locais, organizados em 5 séries de concretagem. O autor confirmou que a ancoragem dita "parcial" (envolvendo apenas a armadura de flexão comprimida) oferece capacidade resistente igual ou superior à ancoragem completa. Esse resultado é de grande impacto prático, pois simplifica significativamente a montagem e o posicionamento das armaduras no canteiro de obras.
+
+Ainda no contexto do ensaio experimental de punção em lajes lisas, @Barakat_2025 investigou o comportamento de lajes lisas de concreto armado reforçadas com barras não metálicas de polímero reforçado com fibra de vidro (GFRP), com objetivo de avaliar sua influência, junto com a resistência à compressão do concreto e taxa de armadura na rigidez e fissuração das lajes, além de confrontar os resultados experimentais com as previsões de normas internacionais (ACI 440.11-22, JSCE-97 e CAN/CSA S806-12).
+
+#figure(
+  caption: [Geometria e reforço para os ensaios realizados por @Barakat_2025],
+  image("../figuras/bakarat_slab.png", width: 80%)
+)
+
+O autor observou que todas as lajes apresentaram ruptura frágil por punção. A sequência de fissuração iniciou-se com fissuras de flexão (entre 22% e 29% da carga de pico), seguidas por fissuras radiais partindo da face do pilar (entre 38% e 47% da carga) e culminou no surgimento de fissuras circunferenciais na carga máxima, formando o cone de punção característico. Não houve ruptura das barras de GFRP nem esmagamento do concreto à flexão. Também foi observado que o aumento da taxa de armadura de flexão de GFRP de 1,2% para 1,8% elevou a capacidade à punção em 19%, 27% e 24% para os concretos de 30 MPa, 60 MPa e 90 MPa, respectivamente. Ao dobrar a taxa para 2,4%, o aumento na capacidade à punção atingiu 40%, 34% e 37%. Além disso, taxas maiores aumentaram significativamente a rigidez pós-fissuração ($k_p$) e reduziram as flechas no vão. 
+
+Também observou-se que as lajes armadas com aço convencional apresentaram resistência à punção entre 71% e 84% superior às suas correspondentes em GFRP com a mesma taxa (1,2%). Essa diferença decorre do menor módulo de elasticidade do GFRP (um quarto do módulo do aço), o que reduz a ação de pino, eleva a linha neutra e resulta em aberturas de fissuras mais amplas, diminuindo o engrenamento dos agregados.
+
+A norma ACI 440.11-22 mostrou-se excessivamente conservadora (razão média $V_"exp"/V_"pred" = 1,81$), principalmente por penalizar o efeito da rigidez axial em concretos de alta resistência. As normas CAN/CSA S806-12 (média $1,06$) e JSCE-97 (média $1,18$) apresentaram melhor precisão na estimativa da resistência resistente.
