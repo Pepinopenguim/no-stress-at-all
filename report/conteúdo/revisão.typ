@@ -101,9 +101,9 @@ $
 onde $rho$ é a taxa geométrica de armadura de flexão aderente.
 
 - Contorno C'': afastado $2d$ da última camada de armadura de cisalhamento. Verifica-se apenas quando há armadura transversal, para garantir que a ruína não ocorra fora da região armada. Nota-se que em casos onde a estabilidade global da estrutura depende da resistência da laje à punção, a armadura será obrigatória.
-#import "helpers.typ": abnt_contours
+#import "helpers.typ": abnt-contours
 #figure(
-  abnt_contours(),
+  abnt-contours(),
   caption: [Contornos críticos C e C' segundo a ABNT NBR 6118:2023.]
 ) <fig_nbr_contornos>
 
@@ -120,9 +120,9 @@ A resistência do concreto sem armadura, $τ_"Rd,c"$, é expressa por:
 $ τ_"Rd,c" = 0.6 / γ_V k_(p b) (100 ρ_l f_(c k) d_(d g) / d_v)^(1/3) <= 0.5/γ_V sqrt(f_"ck") $
 
 onde $k_"pb"$ é o coeficiente de aprimoramento do gradiente de punção ($1 <= k_"pb" <= 2.5$), $d_(d g)$ é o parâmetro que descreve a rugosidade da fissura, $rho_l$ é a taxa geométrica de armadura longitudinal de flexão, e $gamma_V$ é o coeficiente parcial de segurança para a resistência ao cisalhamento.
-
+#import "helpers.typ": euro-contours
 #figure(
-  image("../figuras/perimetros_c_eurocode.png", width: 80%),
+  euro-contours(),
   caption: [Exemplos de Perímetro de controle básico segundo o Eurocode 2:2023 ($0.5d_v$). #todo[melhorar imagem, tirar '2']]
 ) <fig_ec2_perimetro>
 

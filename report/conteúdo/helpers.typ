@@ -1,4 +1,5 @@
 #import "@preview/cetz:0.5.1"
+#import cetz.draw: *
 
 // Shorthands
 #let prose(key) = cite(form: "prose", key)
@@ -13,7 +14,7 @@
 // figures and such
 
 #let bc-figure(length) = cetz.canvas(length: length, {
-    import cetz.draw: *
+
 
     // Change these angles to rotate the model
     ortho(x: 110deg, y: 180deg, z: 219deg, {
@@ -195,7 +196,7 @@
   })
 
 #let rebar = cetz.canvas(length: 1.5cm, {
-        import cetz.draw: *
+
         import calc: pow
         set-style(stroke: (paint:black, thickness:0.6pt), mark:(fill:black))
         // let aux-line-style = (stroke: (paint: gray, thickness: 0.4pt))
@@ -235,12 +236,12 @@
             line(p1, p4)
             line(p2, p4)
             line(p3, p4)
-            
+
             bullet(p1)
             bullet(p2)
             bullet(p3)
             bullet(p4)
-            
+
             content(p1, anchor:"north-east", padding:(x:0, y:0.1), $bold(u)_1$)
             content(p2, anchor:"north-west", padding:(x:0, y:0), $bold(u)_2$)
             content(p3, anchor:"north-east", padding:(x:0, y:0), $bold(u)_3$)
@@ -250,16 +251,16 @@
 
         line((-0.1,1.3), (0.4,2.3), stroke: 0.5pt, mark: (start: ">>", fill:black, scale:0.6), name:"l")
         content("l.end", anchor:"west", padding:0.1, [Elemento de Barra])
-        
+
         line((0.45,0.3), (0.8,0.2), stroke: 0.5pt, mark: (start: ">>", fill:black, scale:0.6), name:"l")
         content("l.end", anchor:"west", padding:0.1, [Elemento de Volume])
 
-        
+
     })
 
 
 #let fib-curve-tau(length) = cetz.canvas(length: length, {
-  import cetz.draw: *
+
   import calc: pow
 
   // Pull-out model parameters
@@ -360,134 +361,336 @@
 
 })
 
-#let abnt_contours() = {
-  import "@preview/cetz:0.5.3": canvas, draw
-  canvas(length: 0.008cm, {
-  import draw: *
+#let abnt-contours() = {
+  cetz.canvas(length: 0.85cm, {
+    import cetz.draw: *
+
+    // ------------------------------------------------------------
+    // Parâmetros
+    // ------------------------------------------------------------
+    let d2 = 0.85  // afastamento 2d a partir da face da coluna
+    let cinza = rgb("#9d9d9d")
+    let fino = 0.55pt
+    let cheio = 0.9pt
+    let tracejado = (paint: black, thickness: 0.75pt, dash: "dashed")
+    let tracejado-fino = (paint: black, thickness: fino, dash: "dashed")
+    let ponto = (paint: black, thickness: fino)
+
+    // ------------------------------------------------------------
+    // Álgebra vetorial 2D
+    // ------------------------------------------------------------
+    let add(a, b) = (a.at(0) + b.at(0), a.at(1) + b.at(1))
+    let sub(a, b) = (a.at(0) - b.at(0), a.at(1) - b.at(1))
+    let mul(a, k) = (a.at(0) * k, a.at(1) * k)
+    let cross(a, b) = a.at(0) * b.at(1) - a.at(1) * b.at(0)
+    let dot(a, b) = a.at(0) * b.at(0) + a.at(1) * b.at(1)
+    let norm(a) = {
+      let l = calc.sqrt(dot(a, a))
+      (a.at(0) / l, a.at(1) / l)
+    }
+
+    // ------------------------------------------------------------
+    // Acessórios
+    // ------------------------------------------------------------
+    let seta(a, b, escala: 0.45) = line(
+      a, b, mark: (end: "triangle", fill: black, scale: escala), stroke: ponto)
+    let cota(a, b) = { seta(a, b); seta(b, a) }
+    let extensao(a, b) = line(a, b, stroke: ponto)
+    let legenda(pos, body, size: 11pt) = content(pos, text(size: size)[#body])
+
+    // Seção cruciforme: braços 2L × 2s (polígono anti-horário)
+    let cruz(L, s) = (
+      (s, L), (-s, L), (-s, s), (-L, s), (-L, -s), (-s, -s),
+      (-s, -L), (s, -L), (s, -s), (L, -s), (L, s), (s, s),
+    )
+
+    // ============================================================
+    // (a) Seção circular → contorno concêntrico
+    // o = origem do painel; T(x, y) desloca o ponto para o painel
+    // ============================================================
+    let painel-circular(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let r = 0.8
+      circle(T(0, 0), radius: r + d2, stroke: tracejado)
+      circle(T(0, 0), radius: r, fill: cinza, stroke: cheio)
+
+      extensao(T(r, 1.55), T(r, 2.4))
+      extensao(T(r + d2, 1.55), T(r + d2, 2.4))
+      cota(T(r, 2.28), T(r + d2, 2.28))
+      legenda(T(r + d2 / 2, 2.7), $2d$)
+
+      seta(T(2.05, 0.75), T(calc.cos(30deg) * r, calc.sin(30deg) * r))
+      legenda(T(2.3, 0.85), $C$)
+      seta(T(2.35, -1.2), T(calc.cos(-40deg) * (r + d2), calc.sin(-40deg) * (r + d2)))
+      legenda(T(2.6, -1.32), $C'$)
+    }
+
+    // ============================================================
+    // (b) Seção retangular → contorno de cantos arredondados
+    // ============================================================
+    let painel-retangular(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let a = 1.0   // meia-largura da coluna
+      let b = 0.65  // meia-altura
+      rect(T(-a, -b), T(a, b), fill: cinza, stroke: cheio)
+      rect(T(-a - d2, -b - d2), T(a + d2, b + d2), radius: d2, stroke: tracejado)
+
+      extensao(T(a, b + 0.12), T(a, 2.1))
+      extensao(T(a + d2, b + d2 + 0.08), T(a + d2, 2.1))
+      cota(T(a, 1.98), T(a + d2, 1.98))
+      legenda(T(a + d2 / 2, 2.35), $2d$)
+
+      seta(T(2.25, -.5), T(a, -0.5))
+      legenda(T(2.55, -.5), $C$)
+      seta(T(2.35, .45), T(a + d2, 0.45))
+      legenda(T(2.7, .45), $C'$)
+
+      legenda(T(0.35, -2.45), [Perímetro])
+      legenda(T(0.6, -3.0), [crítico])
+      seta(T(0.3, -2.25), T(-a - d2 * calc.cos(45deg), -b - d2 * calc.sin(45deg)))
+    }
+
+    // ============================================================
+    // (c) Seção cruciforme → retas e arcos alternados
+    // ============================================================
+    let painel-cruciforme(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let L = 1.4   // meio-comprimento dos braços
+      let s = 0.4   // meia-espessura dos braços
+      let pts = cruz(L, s)
+
+      line(..pts.map(pt => add(pt, o)), close: true, fill: cinza, stroke: cheio)
+
+      let t = .8
+      //drawing straight lines
+      for (pt0, pt1) in (
+        ((L+t,- s), (L+t,+ s)),
+        ((-L - t,- s), (-L - t,+ s)),
+        ((-s,- L - t), (+s , - L - t )),
+        ((-s, L + t), (+s ,  L + t )),
+        ((L + t / calc.sqrt(2), s+ t / calc.sqrt(2)), (s + t / calc.sqrt(2), L + t / calc.sqrt(2))),
+        ((L + t / calc.sqrt(2), - s - t / calc.sqrt(2)), (s + t / calc.sqrt(2), - L - t / calc.sqrt(2))),
+        ((- L - t / calc.sqrt(2), s+ t / calc.sqrt(2)), (- s - t / calc.sqrt(2), L + t / calc.sqrt(2))),
+        ((- L - t / calc.sqrt(2), - s - t / calc.sqrt(2)), (- s - t / calc.sqrt(2), - L - t / calc.sqrt(2))),
+      ) {
+        line(add(pt0,o), add(pt1,o), stroke: tracejado)
+      }
+
+      for (c, start, delta) in (
+         ((L+t, s), 0deg, 45deg),
+         ((L+t, -s), 0deg, -45deg),
+         ((s, L + t), 90deg, -45deg),
+         ((-s, L + t), 90deg, +45deg),
+         ((s, -L - t), -90deg, +45deg),
+         ((-s, -L - t), -90deg, -45deg),
+         ((-L - t , -s ), 180deg, 45deg),
+         ((-L - t , +s ), 180deg, -45deg),
+       ) {
+         arc(add(o, c ), radius: t, start: start, delta: delta, stroke: tracejado)
+       }
+
+      seta(T(0, L), T(.4, L + t + .4))
+      legenda(T(.6, L + t + .6), $C$)
+      seta(T(2.4, -0.6), T(L + d2, -0.3))
+      legenda(T(2.7, -0.7), $C'$)
+
+      extensao(T(L + 0.05, s), T(L + d2 + 0.85, s))
+      extensao(T(L + 0.05, s + d2), T(L + d2 + 0.85, s + d2))
+      cota(T(L + d2 + 0.65, s), T(L + d2 + 0.65, s + d2))
+      legenda(T(L + d2 + 1.35, s + d2 / 2), $2d$)
+
+      extensao(T(-L, s + 0.05), T(-L, s + d2 + 0.75))
+      extensao(T(-L - d2, s + 0.05), T(-L - d2, s + d2 + 0.75))
+      cota(T(-L, s + d2 + 0.6), T(-L - d2, s + d2 + 0.6))
+      legenda(T(-L - d2 / 2, s + d2 + 1.05), $2d$)
+
+      line(T(-L, - s), T(-s,-L), stroke: tracejado)
+      cota(T((-L - s)/2, (-L - s)/2), T((-L - s)/2 - t * calc.cos(45deg),(-L - s)/2 - t * calc.sin(45deg)))
+      legenda(T((-L - s)/2, (-L - s)/2 - t*.75), [$2d$])
+
+      line(T(s, -L), T(s,- L - t), stroke: tracejado)
+      line(T(s, -L), T(s + t * calc.cos(45deg),- L - t * calc.sin(45deg)), stroke: tracejado)
+      legenda(T(s + t * calc.cos(45deg),- L - t * calc.sin(45deg) - .6), [Trecho curvo])
 
 
-  let p(x, y) = (x, -y)
-  let fino = 0.30mm
-  let cheio = 0.56mm
-  let tracejado = (paint: black, thickness: 0.60mm,dash: (array: (1.8mm, 1.6mm)), cap: "butt")
-  let cinza = rgb("#999999")
+      let w = (s + d2 + o.at(0), s + d2 + o.at(1)) // canto vivo do contorno
+      line(w, T(w.at(0) - o.at(0), s), stroke: tracejado-fino)
+      line(w, T(s, w.at(1) - o.at(1)), stroke: tracejado-fino)
 
-  // Mantém a mesma área e as mesmas margens da imagem original.
-  rect(p(0, 0), p(1959, 803), stroke: none)
+    }
 
-  let segmento(a, b, stroke: fino) = line(p(..a), p(..b), stroke: stroke)
-  let curva(a, b, c, d) = bezier(p(..a), p(..d), p(..b), p(..c))
-  let legenda(x, y, body) = content(p(x, y), body)
-  // Setas com ponta triangular preenchida, na proporção da referência.
-  let seta(a, b, ponta: 27, largura: 17, stroke: fino) = {
-    let dx = b.at(0) - a.at(0)
-    let dy = b.at(1) - a.at(1)
-    let r = calc.sqrt(dx * dx + dy * dy)
-    let (ux, uy) = (dx / r, dy / r)
-    let base = (b.at(0) - ponta * ux, b.at(1) - ponta * uy)
-    segmento(a, base, stroke: stroke)
-    line(p(..b),
-      p(base.at(0) - largura / 2 * uy, base.at(1) + largura / 2 * ux),
-      p(base.at(0) + largura / 2 * uy, base.at(1) - largura / 2 * ux),
-      close: true, fill: black, stroke: none)
-  }
-  let cota(a, b) = {
-    seta(a, b, ponta: 29, largura: 17)
-    seta(b, a, ponta: 29, largura: 17)
-  }
-  let C = text(style: "italic")[C]
-  let Cp = text(style: "italic")[C′]
-  let dois-d = text(style: "italic", weight: "bold")[2d]
-  let chamada(x, y, body) = legenda(x, y, text(size: 16.7pt, body))
-
-  // (a) Seção circular e perímetro crítico concêntrico.
-  circle(p(236, 335), radius: 196, stroke: tracejado)
-  circle(p(236, 334), radius: 61, fill: cinza, stroke: cheio)
-  segmento((297, 51), (297, 293))
-  segmento((433, 51), (433, 271))
-  cota((298, 72), (432, 72))
-  legenda(365, 32, dois-d)
-  seta((307, 415), (274, 385))
-  legenda(327, 428, C)
-  seta((366, 543), (328, 509))
-  legenda(397, 567, Cp)
-
-  // (b) Seção retangular e contorno com quatro cantos arredondados.
-  merge-path(close: true, stroke: tracejado, {
-    segmento((761, 152), (925, 152))
-    curva((925, 152), (1005, 152), (1069, 219), (1069, 299))
-    segmento((1069, 299), (1069, 372))
-    curva((1069, 372), (1069, 452), (1005, 516), (925, 516))
-    segmento((925, 516), (761, 516))
-    curva((761, 516), (682, 516), (618, 452), (618, 372))
-    segmento((618, 372), (618, 299))
-    curva((618, 299), (618, 219), (682, 152), (761, 152))
+    // ============================================================
+    // Disposição horizontal: só a origem muda entre os painéis
+    // ============================================================
+    painel-circular((0, 0))
+    painel-retangular((6.4, 0))
+    painel-cruciforme((12.8, 0))
   })
-  rect(p(762, 273), p(925, 393), fill: cinza, stroke: cheio)
-  segmento((925, 51), (925, 255))
-  segmento((1068, 51), (1068, 265))
-  cota((926, 72), (1067, 72))
-  legenda(996, 32, dois-d)
-  seta((897, 449), (865, 396))
-  legenda(916, 459, C)
-  seta((1054, 539), (1002, 494))
-  legenda(1088, 547, Cp)
-  segmento((1181, 671), (913, 671))
-  seta((913, 671), (791, 520))
-  chamada(1045, 636, [Perímetro])
-  chamada(1045, 702, [crítico])
+}
 
-  // (c) Seção cruciforme; o contorno externo alterna retas e arcos.
-  merge-path(close: true, stroke: tracejado, {
-    segmento((1475, 100), (1583, 100))
-    curva((1583, 100), (1606, 100), (1620, 106), (1638, 124))
-    segmento((1638, 124), (1728, 217))
-    curva((1728, 217), (1749, 240), (1759, 269), (1759, 299))
-    segmento((1759, 299), (1759, 389))
-    curva((1759, 389), (1759, 414), (1747, 435), (1728, 454))
-    segmento((1728, 454), (1633, 548))
-    curva((1633, 548), (1617, 561), (1602, 566), (1580, 566))
-    segmento((1580, 566), (1477, 566))
-    curva((1477, 566), (1450, 566), (1433, 558), (1415, 540))
-    segmento((1415, 540), (1327, 452))
-    curva((1327, 452), (1306, 431), (1297, 413), (1297, 386))
-    segmento((1297, 386), (1297, 300))
-    curva((1297, 300), (1297, 268), (1307, 240), (1330, 216))
-    segmento((1330, 216), (1428, 119))
-    curva((1428, 119), (1441, 106), (1457, 100), (1475, 100))
+
+#let euro-contours() = {
+  cetz.canvas(length: 0.85cm, {
+    import cetz.draw: *
+
+    // ------------------------------------------------------------
+    // Parâmetros
+    // ------------------------------------------------------------
+    let d2 = 0.85  // afastamento 2d a partir da face da coluna
+    let cinza = rgb("#9d9d9d")
+    let fino = 0.55pt
+    let cheio = 0.9pt
+    let tracejado = (paint: black, thickness: 0.75pt, dash: "dashed")
+    let tracejado-fino = (paint: black, thickness: fino, dash: "dashed")
+    let ponto = (paint: black, thickness: fino)
+
+    // ------------------------------------------------------------
+    // Álgebra vetorial 2D
+    // ------------------------------------------------------------
+    let add(a, b) = (a.at(0) + b.at(0), a.at(1) + b.at(1))
+    let sub(a, b) = (a.at(0) - b.at(0), a.at(1) - b.at(1))
+    let mul(a, k) = (a.at(0) * k, a.at(1) * k)
+    let cross(a, b) = a.at(0) * b.at(1) - a.at(1) * b.at(0)
+    let dot(a, b) = a.at(0) * b.at(0) + a.at(1) * b.at(1)
+    let norm(a) = {
+      let l = calc.sqrt(dot(a, a))
+      (a.at(0) / l, a.at(1) / l)
+    }
+
+    // ------------------------------------------------------------
+    // Acessórios
+    // ------------------------------------------------------------
+    let seta(a, b, escala: 0.45) = line(
+      a, b, mark: (end: "triangle", fill: black, scale: escala), stroke: ponto)
+    let cota(a, b) = { seta(a, b); seta(b, a) }
+    let extensao(a, b) = line(a, b, stroke: ponto)
+    let legenda(pos, body, size: 11pt) = content(pos, text(size: size)[#body])
+
+    // Seção cruciforme: braços 2L × 2s (polígono anti-horário)
+    let cruz(L, s) = (
+      (s, L), (-s, L), (-s, s), (-L, s), (-L, -s), (-s, -s),
+      (-s, -L), (s, -L), (s, -s), (L, -s), (L, s), (s, s),
+    )
+
+    // ============================================================
+    // (a) Seção circular → contorno concêntrico
+    // o = origem do painel; T(x, y) desloca o ponto para o painel
+    // ============================================================
+    let painel-circular(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let r = 0.8
+      circle(T(0, 0), radius: r + d2, stroke: tracejado)
+      circle(T(0, 0), radius: r, fill: cinza, stroke: cheio)
+
+      extensao(T(r, 1.55), T(r, 2.4))
+      extensao(T(r + d2, 1.55), T(r + d2, 2.4))
+      cota(T(r, 2.28), T(r + d2, 2.28))
+      legenda(T(r + d2 / 2, 2.7), $2d$)
+
+      seta(T(r + d2, 0), T(r + d2 + .75, 0))
+      legenda(T(r + d2 + 1.1, 0), $u_1$)
+    }
+
+    // ============================================================
+    // (b) Seção retangular → contorno de cantos arredondados
+    // ============================================================
+    let painel-retangular(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let a = 1.0   // meia-largura da coluna
+      let b = 0.65  // meia-altura
+      rect(T(-a, -b), T(a, b), fill: cinza, stroke: cheio)
+      rect(T(-a - d2, -b - d2), T(a + d2, b + d2), radius: d2, stroke: tracejado)
+
+      extensao(T(a, b + 0.12), T(a, 2.1))
+      extensao(T(a + d2, b + d2 + 0.08), T(a + d2, 2.1))
+      cota(T(a, 1.98), T(a + d2, 1.98))
+      legenda(T(a + d2 / 2, 2.35), $2d$)
+
+      seta(T(2.35, .45), T(a + d2, 0.45))
+      legenda(T(2.7, .45), $u_1$)
+      extensao(T(-a,b + d2), T(-a - 1.2*d2, b+ d2))
+      extensao(T(-a,-b - d2), T(-a - 1.2*d2, -b - d2))
+      cota(T(-a -1.2*d2, b + d2), T(-a - 1.2*d2, -b - d2))
+      legenda(T(-a - 1.5*d2, 0), [$b_1$])
+
+      
+
+    }
+
+    // ============================================================
+    // (c) Seção cruciforme → retas e arcos alternados
+    // ============================================================
+    let painel-cruciforme(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let L = 1.4   // meio-comprimento dos braços
+      let s = 0.4   // meia-espessura dos braços
+      let pts = cruz(L, s)
+
+      line(..pts.map(pt => add(pt, o)), close: true, fill: cinza, stroke: cheio)
+
+      let t = .8
+      //drawing straight lines
+      for (pt0, pt1) in (
+        ((L+t,- s), (L+t,+ s)),
+        ((-L - t,- s), (-L - t,+ s)),
+        ((-s,- L - t), (+s , - L - t )),
+        ((-s, L + t), (+s ,  L + t )),
+        ((L + t / calc.sqrt(2), s+ t / calc.sqrt(2)), (s + t / calc.sqrt(2), L + t / calc.sqrt(2))),
+        ((L + t / calc.sqrt(2), - s - t / calc.sqrt(2)), (s + t / calc.sqrt(2), - L - t / calc.sqrt(2))),
+        ((- L - t / calc.sqrt(2), s+ t / calc.sqrt(2)), (- s - t / calc.sqrt(2), L + t / calc.sqrt(2))),
+        ((- L - t / calc.sqrt(2), - s - t / calc.sqrt(2)), (- s - t / calc.sqrt(2), - L - t / calc.sqrt(2))),
+      ) {
+        line(add(pt0,o), add(pt1,o), stroke: tracejado)
+      }
+
+      for (c, start, delta) in (
+         ((L+t, s), 0deg, 45deg),
+         ((L+t, -s), 0deg, -45deg),
+         ((s, L + t), 90deg, -45deg),
+         ((-s, L + t), 90deg, +45deg),
+         ((s, -L - t), -90deg, +45deg),
+         ((-s, -L - t), -90deg, -45deg),
+         ((-L - t , -s ), 180deg, 45deg),
+         ((-L - t , +s ), 180deg, -45deg),
+       ) {
+         arc(add(o, c ), radius: t, start: start, delta: delta, stroke: tracejado)
+       }
+
+      seta(T(0, L), T(.4, L + t + .4))
+      legenda(T(.6, L + t + .6), $C$)
+      seta(T(2.4, -0.6), T(L + d2, -0.3))
+      legenda(T(2.7, -0.7), $C'$)
+
+      extensao(T(L + 0.05, s), T(L + d2 + 0.85, s))
+      extensao(T(L + 0.05, s + d2), T(L + d2 + 0.85, s + d2))
+      cota(T(L + d2 + 0.65, s), T(L + d2 + 0.65, s + d2))
+      legenda(T(L + d2 + 1.35, s + d2 / 2), $2d$)
+
+      extensao(T(-L, s + 0.05), T(-L, s + d2 + 0.75))
+      extensao(T(-L - d2, s + 0.05), T(-L - d2, s + d2 + 0.75))
+      cota(T(-L, s + d2 + 0.6), T(-L - d2, s + d2 + 0.6))
+      legenda(T(-L - d2 / 2, s + d2 + 1.05), $2d$)
+
+      line(T(-L, - s), T(-s,-L), stroke: tracejado)
+      cota(T((-L - s)/2, (-L - s)/2), T((-L - s)/2 - t * calc.cos(45deg),(-L - s)/2 - t * calc.sin(45deg)))
+      legenda(T((-L - s)/2, (-L - s)/2 - t*.75), [$2d$])
+
+      line(T(s, -L), T(s,- L - t), stroke: tracejado)
+      line(T(s, -L), T(s + t * calc.cos(45deg),- L - t * calc.sin(45deg)), stroke: tracejado)
+      legenda(T(s + t * calc.cos(45deg),- L - t * calc.sin(45deg) - .6), [Trecho curvo])
+
+
+      let w = (s + d2 + o.at(0), s + d2 + o.at(1)) // canto vivo do contorno
+      line(w, T(w.at(0) - o.at(0), s), stroke: tracejado-fino)
+      line(w, T(s, w.at(1) - o.at(1)), stroke: tracejado-fino)
+
+    }
+
+    // ============================================================
+    // Disposição horizontal: só a origem muda entre os painéis
+    // ============================================================
+    painel-circular((0, 0))
+    painel-retangular((6.4, 0))
+    painel-cruciforme((12.8, 0))
   })
-  line(..((1501, 236), (1557, 236), (1557, 307), (1628, 307),
-    (1628, 360), (1557, 360), (1557, 430), (1501, 430),
-    (1501, 360), (1430, 360), (1430, 307), (1501, 307)).map(q => p(..q)),
-    close: true, fill: cinza, stroke: cheio)
-
-  // Cotas de afastamento 2d.
-  segmento((1288, 100), (1393, 100))
-  seta((1289, 100), (1459, 269))
-  segmento((1433, 299), (1493, 238))
-  legenda(1342, 64, dois-d)
-  segmento((1626, 102), (1848, 102))
-  segmento((1582, 235), (1720, 235))
-  segmento((1771, 235), (1848, 235))
-  cota((1825, 103), (1825, 234))
-  legenda(1886, 165, dois-d)
-  seta((1595, 396), (1563, 365))
-  legenda(1613, 410, C)
-  seta((1720, 549), (1678, 510))
-  legenda(1756, 565, Cp)
-
-  // Construção auxiliar no canto reentrante e indicação do trecho curvo.
-  segmento((1433, 368), (1493, 428))
-  segmento((1499, 432), (1499, 565),
-    stroke: (thickness: fino, dash: (array: (1.0mm, 0.65mm))))
-  segmento((1492, 435), (1400, 527),
-    stroke: (thickness: fino, dash: (array: (1.0mm, 0.65mm))))
-  line(p(1499, 452), p(1517, 452), p(1517, 432), stroke: fino)
-  line(p(1485, 420), p(1472, 433), p(1485, 446), stroke: fino)
-  segmento((1663, 694), (1439, 694))
-  seta((1439, 694), (1439, 575))
-  chamada(1552, 658, [Trecho])
-  chamada(1552, 721, [curvo])
-})
-
 }
