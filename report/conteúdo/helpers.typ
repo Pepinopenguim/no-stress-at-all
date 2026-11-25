@@ -613,7 +613,10 @@
       cota(T(-a -1.2*d2, b + d2), T(-a - 1.2*d2, -b - d2))
       legenda(T(-a - 1.5*d2, 0), [$b_1$])
 
-      
+      extensao(T(-a - d2,-b ), T(-a - d2, -b - 1.4*d2))
+      extensao(T(a + d2,-b ), T(a + d2, -b - 1.4*d2))
+      cota(T(-a - d2, -b - 1.3*d2), T(a + d2, -b - 1.3*d2))
+      legenda(T(0, -b - 1.6*d2), [$b_2$])
 
     }
 
@@ -656,33 +659,15 @@
          arc(add(o, c ), radius: t, start: start, delta: delta, stroke: tracejado)
        }
 
-      seta(T(0, L), T(.4, L + t + .4))
-      legenda(T(.6, L + t + .6), $C$)
       seta(T(2.4, -0.6), T(L + d2, -0.3))
-      legenda(T(2.7, -0.7), $C'$)
+      legenda(T(2.7, -0.7), $u_1$)
 
-      extensao(T(L + 0.05, s), T(L + d2 + 0.85, s))
-      extensao(T(L + 0.05, s + d2), T(L + d2 + 0.85, s + d2))
-      cota(T(L + d2 + 0.65, s), T(L + d2 + 0.65, s + d2))
-      legenda(T(L + d2 + 1.35, s + d2 / 2), $2d$)
 
-      extensao(T(-L, s + 0.05), T(-L, s + d2 + 0.75))
-      extensao(T(-L - d2, s + 0.05), T(-L - d2, s + d2 + 0.75))
-      cota(T(-L, s + d2 + 0.6), T(-L - d2, s + d2 + 0.6))
-      legenda(T(-L - d2 / 2, s + d2 + 1.05), $2d$)
 
       line(T(-L, - s), T(-s,-L), stroke: tracejado)
       cota(T((-L - s)/2, (-L - s)/2), T((-L - s)/2 - t * calc.cos(45deg),(-L - s)/2 - t * calc.sin(45deg)))
       legenda(T((-L - s)/2, (-L - s)/2 - t*.75), [$2d$])
 
-      line(T(s, -L), T(s,- L - t), stroke: tracejado)
-      line(T(s, -L), T(s + t * calc.cos(45deg),- L - t * calc.sin(45deg)), stroke: tracejado)
-      legenda(T(s + t * calc.cos(45deg),- L - t * calc.sin(45deg) - .6), [Trecho curvo])
-
-
-      let w = (s + d2 + o.at(0), s + d2 + o.at(1)) // canto vivo do contorno
-      line(w, T(w.at(0) - o.at(0), s), stroke: tracejado-fino)
-      line(w, T(s, w.at(1) - o.at(1)), stroke: tracejado-fino)
 
     }
 
