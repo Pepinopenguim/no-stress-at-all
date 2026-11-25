@@ -24,6 +24,11 @@ bars = DomainPlot(
     azimuth=-60
 )
 
+add_plot(bars, mesh, "bulk";
+    view_mode=:outline,
+    line_elem_color=Color(50,50,50)
+)
+
 for (rule, color) in Dict(
     "topReinforcement" => Color(230, 126, 0),    # Orange
     "botReinforcement" => Color(180, 30, 45),    # Dark red
@@ -39,7 +44,7 @@ for (rule, color) in Dict(
     )
 end
 
-save(bars, "bars.pdf")
+save(bars, "report/figuras/bars.pdf")
 
 looper = Dict(
     "M100R3.pdf" => generate_mesh(10cm, 1/3),

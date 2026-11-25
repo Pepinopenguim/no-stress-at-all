@@ -15,7 +15,7 @@
     coorientador: none,
     data: datetime(day:1, month:1, year:2025),
     bibliografia: "ref.bib",
-    estilo: "abnt.csl",
+    estilo: "abnt-2023.csl",
 )
 
 // ❱❱❱ Arquivos de conteúdo
@@ -24,14 +24,14 @@
 #include "conteúdo/revisão.typ"
 #include "conteúdo/metodologia.typ"
 #include "conteúdo/redação.typ"
-#include "conteúdo/análise.typ"
-#include "conteúdo/conclusões.typ"
-#include "conteúdo/cronograma.typ"
+//#include "conteúdo/análise.typ"
+//#include "conteúdo/conclusões.typ"
+//#include "conteúdo/cronograma.typ"
 
 // ❱❱❱ Apêndices e anexos
 
 #show: adendos
-#include("conteúdo/apendices.typ")
+//#include("conteúdo/apendices.typ")
 
 // A bibliografia é gerada a partir dos arquivos `.bib` e `.csl` especificados na função `relatório`.
 

@@ -146,16 +146,17 @@ function generate_mesh(msh_size::Real, refinement_ratio::Real)
         (               0, b_col / 2 - 20mm, "halfColRfcmnt", "halfBarInt16"),
     ]
         p_low = add_point(geo, [x, y, -low_col_h])
-        p_high = add_point(geo, [x, y, upp_col_h])
+        p_high = add_point(geo, [x, y, upp_col_h + h])
         bar_line = add_line(geo, p_low, p_high)
         bar_path = add_path(geo, [bar_line], tag=tag, interface_tag=int_tag)
     end
 
     # Column stirrups
     points = [
-        add_point(geo, [ℓ_col / 2 - 20mm, 0, -low_col_h]),
-        add_point(geo, [ℓ_col / 2 - 20mm, b_col / 2 - 20mm, -low_col_h]),
-        add_point(geo, [0, b_col / 2 - 20mm, -low_col_h]),
+        add_point(geo, [ℓ_col / 2 - 20mm, 0, -low_col_h + 70mm]),
+        add_point(geo, [ℓ_col / 2 - 20mm, b_col / 2 - 20mm, -low_col_h + 70mm]),
+        add_point(geo, [0, b_col / 2 - 20mm, -low_col_h + 70mm]),
+        # 70mm to equally distance stirrups along column 
     ]
     edges = [
         add_line(geo, points[1], points[2]),

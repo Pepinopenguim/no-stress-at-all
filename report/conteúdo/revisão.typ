@@ -1,10 +1,10 @@
 // #import "/utils/todo.typ": TODO
-#import "helpers.typ": todo
+#import "helpers.typ": todo, prose
 = Revisão bibliográfica
 
 == Referencial Teórico
 
-O presente capítulo apresenta uma revisão atualizada do contexto atual da engenharia estrutural no que se refere à punção de lajes lisas. Depois, será apresentada uma introdução básica ao método dos elementos finitos, focada em aspectos interessantes para o caso simulado. Por fim, serão observados os modelos matemáticos utilizados na simulação.
+O presente capítulo apresenta uma revisão atualizada do contexto atual da engenharia estrutural no que se refere à punção de lajes lisas. Depois, será apresentada uma introdução básica ao método dos elementos finitos, focada em aspectos interessantes para o caso simulado. Então, serão observados os modelos matemáticos utilizados na simulação. Por fim, será observado o estado da arte na simulação numérica e experimental de punção.
 
 === Punção em Lajes Lisas
 
@@ -36,7 +36,7 @@ A superfície de ruptura inclina-se tipicamente entre $25 degree$ e $30 degree$ 
 
 #figure(
   image("../figuras/tronco_puncao.png", width: 70%),
-  caption: [Formação do tronco de cone de punção ao redor do pilar. @palhares2018 #todo[substituir por figura própria se necessário]]
+  caption: [Formação do tronco de cone de punção ao redor do pilar. @palhares2018]
 ) <fig_tronco_cone>
 
 Do ponto de vista mecânico, a resistência à punção mobiliza diferentes mecanismos: a contribuição do concreto íntegro na zona comprimida, o engrenamento dos agregados nas fissuras inclinadas, o efeito de pino das barras de flexão e, quando presente, a contribuição da armadura de cisalhamento @Sacramento_2012. A falha ocorre quando a soma dessas parcelas é superada pela demanda cisalhante atuante na seção crítica.
@@ -101,10 +101,10 @@ $
 onde $rho$ é a taxa geométrica de armadura de flexão aderente.
 
 - Contorno C'': afastado $2d$ da última camada de armadura de cisalhamento. Verifica-se apenas quando há armadura transversal, para garantir que a ruína não ocorra fora da região armada. Nota-se que em casos onde a estabilidade global da estrutura depende da resistência da laje à punção, a armadura será obrigatória.
-
+#import "helpers.typ": abnt_contours
 #figure(
-  image("../figuras/perimetros_c_abnt.png", width: 80%),
-  caption: [Contornos críticos C e C' segundo a ABNT NBR 6118:2023. #todo[Retirar marca d'água / ver necessidade de adicionar C'']]
+  abnt_contours(),
+  caption: [Contornos críticos C e C' segundo a ABNT NBR 6118:2023.]
 ) <fig_nbr_contornos>
 
 Quando a resistência no contorno C' é insuficiente, a norma permite o uso de armadura de cisalhamento. Nesse caso, a resistência é acrescida da parcela contribuída pela armadura, e a tensão resistente $tau_(R d 3)$ passa a incluir um termo proporcional a $(A_(s w) f_(y w d)) / (u_1 d)$, onde $A_(s w)$ é a área da armadura por camada, $f_(y w d)$ é a resistência de cálculo da armadura (limitada a 300 MPa para conectores e 250 MPa para estribos) e $u_1$ é o perímetro crítico.
@@ -201,7 +201,7 @@ Em carregamentos cíclicos ou alternados, modelos como os de @Murcia_Delso_2013 
 
 === O Método dos Elementos Finitos (MEF)
 
-#todo[Após realizar algumas simulações, revisar este texto para descrever partes do processo de elementos finitos que causaram problema / são interessantes.]
+//#todo[Após realizar algumas simulações, revisar este texto para descrever partes do processo de elementos finitos que causaram problema / são interessantes.]
 
 
 O Método dos elementos finitos é um método de solução numérica para problemas de valor de contorno usado amplamente e históricamente na engenharia civil. A discretização converte a análise geométrica em uma análise de um conjunto finito de elementos, conectados por nós, que substituem o domínio contínio com um modelo discreto adequado para análise numérica. A qualidade dessa aproximação depende diretamente da malha adotada (a união dos elementos em nós, linhas, faces e volumes) e dos modelos constitutivos (que representam as propriedades físicas do material). 
@@ -249,6 +249,8 @@ As forças internas dependem do estado atual do material, e por isso o sistema n
 Em problemas com amolecimento acentuado, no caso da punção, a matriz tangente pode se tornar indefinida e o método pode falhar. Nesses casos, técnicas de continuação (como _arc-length_ e métodos de passo automático) e esquemas de integração implícita, como os adotados em @Durand_2019 e @Durand_2021_3D, são necessários para acompanhar o caminho de equilíbrio após o pico de carga.
 
 === Elementos Coesivos
+
+Esta seção busca introduzir a evolução histórica dos modelos coesivos. Então, serão apresentados os modelos centrais da presente pesquisa, bidimensionais e tridimensionais. Por fim, será apresentado o modelo de interface barra-sólido, utilizado para simular a aderência das barras em relação ao concreto.
 
 ==== Contexto histórico e Evolução
 
@@ -317,7 +319,7 @@ $ <esc_f>
 A função de potencial plástico ($g$), utilizada para determinar a direção do fluxo do material durante deformações plásticas, é definina por
 
 $
-   g(sigma, sigma_max) = cases(tau^2 - tau_max^2 = 0 " para " sigma_n <= 0, sigma_n^2 tan^2(phi) + tau^2 - tau_max^2 = 0 " para " sigma_n > 0) 
+  g(sigma, sigma_max) = cases(tau^2 - tau_max^2 = 0 " para " sigma_n <= 0, sigma_n^2 tan^2(phi) + tau^2 - tau_max^2 = 0 " para " sigma_n > 0) 
 $
 
 // Hordijk
@@ -331,7 +333,7 @@ Para representar o amolecimento da fratura, isto é, a translação da @esc_f pa
 
 #figure(
   image("../figuras/amolecimento_modelo.png"),
-  caption: [Função de Escoamento (a) $u_p = 0$, (b) $u_c > u_p > 0$, (c) $u_p = u_c$ #todo[ajustar zoom / manter fontes consistentes]]
+  caption: [Função de Escoamento (a) $u_p = 0$, (b) $u_c > u_p > 0$, (c) $u_p = u_c$ Fonte: @Durand_2019]
 )
 
 //  $ D_(e p)$
@@ -353,7 +355,7 @@ A tensão de teste apenas será válida se a condição de escoamento não for a
 
 #figure(
   image("../figuras/atualiz_tensoes.png", width: 100%),
-  caption: [Atualização de tensões #todo[revisar necessidade de mudar imagem]]
+  caption: [Atualização de tensões Fonte: @Durand_2019.]
 ) <tens_update>
 
 ==== Modelo tridimensional <sec_cohesive_3d>
@@ -484,10 +486,10 @@ Atualmente existem três abordagens para a abordar a geometria e influência das
 ) <fig:modelos_barras>
 
 
-Para superar essas limitações, especialmente em simulações tridimensionais, o modelo apresentado por @Durand_2021 utiliza um elemento semi-embutido de interface contínuo barra-sólido (_rod-solid interface element_) que dispensa a compatibilidade de malha e permite a aplicação direta de condições de contorno nos nós da barra. Diferentemente do modelo embutido apresentado na @fig:modelos_barras (b), o elemento é formulado a partir de pontos de controle virtuais interiores ao elemento de volume, localizados, inicialmente, nas mesmas coordenadas espaciais dos nós da barra. 
+Para superar essas limitações, especialmente em simulações tridimensionais, o modelo apresentado por #prose(<Durand_2021>) utiliza um elemento discreto com acoplamento, de interface contínuo barra-sólido (_rod-solid interface element_) que dispensa a compatibilidade de malha e permite a aplicação direta de condições de contorno nos nós da barra. Diferentemente do modelo embutido apresentado na @fig:modelos_barras (b), o elemento é formulado a partir de pontos de controle virtuais interiores ao elemento de volume, localizados, inicialmente, nas mesmas coordenadas espaciais dos nós da barra. 
 
 #figure(
-  caption: [Modelo semi-embutido],
+  caption: [Modelo de Elemento discreto com acoplamento @hipolito2016aplicacao.],
   image("../figuras/modelos_barras_semi-embutido.png", width: 55%)
 )
 
@@ -502,7 +504,7 @@ A partir desses pontos, calcula-se o deslocamento relativo entre barra e sólido
 
 A matriz $tilde(bold(B))$ relaciona os deslocamentos nodais do sólido e da barra aos deslocamentos relativos no ponto de integração, e a matriz de rigidez do elemento é obtida por integração numérica ao longo do comprimento da barra. Diferentemente de elementos de mola pontuais, as forças de contato são distribuídas continuamente ao longo do comprimento, o que permite recuperar a distribuição de tensões de aderência nos pontos de integração de forma análoga a elementos finitos convencionais.
 
-Para o comportamento constitutivo da interface, @Durand_2021 adota um modelo que combina o envelope monotônico do _fib Model Code_ @fib2020modelcode com o modelo cíclico de @Murcia_Delso_2013.
+Para o comportamento constitutivo da interface, #prose(<Durand_2021>) adota um modelo que combina o envelope monotônico do _fib Model Code_ @fib2020modelcode com o modelo cíclico de #prose(<Murcia_Delso_2013>).
 
 Complementarmente, o elemento de restrição de ponta controla o deslocamento relativo na extremidade da armadura, cobrindo duas situações: pontas ancoradas, de deslocamento nulo, adotando-se penalidade, e pontas não ancoradas, que impedem apenas a penetração da barra no sólido. Para o caso de lajes lisas, esse elemento é particularmente útil para representar a ancoragem das barras de flexão nas extremidades da laje, onde ganchos em "U" impedem o escorregamento excessivo.
 
@@ -522,7 +524,7 @@ A modelagem numérica da punção em lajes tem evoluído significativamente nas 
 
 #figure(
   caption: [Publicações científicas de alta qualidade em punção ao longo dos anos. Em azul, publicações de análise numérica, em cinza, número total de publicações realizadas. Fonte: @Schimanowski_2025],
-  image("../figuras/punshing_shear_papers_over_time.png")
+  image("../figuras/punshing_shear_papers_over_time.png", width: 80%)
 )
 
 Os autores destacam que, embora os estudos experimentais ainda dominem o campo, as investigações numéricas via Método dos Elementos Finitos (MEF) cresceram exponencialmente na última década. Esse avanço é justificado pelo custo significativamente menor das simulações em relação aos ensaios, pela capacidade de avaliar múltiplos parâmetros rapidamente e pela possibilidade de explorar cenários críticos antes da implementação em projeto. Contudo, a revisão ressalta que a modelagem numérica da punção é um desafio complexo, exigindo conhecimento aprofundado de programação, teorias constitutivas e do próprio MEF, além de cuidadosa definição de condições de contorno, malhas e métodos de solução.
@@ -551,7 +553,7 @@ No contexto dos modelos numéricos desenvolvidos na presente pesquisa, adota-se 
 
 #figure(
   caption: [Esquema do sistema de Ensaios utilizado por Palhares (2018) e Lima (2021).],
-  image("../figuras/lima_palhares_laje.png", width: 100%)
+  image("../figuras/lima_palhares_laje.png", width: 80%)
 )
 
 A tese de @Lima2021 englobou o programa experimental completo com 20 lajes lisas, divididas em 5 séries de 4 lajes cada. A dissertação de @palhares2018 concentrou-se especificamente nos ensaios e análises detalhadas da Série 3 desse mesmo programa.
