@@ -184,7 +184,7 @@
 
       // Draw foreground content
       on-layer(100, {
-        content(( lh/2,     -500,   h/2), text(fill:rgb("#623517"))[$u_x = 0$])
+        content(( lh/2,     -500,   h/2), text(fill:rgb("#961c18"))[$u_x = 0$])
         content((    -500,  bh/2,   h/2), text(fill: rgb("0000ff"))[$u_y = 0$])
         content((    0,     0, zct*1.2), text(fill: rgb("#055401"))[$u_x = u_y = 0$])
         content((    0,     0, -zct/3*1.1), [$u_x = u_y = u_z = 0$])
@@ -567,8 +567,8 @@
     let legenda(pos, body, size: 11pt) = content(pos, text(size: size)[#body])
 
     // Seção cruciforme: braços 2L × 2s (polígono anti-horário)
-    let cruz(L, s) = (
-      (s, L), (-s, L), (-s, s), (-L, s), (-L, -s), (-s, -s),
+    let tshape(L, s) = (
+      (-s, s), (-L, s), (-L, -s), (-s, -s),
       (-s, -L), (s, -L), (s, -s), (L, -s), (L, s), (s, s),
     )
 
@@ -623,38 +623,34 @@
     // ============================================================
     // (c) Seção cruciforme → retas e arcos alternados
     // ============================================================
-    let painel-cruciforme(o) = {
+    let painel-tforme(o) = {
       let T(x, y) = (x + o.at(0), y + o.at(1))
       let L = 1.4   // meio-comprimento dos braços
       let s = 0.4   // meia-espessura dos braços
-      let pts = cruz(L, s)
+      let pts = tshape(L, s)
 
       line(..pts.map(pt => add(pt, o)), close: true, fill: cinza, stroke: cheio)
 
       let t = .8
       //drawing straight lines
       for (pt0, pt1) in (
+        ((-L, s + t), (L, s + t)),
         ((L+t,- s), (L+t,+ s)),
         ((-L - t,- s), (-L - t,+ s)),
         ((-s,- L - t), (+s , - L - t )),
-        ((-s, L + t), (+s ,  L + t )),
-        ((L + t / calc.sqrt(2), s+ t / calc.sqrt(2)), (s + t / calc.sqrt(2), L + t / calc.sqrt(2))),
         ((L + t / calc.sqrt(2), - s - t / calc.sqrt(2)), (s + t / calc.sqrt(2), - L - t / calc.sqrt(2))),
-        ((- L - t / calc.sqrt(2), s+ t / calc.sqrt(2)), (- s - t / calc.sqrt(2), L + t / calc.sqrt(2))),
         ((- L - t / calc.sqrt(2), - s - t / calc.sqrt(2)), (- s - t / calc.sqrt(2), - L - t / calc.sqrt(2))),
       ) {
         line(add(pt0,o), add(pt1,o), stroke: tracejado)
       }
 
       for (c, start, delta) in (
-         ((L+t, s), 0deg, 45deg),
+         ((L+t, s), 0deg, 90deg),
          ((L+t, -s), 0deg, -45deg),
-         ((s, L + t), 90deg, -45deg),
-         ((-s, L + t), 90deg, +45deg),
          ((s, -L - t), -90deg, +45deg),
          ((-s, -L - t), -90deg, -45deg),
          ((-L - t , -s ), 180deg, 45deg),
-         ((-L - t , +s ), 180deg, -45deg),
+         ((-L - t , +s ), 180deg, -90deg),
        ) {
          arc(add(o, c ), radius: t, start: start, delta: delta, stroke: tracejado)
        }
@@ -676,6 +672,100 @@
     // ============================================================
     painel-circular((0, 0))
     painel-retangular((6.4, 0))
-    painel-cruciforme((12.8, 0))
+    painel-tforme((12.8, 0))
+  })
+}
+
+
+#let aci-contours() = {
+  cetz.canvas(length: 0.85cm, {
+    import cetz.draw: *
+
+    // ------------------------------------------------------------
+    // Parâmetros
+    // ------------------------------------------------------------
+    let d2 = 0.85  // afastamento 2d a partir da face da coluna
+    let cinza = rgb("#9d9d9d")
+    let fino = 0.55pt
+    let cheio = 0.9pt
+    let tracejado = (paint: black, thickness: 0.75pt, dash: "dashed")
+    let tracejado-fino = (paint: black, thickness: fino, dash: "dashed")
+    let ponto = (paint: black, thickness: fino)
+
+    // ------------------------------------------------------------
+    // Álgebra vetorial 2D
+    // ------------------------------------------------------------
+    let add(a, b) = (a.at(0) + b.at(0), a.at(1) + b.at(1))
+    let sub(a, b) = (a.at(0) - b.at(0), a.at(1) - b.at(1))
+    let mul(a, k) = (a.at(0) * k, a.at(1) * k)
+    let cross(a, b) = a.at(0) * b.at(1) - a.at(1) * b.at(0)
+    let dot(a, b) = a.at(0) * b.at(0) + a.at(1) * b.at(1)
+    let norm(a) = {
+      let l = calc.sqrt(dot(a, a))
+      (a.at(0) / l, a.at(1) / l)
+    }
+
+    // ------------------------------------------------------------
+    // Acessórios
+    // ------------------------------------------------------------
+    let seta(a, b, escala: 0.45) = line(
+      a, b, mark: (end: "triangle", fill: black, scale: escala), stroke: ponto)
+    let cota(a, b) = { seta(a, b); seta(b, a) }
+    let extensao(a, b) = line(a, b, stroke: ponto)
+    let legenda(pos, body, size: 11pt) = content(pos, text(size: size)[#body])
+
+    // Seção cruciforme: braços 2L × 2s (polígono anti-horário)
+    let tshape(L, s) = (
+      (-s, s), (-L, s), (-L, -s), (-s, -s),
+      (-s, -L), (s, -L), (s, -s), (L, -s), (L, s), (s, s),
+    )
+
+    // ============================================================
+    // (a) Seção circular → contorno concêntrico
+    // o = origem do painel; T(x, y) desloca o ponto para o painel
+    // ============================================================
+    let painel-circular(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let r = 0.8
+      circle(T(0, 0), radius: r + d2, stroke: tracejado)
+      circle(T(0, 0), radius: r, fill: cinza, stroke: cheio)
+
+      extensao(T(r, 1.55), T(r, 2.4))
+      extensao(T(r + d2, 1.55), T(r + d2, 2.4))
+      cota(T(r, 2.28), T(r + d2, 2.28))
+      legenda(T(r + d2 / 2, 2.7), $d\/2$)
+
+      seta(T(-r - d2, 0), T(-r - d2 - .75, 0))
+      legenda(T(-r - d2 - 1.7, 0), align(center)[Seção Crítica \ $b_0$])
+    }
+
+    // ============================================================
+    // (b) Seção retangular → contorno de cantos arredondados
+    // ============================================================
+    let painel-retangular(o) = {
+      let T(x, y) = (x + o.at(0), y + o.at(1))
+      let a = 1.0   // meia-largura da coluna
+      let b = 1     // meia-altura
+      rect(T(-a, -b), T(a, b), fill: cinza, stroke: cheio)
+      rect(T(-a - d2, -b - d2), T(a + d2, b + d2), radius: 0, stroke: tracejado)
+
+      extensao(T(a, b + 0.12), T(a, 2.3))
+      extensao(T(a + d2, b + d2 + 0.08), T(a + d2, 2.3))
+      cota(T(a, 2.2), T(a + d2, 2.2))
+      legenda(T(a + d2 / 2, 2.65), $d\/2$)
+
+      seta(T(2.95, .45), T(a + d2, 0.45))
+      legenda(T(3.7, .45), align(center)[Seção Crítica \ $b_0$])
+      
+
+    }
+
+    
+
+    // ============================================================
+    // Disposição horizontal: só a origem muda entre os painéis
+    // ============================================================
+    painel-circular((0, 0))
+    painel-retangular((6.4, 0))
   })
 }

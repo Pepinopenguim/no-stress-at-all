@@ -4,11 +4,11 @@
 
 = Metodologia
 
-A metodologia adotada neste trabalho é organizada em cinco etapas complementares, alinhadas aos objetivos específicos. Inicialmente, define-se um modelo de referência da laje lisa ensaiada por @palhares2018, calibrado com base nas propriedades experimentais dos materiais e comparado aos resultados numéricos de @Palhares_2022. Em seguida, realiza-se um estudo de convergência de malha, variando o tamanho base e o refinamento local na ligação laje-pilar, para definir a discretização adotada nas etapas seguintes. Na terceira etapa, conduz-se uma análise de sensibilidade dos parâmetros do concreto coesivo — $f_t​$, $G_F​$, $ϕ$ e $α$ — sobre a carga de pico, a rigidez e o ramo de amolecimento. A quarta etapa avalia os padrões de fissuração e as tensões na armadura, comparando os resultados numéricos com os mapas experimentais e com as leituras de (_strain gauges_). Por fim, o modelo é estendido para as configurações de armadura de punção ensaiadas por @Lima2021, avaliando a influência do tipo de ancoragem sobre a carga de pico e o modo de ruptura. A análise é realizada no pacote `Serendip`, na linguagem `Julia`, com geração de malha pelo `Gmsh` e pós-processamento no _ParaView_.
+A metodologia adotada neste trabalho é organizada em cinco etapas complementares, alinhadas aos objetivos específicos. Inicialmente, define-se um modelo de referência da laje lisa ensaiada por #prose(<palhares2018>), calibrado com base nas propriedades experimentais dos materiais e comparado aos resultados numéricos de #prose(<Palhares_2022>). Em seguida, realiza-se um estudo de convergência de malha, variando o tamanho base e o refinamento local na ligação laje-pilar, para definir a discretização adotada nas etapas seguintes. Na terceira etapa, conduz-se uma análise de sensibilidade dos parâmetros do concreto coesivo — $f_t​$, $G_F​$, $ϕ$ e $α$ — sobre a carga de pico, a rigidez e o ramo de amolecimento. A quarta etapa avalia os padrões de fissuração e as tensões na armadura, comparando os resultados numéricos com os mapas experimentais e com as leituras de (_strain gauges_). Por fim, o modelo é estendido para as configurações de armadura de punção ensaiadas por #prose(<Lima2021>), avaliando a influência do tipo de ancoragem sobre a carga de pico e o modo de ruptura. A análise é realizada no pacote `Serendip`, na linguagem `Julia`, com geração de malha pelo `Gmsh` e pós-processamento no _ParaView_.
 
 == Estratégia geral e etapas da pesquisa
 
-A pesquisa é organizada em cinco etapas, cada uma correspondendo a um dos objetivos específicos apresentados na Introdução. A @tab:rastreabilidade sintetiza essa correspondência, relacionando cada objetivo ao conjunto de casos simulados, às métricas de avaliação, aos critérios de aceitação adotados e às entregas esperadas (figuras e tabelas) na Análise dos Resultados.
+A pesquisa é organizada em quatro etapas, cada uma correspondendo a um dos objetivos específicos apresentados na @sec:objetivos. A @tab:rastreabilidade sintetiza essa correspondência, relacionando cada objetivo ao conjunto de casos simulados, às métricas de avaliação, e às entregas esperadas (figuras e tabelas) na Análise dos Resultados.
 
 #pagebreak()
 #rotate(-90deg, reflow: true)[
@@ -179,9 +179,9 @@ A malha é gerada no `GeoModel` do `Serendip`, que utiliza funções base das bi
 - Tamanho base do elemento, $s$;
 - Tamanho do elemento na zona de refino, na região de ruptura laje-pilar, $s_r$.
 
-Adotam-se inicialmente $s in {100, 200} "mm"$ e $s_r in {s\/3, s\/5, s\/7}$. Assim, o refino local acompanha o tamanho base e evita que a comparação entre casos misture efeitos de tamanho global e tamanho local. A zona refinada é centrada em $[0, 0, h/2]$ e se estende por $2h$ na vertical. Esse refino é essencial para capturar o gradiente de tensões na região onde o cone de punção se forma.
+Adotam-se inicialmente $s in {100, 200} "mm"$ e $s_r in {s\/3, s\/5, s\/7}$. Assim, o refino local acompanha o tamanho base e evita que a comparação entre casos misture efeitos de tamanho global e tamanho local. A zona refinada é centrada em $[0, 0, h/2]$ e se estende por $2h$ na vertical, onde $h$ é a espessura da laje. Esse refino é essencial para capturar o gradiente de tensões na região onde o cone de punção se forma.
 
-Após a geração da malha de volume, os elementos coesivos são inseridos entre todos os elementos de volume adjacentes. Conforme a @sec_cohesive_3d, o modelo de @Durand_2021_3D adota uma abordagem discreta para a fratura: os elementos coesivos têm espessura nula e representam a interface potencial entre dois elementos de volume. A fissura só se desenvolve onde o estado de tensões atinge o critério de escoamento do modelo constitutivo coesivo, de modo que a localização da fissura é determinada pela física do problema, não pela topologia da malha. O caso final será escolhido pela melhor relação entre precisão dos resultados — carga de pico, rigidez inicial, queda pós-pico e formação do cone de punção — e tempo de processamento, e não simplesmente pela malha mais refinada.
+Após a geração da malha de volume, os elementos coesivos são inseridos entre todos os elementos de volume adjacentes. Conforme a @sec_cohesive_3d, o modelo de #prose(<Durand_2021_3D>) adota uma abordagem discreta para a fratura: os elementos coesivos têm espessura nula e representam a interface potencial entre dois elementos de volume. A fissura só se desenvolve onde o estado de tensões atinge o critério de escoamento do modelo constitutivo coesivo, de modo que a localização da fissura é determinada pela física do problema, não pela topologia da malha. O caso final será escolhido pela melhor relação entre precisão dos resultados — carga de pico, rigidez inicial, queda pós-pico e formação do cone de punção — e tempo de processamento, e não simplesmente pela malha mais refinada.
 
 #figure(
   caption: [Casos de Malhas propostas para o estudo.],
@@ -215,7 +215,7 @@ Após a geração da malha de volume, os elementos coesivos são inseridos entre
 
 == Modelos constitutivos
 
-A escolha dos modelos constitutivos adotados na simulação busca representar o comportamento dos materiais, evitando redundâncias numéricas. A filosofia central do modelo de @Durand_2021_3D é concentrar toda a não linearidade do concreto nos elementos coesivos. Dessa forma, o volume de concreto atua apenas transmitindo tensões entre fissuras. Essa separação evita a dupla contagem de não linearidade que ocorreria ao se combinar um modelo de dano contínuo no volume com elementos coesivos na interface. Os modelos e suas respectivas propriedades são detalhados a seguir.
+A escolha dos modelos constitutivos adotados na simulação busca representar o comportamento dos materiais, evitando redundâncias numéricas. A filosofia central do modelo de #prose(<Durand_2021_3D>) é concentrar toda a não linearidade do concreto nos elementos coesivos. Dessa forma, o volume de concreto atua apenas transmitindo tensões entre fissuras. Essa separação evita a dupla contagem de não linearidade que ocorreria ao se combinar um modelo de dano contínuo no volume com elementos coesivos na interface. Os modelos e suas respectivas propriedades são detalhados a seguir.
 
 #let Ec = 21.551
 #let nu = 0.2
@@ -385,10 +385,10 @@ As condições de contorno refletem as condições do ensaio experimental, aplic
   ]
 )<tab:cc>
 
-Optou-se por controle de deslocamento nas placas de carregamento, para melhor simular os ensaios realizados por @palhares2018 e @Lima2021, com deslocamento incremental de $25$ mm é suficiente para levar a laje à ruptura e capturar o ramo descendente. Diferentemente das simulações realizadas por @Palhares_2022
+Optou-se por controle de deslocamento nas placas de carregamento, para melhor simular os ensaios realizados por #prose(<palhares2018>) e @Lima2021, com deslocamento incremental de $25$ mm é suficiente para levar a laje à ruptura e capturar o ramo descendente. Diferentemente das simulações realizadas por #prose(<Palhares_2022>).
 
 == Procedimento de Análise Numérica
-A análise não linear é conduzida por controle de deslocamento, com deslocamento vertical prescrito de $-25$ mm nos pontos de controle das placas de carregamento, subdividido em $100$ incrementos, com saída de resultados a cada $2$ incrementos (total de $50$ quadros). O processo iterativo adota tolerância de convergência de $1$ kN e controle automático de incremento, fator praticamente necessário para convergência do modelo, de modo que o passo é reduzido caso a convergência não seja atingida dentro do número máximo de iterações e ampliado nas fases de resposta suave. Esses parâmetros foram mantidos idênticos em todas as simulações, de modo que a comparação entre casos reflita apenas a variação das grandezas em estudo.
+A análise não linear é conduzida por controle de deslocamento, com deslocamento vertical prescrito de $u_z = -25$ mm nos pontos de controle das placas de carregamento, subdividido em $100$ incrementos, com saída de resultados a cada $2$ incrementos (total de $50$ quadros). O processo iterativo adota tolerância de convergência de $1$ kN (equivalente a $ approx 0,2%$ de $P_(max",exp")$) e controle automático de incremento, fator praticamente necessário para convergência do modelo, de modo que o passo é reduzido caso a convergência não seja atingida dentro do número máximo de iterações e ampliado nas fases de resposta suave. Esses parâmetros foram mantidos idênticos em todas as simulações, de modo que a comparação entre casos reflita apenas a variação das grandezas em estudo.
 
 No processo de iteração do MEF, aplica-se um processo de reaplicação da carga $R(u) = f_"ext" - f_"int"$ como forma de redirecionar a linha de tensão-deformação para um falor mais próximo da realidade. Esse processo é feito ao longo de um `span`de iterações, para não afetar bruscamente o resultado.
 
@@ -399,11 +399,11 @@ O pós-processamento da análise numérica é organizado em três etapas complem
 + Extração e organização dos dados de saída gerados pelo Serendip;
 + Visualização tridimensional dos campos de deslocamento, tensão e dano no ParaView; 
 + Visualização qualitativa do padrão de fissuras, comparação do ângulo do cone de punção com os resultados experimentais e numéricos.
-+ Geração dos gráficos de comparação com os resultados experimentais de @palhares2018 e @Lima2021, além dos resultados numéricos obtidos por @Palhares_2022.
++ Geração dos gráficos de comparação com os resultados experimentais de #prose(<palhares2018>) e #prose(<Lima2021>), além dos resultados numéricos obtidos por #prose(<Palhares_2022>).
 
 = Resultados esperados
 
-Os resultados esperados são organizados segundo os cinco objetivos e se apoiam nos ensaios de @palhares2018 e @Lima2021, nas simulações de @Palhares_2022 e nas diretrizes de modelagem coesiva de @Durand_2019 e @Durand_2021_3D. Eventuais desvios serão discutidos na Análise dos Resultados. A @tab:resumo-esp sintetiza as expectativas ao final da seção.
+Os resultados esperados são organizados segundo os cinco objetivos e se apoiam nos ensaios de #prose(<palhares2018>) e #prose(<Lima2021>), nas simulações de #prose(<Palhares_2022>) e nas diretrizes de modelagem coesiva de #prose(<Durand_2019>) e #prose(<Durand_2021_3D>). Eventuais desvios serão discutidos na Análise dos Resultados. A @tab:resumo-esp sintetiza as expectativas ao final da seção.
 
 == Convergência de malha
 

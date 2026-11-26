@@ -5,7 +5,7 @@
 
 #show: relatório.with(
     título: "Modelagem Numérica da Punção em Lajes de Concreto Armado usando Elementos Finitos",
-    subtítulo: highlight(["Seminário de mestrado em estruturas e construção civil"]),
+    subtítulo: "MONOGRAFIA DE PROJETO FINAL EM ENGENHARIA CIVIL 1",
     tipo: "TCC", // "Tese", "Dissertação", "TCC", "Seminário"
     programa: "Programa de Pós-Graduação em Estruturas e Construção Civil",
     departamento: "Departamento de Engenharia Civil e Ambiental",
@@ -13,7 +13,7 @@
     autor: "Vítor Luís Costa Azevedo",
     orientador: "Raul Durand",
     coorientador: none,
-    data: datetime(day:1, month:1, year:2025),
+    data: datetime(day:3, month:12, year:2026),
     bibliografia: "ref.bib",
     estilo: "abnt-2023.csl",
 )

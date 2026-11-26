@@ -8,7 +8,7 @@ O presente capítulo apresenta uma revisão atualizada do contexto atual da enge
 
 === Punção em Lajes Lisas
 
-As lajes lisas são sistemas estruturais laminares apoiados exclusivamente por pilares. O acúmulo de esforços e tensões, especialmente em torno da conexão laje-pila, causa uma região de grande potencial de ruptura. De acordo com @melges1995, o acúmulo de tensões nessa região pode ser extremo a ponto da ruptura ocorrer antes do escoamento do aço, caracterizando uma ruptura frágil. 
+As lajes lisas são sistemas estruturais laminares apoiados exclusivamente por pilares. O acúmulo de esforços e tensões, especialmente em torno da conexão laje-pila, causa uma região de grande potencial de ruptura. De acordo com #prose(<melges1995>), o acúmulo de tensões nessa região pode ser extremo a ponto da ruptura ocorrer antes do escoamento do aço, caracterizando uma ruptura frágil. 
 
 Apesar disso, a conveniência na sua execução justifica seu uso, especialmente em função da: supressão de vigas, que simplifica a execução em obra do concreto armado, obtendo-se uma execução mais ágil do projeto, redução de formas, além da economia de materiais e mão de obra; redução do pé-direito, fator que aumenta o número de pavimentos a serem executados para uma mesma altura; Simplificação do projeto de ventilação, iluminação e resistência à incêndios, por diminuição dos obstáculos e assim, concentração de calor @palhares2018.
 
@@ -32,7 +32,7 @@ A ruptura por punção é um evento potencialmente catastrófico, por ocorrer de
 
 Sob carregamento crescente, a região da ligação laje-pilar desenvolve um estado triaxial de tensões no qual a componente cisalhante predomina. Quando a resistência à tração diagonal do concreto é atingida, inicia-se a formação de uma fissura inclinada que, propagando-se da face tracionada em direção à face comprimida, delimita um sólido aproximadamente cônico ao redor do pilar — o chamado tronco de cone de punção @melges1995.
 
-A superfície de ruptura inclina-se tipicamente entre $25 degree$ e $30 degree$ em relação ao plano da laje, conforme observado experimentalmente por @regan1981 e confirmado por @palhares2018. A extensão horizontal dessa superfície é da ordem de $2 d$ a $3 d$, onde $d$ é a altura útil da laje.
+A superfície de ruptura inclina-se tipicamente entre $25 degree$ e $30 degree$ em relação ao plano da laje, conforme observado experimentalmente por #prose(<regan1981>) e confirmado por #prose(<palhares2018>). A extensão horizontal dessa superfície é da ordem de $2 d$ a $3 d$, onde $d$ é a altura útil da laje.
 
 #figure(
   image("../figuras/tronco_puncao.png", width: 70%),
@@ -68,7 +68,7 @@ Para o caso de lajes lisas usuais, a punção pura é o modo predominante e o ma
 
 Diversos parâmetros governam a resistência à punção de lajes lisas, atuando de forma acoplada.
 
-A resistência à compressão do concreto $f_c$ é o primeiro deles: a capacidade resistente cresce com $f_c$, mas a relação não é linear — formulações normativas adotam proporcionalidade com $f_c^(1\/3)$ (EN 1992-1-1:2023 e ABNT NBR 6118:2026) ou com $sqrt(f_c)$ (ACI 318-25). @melges1995 relata que a relação não linear já havia sido observada por Graf na década de 1930, sendo que a adoção da raiz quadrada tende a superestimar a influência em concretos de alta resistência. 
+A resistência à compressão do concreto $f_c$ é o primeiro deles: a capacidade resistente cresce com $f_c$, mas a relação não é linear — formulações normativas adotam proporcionalidade com $f_c^(1\/3)$ (EN 1992-1-1:2023 e ABNT NBR 6118:2026) ou com $sqrt(f_c)$ (ACI 318-25). #prose(<melges1995>) relata que a relação não linear já havia sido observada por Graf na década de 1930, sendo que a adoção da raiz quadrada tende a superestimar a influência em concretos de alta resistência. 
 
 A taxa de armadura de flexão $rho$ controla a abertura das fissuras de flexão: quanto maior $rho$, menor a abertura, o que melhora o engrenamento dos agregados e o efeito de pino, elevando a capacidade resistente @regan1981. 
 
@@ -76,7 +76,7 @@ A geometria e dimensão do pilar determinam a distribuição de tensões na liga
 
   O efeito de escala (_size effect_) é outro fator central: a resistência nominal ao cisalhamento diminui com o aumento da altura útil, uma vez que lajes mais espessas apresentam maior heterogeneidade do concreto e menor eficiência da armadura de flexão no controle da abertura de fissuras ao longo de toda a seção fissurada @melges1995. Esse efeito é incorporado nas formulações normativas por coeficientes que majoram a resistência para lajes de menor altura útil @cen_en1992_2023, @abnt_nbr6118_2026. 
 
-Por fim, a armadura de cisalhamento é a forma mais eficiente de elevar a resistência à punção, uma vez que as demais alternativas — aumento da seção do pilar, da espessura da laje, da taxa de armadura de flexão ou da resistência do concreto — são, em geral, economicamente desfavoráveis ou arquitetonicamente indesejáveis @palhares2018. Diferentes tipos já foram investigados (estribos fechados, estribos abertos, estribos inclinados, barras dobradas e conectores tipo pino), sendo os estribos fechados e os _studs_ os mais utilizados na prática; a eficiência da armadura depende diretamente das condições de ancoragem na armadura de flexão @palhares2018, @Lima2021.
+Por fim, a armadura de cisalhamento é a forma mais eficiente de elevar a resistência à punção, uma vez que as demais alternativas — aumento da seção do pilar, da espessura da laje, da taxa de armadura de flexão ou da resistência do concreto — são, em geral, economicamente desfavoráveis ou arquitetonicamente indesejáveis @palhares2018. Diferentes tipos já foram investigados (estribos fechados, estribos abertos, estribos inclinados, barras dobradas e conectores tipo pino), sendo os estribos fechados e os _studs_ os mais utilizados na prática; a eficiência da armadura depende diretamente das condições de ancoragem na armadura de flexão @palhares2018 @Lima2021.
 
 ==== Dimensionamento normativo
 
@@ -123,7 +123,7 @@ onde $k_"pb"$ é o coeficiente de aprimoramento do gradiente de punção ($1 <= 
 #import "helpers.typ": euro-contours
 #figure(
   euro-contours(),
-  caption: [Exemplos de Perímetro de controle básico segundo o Eurocode 2:2023 ($0.5d_v$). #todo[melhorar imagem, tirar '2']]
+  caption: [Exemplos de Perímetro de controle básico segundo o Eurocode 2:2023 ($0.5d_v$).]
 ) <fig_ec2_perimetro>
 
 Em relação ao ELS, a revisão de 2023 do Eurocode 2 (EN 1992-1-1:2023) o modelo europeu estabelece uma dependência direta entre o comportamento em serviço e a capacidade resistente última (ELU): a rotação da laje ($psi$) e o nível de deformação da armadura de flexão sob combinações de serviço governam a abertura da fissura crítica de cisalhamento no perímetro de controle a $0,5 d_v$, condicionando a eficiência do engrenamento dos agregados.
@@ -144,11 +144,12 @@ $
 
 onde $β$ é a razão entre as dimensões do pilar, $λ$ é o fator de concreto leve, $λ_s$ é o fator de efeito de escala (_size effect_) e $α_s$ depende da posição do pilar.
 
-//#figure(
-//  image("../figuras/aci_perimetro.png", width: 70%),
-//  caption: [Perímetro crítico $b_0$ a $d\/2$ da face do pilar segundo o ACI 318-25. #todo[substituir por figura própria]]
-//) <fig_aci_perimetro>
-// 
+#import "helpers.typ": aci-contours
+#figure(
+  caption: [Perímetro crítico $b_0$ a $d\/2$ da face do pilar segundo o ACI 318-25.],
+  aci-contours()
+)
+
 
 No que se refere ao ELS, o @aci_318_25 adota uma abordagem desacoplada e indireta para o comportamento de lajes sob punção. O código norte-americano não estabelece uma verificação direta de tensões cisalhantes por punção em nível de serviço, concentrando a análise de cisalhamento bidirecional exclusivamente no Estado Limite Último (ELU) na seção crítica supracitada. No ELS, o desempenho da laje é garantido de maneira indireta pela prescrição de espessuras mínimas empíricas ($h_("min")$), que dispensam a verificação explícita de deformações sob cargas gravitacionais usuais. Quando a espessura da laje é inferior a esse limite, exige-se o cálculo explícito das flechas imediatas e diferidas no tempo com base no momento de inércia efetivo ($I_e$), de modo que essas garantam a aceitabilidade visual e a integridade de elementos não estruturais acoplados. Adicionalmente, o controle da fissuração na região dos apoios, onde ocorrem os picos de momento negativo simultâneos às solicitações de punção, é realizado pelo detalhamento e limitação do espaçamento das armaduras longitudinais de flexão.
 
@@ -172,9 +173,9 @@ A transferência de tensões de aderência ao longo do comprimento de embutiment
 
 A resposta última da ligação aço-concreto é condicionada pelo modo de falha da interface, governado principalmente pelo nível de confinamento do concreto e pelas dimensões do cobrimento:
 - Ruptura por Arrancamento (_Pull-out failure_): Ocorre em seções com elevado confinamento (grande cobrimento $c/d_b$, presença de armadura transversal densa ou tensões de compressão transversais). Nesse cenário, as mísulas de concreto entre as nervuras são progressivamente cisalhadas, resultando em uma curva tensão-deslizamento dúctil com patamar de plastificação e tensão residual de atrito.
-- Ruptura por Fendilhamento (_Splitting failure_): Ocorre em elementos com reduzido cobrimento de concreto ou sem armadura transversal de confinamento. As componentes radiais de força geradas pelo engrenamento mecânico induzem tensões de tração anulares (efeito de cunha) na massa de concreto ao redor da barra @melges1995. Ao ser atingida a resistência à tração do concreto, formam-se fissuras longitudinais de fendilhamento ao longo da armadura, provocando a perda brusca e frágil da capacidade de aderência antes que o patamar de arrancamento seja alcançado @palhares2018, @Lima2021\.
+- Ruptura por Fendilhamento (_Splitting failure_): Ocorre em elementos com reduzido cobrimento de concreto ou sem armadura transversal de confinamento. As componentes radiais de força geradas pelo engrenamento mecânico induzem tensões de tração anulares (efeito de cunha) na massa de concreto ao redor da barra @melges1995. Ao ser atingida a resistência à tração do concreto, formam-se fissuras longitudinais de fendilhamento ao longo da armadura, provocando a perda brusca e frágil da capacidade de aderência antes que o patamar de arrancamento seja alcançado @palhares2018 @Lima2021.
 
-A formulação analítica do comportamento local de aderência é comumente representada pela relação entre a tensão cisalhante de aderência ($tau_b$) e o deslizamento relativo ($s$). O @fib2020modelcode define a seguinte relação entre deslizamento e tensão de aderência:
+A formulação analítica do comportamento local de aderência é comumente representada pela relação entre a tensão cisalhante de aderência ($tau_b$) e o deslizamento relativo ($s$). O #prose(<fib2020modelcode>) define a seguinte relação entre deslizamento e tensão de aderência:
 
 $
 tau_b (s) =
@@ -197,7 +198,7 @@ Assim, o envelope monotônico é definido por uma curva em quatro trechos: ascen
 
 Para a @fig:fib_bond_slip e a @eq:fib_bond_slip, $tau_"bmax"$ é a tensão máxima de aderência, atingida ao final do trecho ascendente e mantida durante o patamar; $tau_"bf"$ é a tensão residual de atrito após o colapso da aderência. Os deslocamentos $s_1$, $s_2$ e $s_3$ delimitam os quatro trechos da curva: $s_1$ marca o fim do trecho ascendente (pico), $s_2$ o fim do patamar (início do descendente) e $s_3$ o ponto em que a tensão residual $tau_"bf"$ é atingida. 
 
-Em carregamentos cíclicos ou alternados, modelos como os de @Murcia_Delso_2013 incorporam o encurtamento do envelope monotônico e o fenômeno de estrangulamento (_pinching_) devido à degradação do dano na interface. Para o deslizamento de barras decorrentes da punção em lajes lisas, no entanto, apenas o caso de arrancamento é interessante.
+Em carregamentos cíclicos ou alternados, modelos como os de #prose(<Murcia_Delso_2013>) incorporam o encurtamento do envelope monotônico e o fenômeno de estrangulamento (_pinching_) devido à degradação do dano na interface. Para o deslizamento de barras decorrentes da punção em lajes lisas, no entanto, apenas o caso de arrancamento é interessante.
 
 === O Método dos Elementos Finitos (MEF)
 
@@ -238,7 +239,7 @@ $
 
 A forma fraca define a relação entre a matriz de rigidez global ($bold(K)$), os deslocamentos aplicados e decorrentes ($bold(U)$) com as forças existentes no problema ($bold(F)$). Em problemas elásticos, essa equação é válida e objetiva de se obter, em pequenos deslocamentos, mas torna-se inadequada para problemas não-lineares, como o concreto em ruptura.
 
-Para o problema de punção em lajes lisas. a não-linearidade ocorre principalmente em função do material, pela ocorrência de fraturas, escoamento do aço, coesão (e deslizamento) entre armadura e o concreto, dentre outros fatores. Nesses casos, a equação de equilíbrio deve ser reescrita em função do resíduo ($bold(R)(bold(u))$) entre as forças internas ($bold(f)_"int"$)e externas ($bold(f)_"ext"$) do sistema:
+Para o problema de punção em lajes lisas. a não-linearidade ocorre principalmente em função do material, pela ocorrência de fraturas, escoamento do aço, coesão (e deslizamento) entre armadura e o concreto, dentre outros fatores. Nesses casos, a equação de equilíbrio deve ser reescrita em função do resíduo ($bold(R)(bold(u))$) entre as forças internas ($bold(f)_"int"$) e externas ($bold(f)_"ext"$) do sistema:
 
 $ 
   bold(R)(bold(u)) = bold(f)_"ext" - bold(f)_"int" (bold(u)) = 0
@@ -246,7 +247,7 @@ $
 
 As forças internas dependem do estado atual do material, e por isso o sistema não pode ser resolvido diretamente. A solução é obtida de forma incremental e iterativa, pelo método de Newton-Raphson: aplica-se a carga em pequenos passos e, em cada passo, corrige-se a solução até que o resíduo seja suficientemente pequeno. Essa correção ocorre pela alteração da rigidez interna do material, ditada pelo modelo constitutivo apropriado.
 
-Em problemas com amolecimento acentuado, no caso da punção, a matriz tangente pode se tornar indefinida e o método pode falhar. Nesses casos, técnicas de continuação (como _arc-length_ e métodos de passo automático) e esquemas de integração implícita, como os adotados em @Durand_2019 e @Durand_2021_3D, são necessários para acompanhar o caminho de equilíbrio após o pico de carga.
+Em problemas com amolecimento acentuado, no caso da punção, a matriz tangente pode se tornar indefinida e o método pode falhar. Nesses casos, técnicas de continuação (como _arc-length_ e métodos de passo automático) e esquemas de integração implícita, como os adotados em #prose(<Durand_2019>) e #prose(<Durand_2021_3D>), são necessários para acompanhar o caminho de equilíbrio após o pico de carga.
 
 === Elementos Coesivos
 
@@ -256,18 +257,18 @@ Esta seção busca introduzir a evolução histórica dos modelos coesivos. Ent�
 
 A evolução dos elementos coesivos pode ser definida em quatro marcos principais, desde a concepção da zona coesiva até a consolidação como ferramenta numérica para fratura em concreto.
 
-A ideia fundamental de que a fratura é precedida por uma zona não linear de ponta de fissura, capaz de transmitir tensões, foi introduzida de forma independente por @Dugdale_1960 e @Barenblatt_1962. Dugdale analisou o escoamento em chapas de aço, e propôs que a zona plástica na ponta da fissura pudesse ser representada por tensões coesivas iguais à tensão de escoamento do material. Barenblatt, por sua vez, formulou o conceito para materiais parcialmente frágeis, tratando a zona coesiva como uma região de tensões de coesão que se anulam quando as superfícies se separam completamente . Esses trabalhos estabeleceram a base conceitual do que hoje se chama de cohesive zone model (CZM).
+A ideia fundamental de que a fratura é precedida por uma zona não linear de ponta de fissura, capaz de transmitir tensões, foi introduzida de forma independente por #prose(<Dugdale_1960>) e #prose(<Barenblatt_1962>). Dugdale analisou o escoamento em chapas de aço, e propôs que a zona plástica na ponta da fissura pudesse ser representada por tensões coesivas iguais à tensão de escoamento do material. Barenblatt, por sua vez, formulou o conceito para materiais parcialmente frágeis, tratando a zona coesiva como uma região de tensões de coesão que se anulam quando as superfícies se separam completamente . Esses trabalhos estabeleceram a base conceitual do que hoje se chama de cohesive zone model (CZM).
 
-A aplicação da zona coesiva ao concreto foi realizada por @Hillerborg_1976, com o _Fictitious Crack Model_ (FCM). A diferença essencial em relação aos metais é que, no concreto, a zona de processo de fratura não é pequena em comparação com a estrutura; ela pode ser da ordem da dimensão global do corpo. Por isso, o modelo de Hillerborg introduziu uma relação tensão-abertura da fissura ($σ–w$) que governa a transferência de tensões ao longo da fissura, com uma curva de amolecimento que se inicia na resistência à tração do concreto e decai até zero para uma abertura crítica, introduzindo a energia de fratura $G_F$. Esse foi um dos primeiros modelos de fratura não linear para concreto que incorporou explicitamente a zona de processo de fratura (FPZ). Em paralelo, @Bazant_1983 desenvolveu formulações complementares de fratura não linear para concreto, frequentemente citadas em conjunto com o FCM.
+A aplicação da zona coesiva ao concreto foi realizada por #prose(<Hillerborg_1976>), com o _Fictitious Crack Model_ (FCM). A diferença essencial em relação aos metais é que, no concreto, a zona de processo de fratura não é pequena em comparação com a estrutura; ela pode ser da ordem da dimensão global do corpo. Por isso, o modelo de Hillerborg introduziu uma relação tensão-abertura da fissura ($σ–w$) que governa a transferência de tensões ao longo da fissura, com uma curva de amolecimento que se inicia na resistência à tração do concreto e decai até zero para uma abertura crítica, introduzindo a energia de fratura $G_F$. Esse foi um dos primeiros modelos de fratura não linear para concreto que incorporou explicitamente a zona de processo de fratura (FPZ). Em paralelo, #prose(<Bazant_1983>) desenvolveram formulações complementares de fratura não linear para concreto, frequentemente citadas em conjunto com o FCM.
 
 #figure(
-  caption: [Hipóteses apresentadas por @Hillerborg_1976 para a relação tensão-abertura],
+  caption: [Hipóteses apresentadas por #prose(<Hillerborg_1976>) para a relação tensão-abertura],
   image("../figuras/softening_curve_76.png")
 )
 
-A transição do conceito mecânico para uma ferramenta computacional robusta ocorreu com o trabalho de @Needleman_1987, que implementou um elemento coesivo de modo I em um código de elementos finitos para estudar a separação entre partículas e matriz. Needleman introduziu uma descrição fenomenológica baseada em um potencial de separação, do qual derivam as leis de tração-separação. A partir desse trabalho, as leis coesivas passaram a ser amplamente utilizadas em modelos numéricos de materiais e estruturas. Nas décadas seguintes, diferentes formas de leis de tração-separação foram propostas (p. ex. @Hordijk1992), cada uma adequada a diferentes materiais e modos de fratura.
+A transição do conceito mecânico para uma ferramenta computacional robusta ocorreu com o trabalho de #prose(<Needleman_1987>), que implementou um elemento coesivo de modo I em um código de elementos finitos para estudar a separação entre partículas e matriz. Needleman introduziu uma descrição fenomenológica baseada em um potencial de separação, do qual derivam as leis de tração-separação. A partir desse trabalho, as leis coesivas passaram a ser amplamente utilizadas em modelos numéricos de materiais e estruturas. Nas décadas seguintes, diferentes formas de leis de tração-separação foram propostas (p. ex. @Hordijk1992), cada uma adequada a diferentes materiais e modos de fratura.
 
-Um marco na consolidação do _CZM_ como abordagem geral foi a revisão de Elices, Guinea, Gómez e Planas @Elices_2002. Os autores revisaram o modelo da zona de processo coesiva, destacando sua capacidade de lidar com a zona não linear à frente da ponta da fissura e de prever o comportamento de estruturas não fissuradas, incluindo entalhes rombos, uma limitação comum de modelos de fratura clássicos. O trabalho também mostrou que o _CZM_, originalmente aplicado ao concreto e compósitos cimentícios, podia ser estendido com sucesso a outros materiais.
+Um marco na consolidação do _CZM_ como abordagem geral foi a revisão de  #prose(<Elices_2002>). Os autores revisaram o modelo da zona de processo coesiva, destacando sua capacidade de lidar com a zona não linear à frente da ponta da fissura e de prever o comportamento de estruturas não fissuradas, incluindo entalhes rombos, uma limitação comum de modelos de fratura clássicos. O trabalho também mostrou que o _CZM_, originalmente aplicado ao concreto e compósitos cimentícios, podia ser estendido com sucesso a outros materiais.
 
 ==== Formulação
 
@@ -303,9 +304,9 @@ A seguir, detalham-se as abordagens constitutivas adotadas no trabalho, constitu
 
 ==== O modelo bidimensional
 
-O texto de @Durand_2019 apresenta um modelo bidimensional para elementos de interface modelados de acordo com a função de escoamento de Mohr-Coulomb. Além disso, os autores utilizam modelos de fratura não-lineares para representar o amolecimento (_softening_) da fratura ao longo de sua separação.
+O texto de #prose(<Durand_2019>) apresenta um modelo bidimensional para elementos de interface modelados de acordo com a função de escoamento de Mohr-Coulomb. Além disso, os autores utilizam modelos de fratura não-lineares para representar o amolecimento (_softening_) da fratura ao longo de sua separação.
 
-O modelo adota uma superfície de escoamento baseada no critério de Mohr-Coulomb com aderência, conforme proposto por @Lens_2009 A função de escoamento $f$ é definida no espaço de tensões normal ($sigma_n$) e cisalhante $tau$ como:
+O modelo adota uma superfície de escoamento baseada no critério de Mohr-Coulomb com aderência, conforme proposto por #prose(<Lens_2009>) A função de escoamento $f$ é definida no espaço de tensões normal ($sigma_n$) e cisalhante $tau$ como:
 
 $
    f(sigma, sigma_max) = abs(tau) + (sigma_n - sigma_max) tan(phi) = 0 
@@ -313,7 +314,7 @@ $ <esc_f>
 
 #figure(
   image("../figuras/lens_modelo_const.png", width: 65%),
-  caption: [Função de escoamento (sólida) e potencial plástico (tracejada) de acordo com @Lens_2009]
+  caption: [Função de escoamento (sólida) e potencial plástico (tracejada) de acordo com #prose(<Lens_2009>)]
 )
 
 A função de potencial plástico ($g$), utilizada para determinar a direção do fluxo do material durante deformações plásticas, é definina por
@@ -324,11 +325,11 @@ $
 
 // Hordijk
 
-Para representar o amolecimento da fratura, isto é, a translação da @esc_f para a esquerda, ao longo do eixo $sigma_n$, em relação à abertura da fissura $u_p$, os autores utilizaram a seguinte curva, definida @Hordijk1992. que relaciona a abertura de tração com a tensão máxima do modelo:
+Para representar o amolecimento da fratura, isto é, a translação da @esc_f para a esquerda, ao longo do eixo $sigma_n$, em relação à abertura da fissura $u_p$, os autores utilizaram a seguinte curva, definida #prose(<Hordijk1992>). que relaciona a abertura de tração com a tensão máxima do modelo:
 
 #figure(
   image("../figuras/amolecimento_hordjark.png", width: 60%),
-  caption: [Curva de amolecimento de Hordijk] 
+  caption: [Curva de amolecimento @Hordijk1992.] 
 ) <hordijk>
 
 #figure(
@@ -345,7 +346,7 @@ $ bold(D)_(e p) = bold(D)_e - (bold(D)_e bold(r) bold(v)^T bold(D)_e) / (bold(v)
 Onde $bold(D)_e$ é a matriz constitutiva elástica do elemento, $bold(v) = (partial f) / (partial sigma)$ e $bold(y) = (partial f) / (partial sigma_max)$ são derivadas da função de escoamento em função das tensões, $bold(r) = (partial g) / (partial sigma)$ é o fluxo plástico e $bold(m) = (partial sigma_max) / (partial u_p)$ é a derivada da tensão máxima em relação à abertura do elemento.
 
 // atualização de tensões e integração implícita
-Na análise não-linear de elementos finitos, e especialmente para um modelo matematicamente sensível como os elementos coesivos, a atualização de tensões é parte fundamental do processo iterativo. No modelo de @Durand_2019, essa atualização dependerá do deslocamento relativo $Delta bold(w)$ de tal modo que, dado o valor da tensão na iteração atual $bold(sigma)^n$, a tensão de teste $bold(sigma)^(t r)$ será 
+Na análise não-linear de elementos finitos, e especialmente para um modelo matematicamente sensível como os elementos coesivos, a atualização de tensões é parte fundamental do processo iterativo. No modelo de #prose(<Durand_2019>), essa atualização dependerá do deslocamento relativo $Delta bold(w)$ de tal modo que, dado o valor da tensão na iteração atual $bold(sigma)^n$, a tensão de teste $bold(sigma)^(t r)$ será 
 
 $
   bold(sigma)^(t r) = bold(sigma)^n + bold(D)_e Delta bold(w)
@@ -360,7 +361,7 @@ A tensão de teste apenas será válida se a condição de escoamento não for a
 
 ==== Modelo tridimensional <sec_cohesive_3d>
 
-Seguindo a aplicação e análise feita nos modelos coesivos em @Durand_2019, que apresentou uma abordagem bidimensional do modelo, que se mostra uma limitação natural do modelo. Assim, para superar essa limitação, @Durand_2021_3D apresenta uma extensão tridimensioal do modelo constitutivo, que é a base utilizada nesse trabalho para analisar a punção em lajes lisas.
+Seguindo a aplicação e análise feita nos modelos coesivos em #prose(<Durand_2019>), que apresentou uma abordagem bidimensional do modelo, que se mostra uma limitação natural do modelo. Assim, para superar essa limitação, #prose(<Durand_2021_3D>) apresenta uma extensão tridimensioal do modelo constitutivo, que é a base utilizada nesse trabalho para analisar a punção em lajes lisas.
 
 // extensão para o estado triaxial de tensões
 
@@ -410,7 +411,7 @@ $
   bold(r) = ((partial g)/(partial sigma_n), (partial g)/(partial tau_s), (partial g)/(partial tau_t)) = (2 sigma_n tan^2(phi), 2 tau_s, 2 tau_t) quad "para " sigma_n > 0
 $
 
-A matriz constitutiva elastoplástica $bold(D)_(e p)$ mantém a mesma estrutura da @eq_Dep (do modelo 2D), porém agora operando com vetores de três componentes. 
+A matriz constitutiva elastoplástica $bold(D)_(e p)$ mantém a mesma estrutura da @eq_Dep, porém agora operando com vetores de três componentes. 
 
 
 // técnicas de solução numérica
@@ -438,13 +439,13 @@ O novo passo é calculado como $Delta T^(n+1) = q Delta T^n$, com limites para e
 
 // aplicação
 
-O modelo 3D foi validado por @Durand_2021_3D por meio de ensaios de tração e cisalhamento puros (patch tests) e, posteriormente, aplicado à simulação de experimentos clássicos da literatura, como vigas entalhadas submetidas à torção e placas com duplo entalhe em modo misto. Os resultados demonstraram boa concordância com as curvas experimentais de carga-CMOD, incluindo o ramo de amolecimento, e padrões de fissuração compatíveis com os observados experimentalmente.
+O modelo 3D foi validado por #prose(<Durand_2021_3D>) por meio de ensaios de tração e cisalhamento puros (patch tests) e, posteriormente, aplicado à simulação de experimentos clássicos da literatura, como vigas entalhadas submetidas à torção e placas com duplo entalhe em modo misto. Os resultados demonstraram boa concordância com as curvas experimentais de carga-CMOD, incluindo o ramo de amolecimento, e padrões de fissuração compatíveis com os observados experimentalmente.
 
-É importante destacar que o modelo 3D apresenta uma limitação em relação ao tipo de elemento de volume utilizado: @Durand_2021_3D observaram que elementos hexaédricos interferem no desenvolvimento das fissuras, tendendo a aumentar a carga de pico ou gerar múltiplas fissuras em regiões onde se esperava apenas uma. Por outro lado, elementos tetraédricos e piramidais proporcionaram padrões de fissuração mais realistas. Essa observação é particularmente relevante para o presente trabalho, pois a escolha do tipo de elemento de volume na malha da laje influenciará diretamente a qualidade dos resultados da simulação de punção.
+É importante destacar que o modelo 3D apresenta uma limitação em relação ao tipo de elemento de volume utilizado: #prose(<Durand_2021_3D>) observaram que elementos hexaédricos interferem no desenvolvimento das fissuras, tendendo a aumentar a carga de pico ou gerar múltiplas fissuras em regiões onde se esperava apenas uma. Por outro lado, elementos tetraédricos e piramidais proporcionaram padrões de fissuração mais realistas. Essa observação é particularmente relevante para o presente trabalho, pois a escolha do tipo de elemento de volume na malha da laje influenciará diretamente a qualidade dos resultados da simulação de punção.
 
 ==== Modelagem da Aderência do Aço
 // problema de compatibilidade malha entre aço e concreto
-Segundo @Durand_2021, a modelagem de armaduras em meios sólidos por elementos finitos apresenta duas problemáticas clássicas: A primeira, em relação à dificuldade de representar o elemento numericamente, isto é, sua relação geométrica com a discretização do problema, e a segunda, referente à definição de um modelo de interface adequado para modelar a ligação entre aço e concreto, incluindo o escorregamento. 
+Segundo #prose(<Durand_2021>), a modelagem de armaduras em meios sólidos por elementos finitos apresenta duas problemáticas clássicas: A primeira, em relação à dificuldade de representar o elemento numericamente, isto é, sua relação geométrica com a discretização do problema, e a segunda, referente à definição de um modelo de interface adequado para modelar a ligação entre aço e concreto, incluindo o escorregamento. 
 
 Atualmente existem três abordagens para a abordar a geometria e influência das barras no concreto armado: 
 
@@ -508,19 +509,19 @@ Para o comportamento constitutivo da interface, #prose(<Durand_2021>) adota um m
 
 Complementarmente, o elemento de restrição de ponta controla o deslocamento relativo na extremidade da armadura, cobrindo duas situações: pontas ancoradas, de deslocamento nulo, adotando-se penalidade, e pontas não ancoradas, que impedem apenas a penetração da barra no sólido. Para o caso de lajes lisas, esse elemento é particularmente útil para representar a ancoragem das barras de flexão nas extremidades da laje, onde ganchos em "U" impedem o escorregamento excessivo.
 
-Para o presente trabalho, a contribuição de @Durand_2021 é fundamental: o elemento de interface barra-sólido permite representar a armadura de flexão da laje sem a necessidade de compatibilizar a malha do concreto com a posição das barras, o que viabiliza a geração automática da malha e a variação do layout de armadura sem remalhamento. A aplicação ao caso da laje lisa de @palhares2018 é, portanto, direta: as barras de flexão (superior e inferior) e os ganchos em "U" podem ser discretizados como elementos de barra curva, conectados ao concreto por meio dos elementos de interface, com o envelope monotônico do fib governando a aderência.
+Para o presente trabalho, a contribuição de #prose(<Durand_2021>) é fundamental: o elemento de interface barra-sólido permite representar a armadura de flexão da laje sem a necessidade de compatibilizar a malha do concreto com a posição das barras, o que viabiliza a geração automática da malha e a variação do layout de armadura sem remalhamento. A aplicação ao caso da laje lisa de #prose(<palhares2018>) é, portanto, direta: as barras de flexão (superior e inferior) e os ganchos em "U" podem ser discretizados como elementos de barra curva, conectados ao concreto por meio dos elementos de interface, com o envelope monotônico do fib governando a aderência.
 
 
 == Estado da Arte
 Este capítulo apresenta o estado atual das simulações numéricas de punção, com enfoque especial no Método dos Elementos Finitos (MEF). No contexto da modelagem numérica, observa-se que grande parte dos estudos que empregam elementos coesivos os utiliza para representar interfaces específicas entre materiais, não necessariamente para modelar diretamente a fissura diagonal característica do fenômeno da punção, como proposto na presente pesquisa.
 
-Inicialmente, será abordado o trabalho de @Schimanowski_2025, que apresenta uma extensa revisão da aplicação do MEF na simulação do fenômeno da punção em diferentes contextos. Será dada especial atenção às lajes lisas, buscando compreender como sua modelagem numérica evoluiu ao longo do tempo.
+Inicialmente, será abordado o trabalho de #prose(<Schimanowski_2025>), que apresenta uma extensa revisão da aplicação do MEF na simulação do fenômeno da punção em diferentes contextos. Será dada especial atenção às lajes lisas, buscando compreender como sua modelagem numérica evoluiu ao longo do tempo.
 
-Em seguida, será analisado o trabalho de @Palhares_2022, que constitui a principal referência e base de comparação para a presente pesquisa. Esse estudo analisa numericamente lajes ensaiadas experimentalmente por @palhares2018 e @Lima2021, investigando a influência de diferentes configurações de armadura de punção em comparação com uma laje de referência. Esta última será também considerada na presente pesquisa, permitindo uma comparação direta entre os resultados obtidos.
+Em seguida, serão apresentadas pesquisas contemporâneas no contexto da aplicação de elementos coesivos, análise de punção pelo MEF e ensaios experimentais de punção em lajes lisas, em que serão revisados os trabalhos de #prose(<palhares2018>) e #prose(<Lima2021>).
 
 === Revisão do Estado da Arte da modelagem numérica de punção @Schimanowski_2025
 
-A modelagem numérica da punção em lajes tem evoluído significativamente nas últimas décadas, impulsionada pela necessidade de prever um modo de falha que é abrupto e potencialmente catastrófico. Em sua pesquisa, @Schimanowski_2025 apresentam uma revisão extensiva e sistemática do estado da arte sobre a simulação numérica da punção, analisando a produção científica de alta qualidade até o início de 2025.
+A modelagem numérica da punção em lajes tem evoluído significativamente nas últimas décadas, impulsionada pela necessidade de prever um modo de falha que é abrupto e potencialmente catastrófico. Em sua pesquisa, #prose(<Schimanowski_2025>) apresentam uma revisão extensiva e sistemática do estado da arte sobre a simulação numérica da punção, analisando a produção científica de alta qualidade até o início de 2025.
 
 #figure(
   caption: [Publicações científicas de alta qualidade em punção ao longo dos anos. Em azul, publicações de análise numérica, em cinza, número total de publicações realizadas. Fonte: @Schimanowski_2025],
@@ -529,18 +530,105 @@ A modelagem numérica da punção em lajes tem evoluído significativamente nas 
 
 Os autores destacam que, embora os estudos experimentais ainda dominem o campo, as investigações numéricas via Método dos Elementos Finitos (MEF) cresceram exponencialmente na última década. Esse avanço é justificado pelo custo significativamente menor das simulações em relação aos ensaios, pela capacidade de avaliar múltiplos parâmetros rapidamente e pela possibilidade de explorar cenários críticos antes da implementação em projeto. Contudo, a revisão ressalta que a modelagem numérica da punção é um desafio complexo, exigindo conhecimento aprofundado de programação, teorias constitutivas e do próprio MEF, além de cuidadosa definição de condições de contorno, malhas e métodos de solução.
 
-Para organizar a vasta literatura, @Schimanowski_2025 dividem os estudos numéricos em oito cenários principais. O caso mais simples e fundamental, que também é tema de análise da presente pesquisa, que serve de base para a validação da maioria dos modelos, é o de punção simétrica em lajes lisas de concreto armado convencional, sem aberturas ou armadura de cisalhamento. Nesse contexto, os pesquisadores avaliam a sensibilidade dos resultados a diferentes tipos de elementos (sólidos 3D, cascas, axissimétricos), modelos constitutivos (desde elásticos até dano plástico e fissuração distribuída) e estratégias de modelagem da armadura (embutida, discreta ou distribuída). A revisão aponta que, embora a carga de ruptura seja geralmente bem capturada, a rigidez inicial e a carga de fissuração ainda apresentam desvios em relação aos dados experimentais. Além disso, grande parte dos modelos adota a hipótese de aderência perfeita entre aço e concreto, o que é uma limitação, dado que a interação na interface é um fator crítico para o comportamento pós-pico.
+Para organizar a vasta literatura, #prose(<Schimanowski_2025>) dividem os estudos numéricos em oito cenários principais. O caso mais simples e fundamental, que também é tema de análise da presente pesquisa, que serve de base para a validação da maioria dos modelos, é o de punção simétrica em lajes lisas de concreto armado convencional, sem aberturas ou armadura de cisalhamento. Nesse contexto, os pesquisadores avaliam a sensibilidade dos resultados a diferentes tipos de elementos (sólidos 3D, cascas, axissimétricos), modelos constitutivos (desde elásticos até dano plástico e fissuração distribuída) e estratégias de modelagem da armadura (embutida, discreta ou distribuída). A revisão aponta que, embora a carga de ruptura seja geralmente bem capturada, a rigidez inicial e a carga de fissuração ainda apresentam desvios em relação aos dados experimentais. Além disso, grande parte dos modelos adota a hipótese de aderência perfeita entre aço e concreto, o que é uma limitação, dado que a interação na interface é um fator crítico para o comportamento pós-pico.
 
 A partir desse caso base, a revisão avança para cenários mais complexos e representativos da prática real. Destaca-se o crescimento dos estudos sobre punção assimétrica, incluindo carregamentos excêntricos, momentos desbalanceados e ligações de borda e canto, que são mais críticos, mas historicamente menos estudados que as ligações internas. Outros temas em evidência incluem a punção sob carregamentos cíclicos e sísmicos, a influência de aberturas próximas ao pilar, o uso de materiais alternativos (como concretos leves e compósitos reforçados com fibras), técnicas de reforço estrutural e diferentes configurações de armadura de cisalhamento. Os autores também abordam cenários complexos, como o colapso progressivo, lajes protendidas, lajes nervuradas, painéis sanduíche e tabuleiros de pontes.
 
-Por fim, @Schimanowski_2025 identificam lacunas importantes na literatura e apontam direções promissoras para pesquisas futuras. Os principais desafios transversais que persistem na modelagem numérica são a sensibilidade dos resultados ao modelo constitutivo (frequentemente acompanhada de dependência de malha), a representação precisa da interação entre concreto e armadura (incluindo o escorregamento e a perda de aderência) e o alto custo computacional de análises com malhas refinadas. Como perspectivas futuras, os autores sugerem a simulação sob condições dinâmicas (sísmicas), a análise de lajes com novos materiais (concreto leve, compósitos reforçados com fibras), o desenvolvimento e a avaliação de sistemas avançados de reforço ao cisalhamento, e a exploração da punção em sistemas estruturais complexos, como lajes nervuradas, painéis sanduíche e lajes com núcleos vazados.
+Por fim, #prose(<Schimanowski_2025>) identificam lacunas importantes na literatura e apontam direções promissoras para pesquisas futuras. Os principais desafios transversais que persistem na modelagem numérica são a sensibilidade dos resultados ao modelo constitutivo (frequentemente acompanhada de dependência de malha), a representação precisa da interação entre concreto e armadura (incluindo o escorregamento e a perda de aderência) e o alto custo computacional de análises com malhas refinadas. Como perspectivas futuras, os autores sugerem a simulação sob condições dinâmicas (sísmicas), a análise de lajes com novos materiais (concreto leve, compósitos reforçados com fibras), o desenvolvimento e a avaliação de sistemas avançados de reforço ao cisalhamento, e a exploração da punção em sistemas estruturais complexos, como lajes nervuradas, painéis sanduíche e lajes com núcleos vazados.
 
-Em síntese, a revisão de @Schimanowski_2025 evidencia que a modelagem numérica da punção está em um estágio de maturidade que permite não apenas validar experimentos, mas também investigar fenômenos complexos e orientar o projeto estrutural. Ao mesmo tempo, a identificação das lacunas e desafios reforça a relevância de abordagens inovadoras, como o uso de elementos coesivos para representar a fratura discreta e a modelagem explícita da aderência aço-concreto, que buscam superar as limitações dos modelos de dano contínuo tradicionalmente empregados.
-
-=== Estudos numéricos da fratura por meio de elementos coesivos
+Em síntese, a revisão evidencia que a modelagem numérica da punção está em um estágio de maturidade que permite não apenas validar experimentos, mas também investigar fenômenos complexos e orientar o projeto estrutural. Ao mesmo tempo, a identificação das lacunas e desafios reforça a relevância de abordagens inovadoras, como o uso de elementos coesivos para representar a fratura discreta e a modelagem explícita da aderência aço-concreto, que buscam superar as limitações dos modelos de dano contínuo tradicionalmente empregados.
 
 
-=== Estudos numéricos de punção em lajes lisas utilizando o Método dos Elementos Finitos (MEF)
+
+== Aplicação de Elementos Coesivos na Modelagem Discreta de Interfaces e Fratura
+
+No contexto da modelagem numérica via MEF, a aplicação de elementos coesivos permite representar descontinuidades discretas, transferência de esforços em modo misto (Abertura Modo I e Cisalhamento Modo II) e mecanismos de atrito/engrenamento sem a dependência de malha inerente aos modelos de dano contínuo distribuído. A atual seção apresenta, três pesquisas contemporâneas mas abrangentes que aplicam essa metodologia, realizadas por #prose(<Xu_2025>), #prose(<Liu_2022>) e #prose(<Gudzulic_2025>).
+
+Em seu texto, #prose(<Xu_2025>) avaliam a capacidade de aderência e a resposta de arranque (_push-out_) em colunas curtas de tubo de aço preenchido com Concreto de Ultra-Alto Desempenho (UHPCFST). Elementos coesivos 3D (`COH3D8`) são alocados na interface tubo-UHPC e inseridos em lote entre elementos sólidos de UHPC (`C3D8R`) para simular o lascamento e descolamento da matriz.
+
+A relação tração-separação elástica linear inicial (não acoplada) é expressa por:
+
+$ vec(t_n, t_s, t_t) = mat(K_"nn", 0, 0; 0, K_"ss", 0; 0, 0, K_"tt") vec(delta_n, delta_s, delta_t) $
+
+Que representa a relação mecânica clássica entre tração, rigidez e deslocamentos para um corpo. Na notação, $< n, s, t> $ representam, respectivamente, a direção normal e as duas tangenciais.
+
+O início do dano interfacial é regido pelo critério de Tensão Nominal Máxima (_Maximum Nominal Stress Criterion_):
+
+$ max({ (<t_n>) / (t_n^0), (t_s) / (t_s^0), (t_t) / (t_t^0) }) = 1 $
+
+Os autores observaram que modelos convencionais de dano plástico associados apenas ao atrito de Coulomb não conseguiam reproduzir o fenômeno de destacamento do concreto. A inserção dos elementos coesivos entre os elementos do UHPC permitiu que, ao atingirem o critério de ruptura, as superfícies coesivas falhassem e permitissem o escorregamento, lascamento e fraturamento livre do concreto, reproduzindo com precisão o lascamento e o efeito de cunha observados nos ensaios de arranque (push-out).
+
+Além disso, a calibração dos parâmetros constitutivos dos elementos coesivos (rigidez $K_n, K_s, K_t$, tensões de pico de 20% a 40% da resistência e energia de fratura) resultou em uma excelente concordância com as curvas experimentais, com erros inferiores a 5% para a carga de escoamento e para a capacidade última de aderência. 
+
+A simulação coesiva evidenciou claramente a transição do comportamento interfacial: na fase não danificada, a resposta é governada pela rigidez elástica dos elementos coesivos. Após a degradação total das tensões coesivas, a transferência de carga passa a ser mantida exclusivamente pelo atrito e pelo confinamento mecânico exercido pelo tubo de aço.
+
+Com uma abordagem similar, #prose(<Liu_2022>) investigam a transferência de esforços e os mecanismos de fraturamento na interface entre concreto pré-moldado antigo (C30) e concreto moldado posteriormente no local (C35), em vigas com diferentes configurações geométricas de chaves de cisalhamento, submetidas à flexão em quatro pontos.
+
+A iniciação do dano na interface entre os concretos novo e antigo é governada pelo critério Quadrático de Tensão Nominal (Quadratic Nominal Stress Damage Criterion – Quads Damage):
+
+$ ( (t_n) / (t_n^0) )^2 + ( (t_s) / (t_s^0) )^2 + ( (t_t) / (t_t^0) )^2 = 1 $
+
+Nesta formulação, $t_n$ representa a tensão nominal normal à interface, enquanto $t_s$ e $t_t$ correspondem às tensões nominais cisalhantes nas duas direções tangenciais ortogonais. Os termos $t_n^0 = t_s^0 = t_t^0 = 0,6 "MPa"$ definem as resistências nominais de pico (limiares de início de dano) nas respetivas direções.
+
+A interface foi discretizada com elementos coesivos tridimensionais de espessura nula (COH3D8), enquanto o comportamento não linear do concreto foi representado pelo modelo de plasticidade com dano (Concrete Damaged Plasticity – CDP). Adicionalmente, o contato tangencial foi descrito por uma formulação de atrito do tipo penalty, com coeficiente de atrito de Coulomb de 0,6. Essa estratégia permitiu representar a evolução da transferência de esforços, inicialmente dominada pela adesão química e posteriormente governada pela atuação combinada do atrito e do engrenamento mecânico nas paredes das chaves de cisalhamento.
+
+O modelo numérico reproduziu os três modos de ruptura observados experimentalmente: falha dominada pela interface, falha mista entre interface e substrato e rasgamento da raiz da chave de cisalhamento. Os resultados também demonstraram que a geometria das chaves influencia significativamente a capacidade resistente à flexão, sendo a quantidade de chaves o parâmetro de maior sensibilidade, seguida pela profundidade, formato, altura e inclinação. A comparação entre as curvas carga-deslocamento experimentais e numéricas apresentou boa concordância para a maioria das configurações, com diferenças na carga de pico predominantemente inferiores a 2,5%, embora tenha sido observada uma discrepância de 37,1% para a configuração com altura de chave de 60 mm. Esses resultados demonstram a capacidade do modelo em representar a evolução do dano interfacial, a redistribuição de tensões e a alteração das trajetórias de fissuração em função da geometria das chaves de cisalhamento.
+
+
+Finalmente, #prose(<Gudzulic_2025>) simulam a propagação de fissuras discretas, a falha por cisalhamento em modo misto e o efeito de escala em vigas de concreto armado, combinando elementos de interface coesiva no concreto com elementos de acoplamento elastoplásticos de aderência na armadura.
+
+#figure(
+  caption: [ Superfície de fratura coesiva com dilatância apresentada por #prose(<Gudzulic_2025>)],
+  image("../figuras/camacho_ortiz_model.png", width: 80%)
+)
+
+A superfície de ruína coesiva-friccional estende o modelo de #prose(<Snozzi_2012>), incorporando o efeito de dilatância induzida pela rugosidade e o atrito entre as faces da fissura, que caracteriza a superfície de falha de #prose(<Camacho_1996>):
+
+$
+  F
+  =
+  sqrt(
+    (1/β^2 norm(bold(t)_T)^2 + chevron.l t'_(x') chevron.r^2_+)
+    /
+    (q_c^2)
+  )
+  -
+  1
+  =
+  0
+$
+
+Na equação, $F$ é a função da superfície de falha coesiva, $β = f_s / f_t$ é a razão entre as resistências ao cisalhamento e à tração, $bold(t)_T$ é o vetor de trações tangenciais no plano da fissura, $t'_(x')$ é a tração normal à fissura, $chevron.l t'_(x') chevron.r_+$ representa a parte positiva de $t'_(x')$ pelo operador de Macaulay e $q_c$ é a função de amolecimento coesivo que descreve a evolução da resistência residual.
+
+A função de escoamento é dada por
+
+$
+  f_μ(bold(t)'_μ) = norm(bold(t)'_μ) - μ|chevron.l t'_(x') chevron.r^2_+| <= 0
+$
+
+Nesta expressão, $f_μ$ é a função de escoamento por atrito, $bold(t)'_μ$ é o vetor de tração tangencial de atrito atuante nas faces da fissura, $μ$ é o coeficiente de atrito de Coulomb e $chevron.l -t'_(x') chevron.r_+$ é a parte positiva da tensão normal compressiva efetiva entre as faces da fissura, de modo que o termo $μ|chevron.l -t'_(x') chevron.r_+|$ representa a resistência friccional mobilizada.
+
+Os resultados obtidos por #prose(<Gudzulic_2025>) demonstraram que a combinação de elementos de interface coesiva no concreto com elementos de acoplamento elastoplásticos de aderência foi capaz de reproduzir a formação de fissuras, os modos de falha e a capacidade resistente de vigas de concreto armado em diferentes escalas geométricas. A inclusão da dilatância induzida pela rugosidade mostrou-se relevante para capturar mecanismos de falha dominados por cisalhamento e o confinamento passivo mobilizado pela armadura. O modelo também reproduziu o efeito de escala na resistência nominal ao cisalhamento, em boa concordância com os ensaios de referência, e a abordagem discreta evitou a necessidade de limitadores de localização típicos de modelos contínuos, embora a sensibilidade de malha tenha sido analisada separadamente.
+
+
+
+=== Estudos Numéricos de Punção em Lajes Lisas Utilizando o Método dos Elementos Finitos (MEF)
+
+A análise numérica via Método dos Elementos Finitos (MEF) consolidou-se como uma ferramenta indispensável para a investigação do fenômeno de punção em ligações laje-pilar. Por se tratar de uma ruína frágil governada por um estado tridimensional e altamente complexo de tensões na vizinhança do apoio, a simulação computacional permite acessar distribuições internas de tensões, deformações na massa de concreto e na armadura, além do desenvolvimento progressivo do dano que seriam de difícil ou impossível instrumentação em ensaios de laboratório.
+
+Como destacado por #prose(<Schimanowski_2025>), embora os estudos experimentais ainda sejam preponderantes, o volume de pesquisas dedicadas à simulação numérica da punção cresceu de forma expressiva na última década. Esse avanço é impulsionado pelo custo marginal reduzido das análises paramétricas em comparação às campanhas físicas, aliado ao desenvolvimento de modelos constitutivos não lineares mais sofisticados e ao aumento da capacidade de processamento computacional.
+
+
+Nas simulações tridimensionais da ligação laje-pilar via MEF, a representação da não linearidade física do concreto é predominantemente efetuada por meio de modelos contínuos baseados na mecânica do dano e na plasticidade, especialmente o Modelo _Concrete Damaged Plasticity_ (CDP), implementado de forma pioneira e amplamente difundido no código comercial ABAQUS, o CDP combina a plasticidade isotrópica com a degradação de rigidez por dano escalar à compressão ($d_c$) e à tração ($d_t$). 
+
+No trabalho de #prose(<Genikomsou_2015>), o modelo CDP foi rigorosamente calibrado para investigar a punção simétrica em lajes lisas. Foi demonstrado que o comportamento numérico é fortemente sensível ao ângulo de dilatância do concreto ($psi$), ao parâmetro de viscosidade ($mu$) utilizado na regularização viscoplástica para estabilização numérica, e ao modelo de amolecimento por tração. A adoção da lei bilinear de Petersson ancorada na energia de fratura do concreto ($G_F$) provou ser determinante para evitar a dependência excessiva do refinamento da malha.
+
+ Estendendo essa metodologia, #prose(<Milligan_2020>) aplicaram o modelo CDP para avaliar a influência do índice de retangularidade de pilares na resistência e na rotação da laje, evidenciando a concentração heterogênea de tensões cisalhantes nos cantos de apoios alongados. Paralelemante, investigações comparativas entre o modelo CDP (ABAQUS) e o modelo `Cementitious2` do _software_ ATENA — este último baseado na teoria da banda de fissuras (_crack band theory_) com amolecimento exponencial e superfície de plastificação de Menetrey-Willam — demonstraram que ambas as abordagens capturam com precisão a curva carga-deslocamento e a transição do modo de falha com a variação da taxa de armadura longitudinal ($rho$).
+
+Trabalhos como o de #prose(<Gouda_2025>) aplicaram esquemas iterativos de Newton-Raphson para simular o carregamento em etapas (nível de serviço, ciclos de carga e incremento até a ruína) em ligações de borda, avaliando a perda de capacidade resistente decorrente do momento fletor transferido e comparando as estimativas numéricas com as prescrições do ACI 318-19.
+
+Em situações não contempladas pelas normas de projeto convencionais — como lajes apoiadas em pilares em "L" ou de canto reentrante —, simulações tridimensionais via ATENA (empregando elementos sólidos `CSIsoBrick` e elementos de treliça `CCIsoTruss` para o aço) demonstraram excelente capacidade preditiva @albuquerque2015punção. As análises numéricas permitiram mapear os picos de tensão no canto reentrante e validar critérios de convergência baseados no equilíbrio de forças e na energia relativa.
+
 
 
 === Estudos experimentais sobre o comportamento à punção de lajes lisas
@@ -549,14 +637,14 @@ A investigação experimental de lajes lisas de concreto armado desempenha um pa
 
 Devido às dimensões e complexidade de um pavimento completo, a prática experimental adota a simplificação de isolar a região do pilar delimitada pela linha de momentos fletores nulos. O elemento de ensaio típico consiste em uma laje quadrada ou circular apoiada sobre um trecho de pilar central (_stub column_), estendendo-se superior e inferiormente à laje.
 
-No contexto dos modelos numéricos desenvolvidos na presente pesquisa, adota-se como _benchmark_ a campanha experimental realizada por @palhares2018 e @Lima2021 no Laboratório de Estruturas da Universidade de Brasília (UnB), com  foco central na eficiência e no tipo de ancoragem da armadura de cisalhamento (estribos fechados em cruz) nas barras de flexão. A laje de referência possui dimensão de $2500 times 2500$ mm, com espessura total de 180 mm e altura útil $d approx 144$ mm, apoiada sobre um pilar central quadrado de $300 times 300$ mm. 
+No contexto dos modelos numéricos desenvolvidos na presente pesquisa, adota-se como _benchmark_ a campanha experimental realizada por #prose(<palhares2018>) e #prose(<Lima2021>) no Laboratório de Estruturas da Universidade de Brasília (UnB), com  foco central na eficiência e no tipo de ancoragem da armadura de cisalhamento (estribos fechados em cruz) nas barras de flexão. A laje de referência possui dimensão de $2500 times 2500$ mm, com espessura total de 180 mm e altura útil $d approx 144$ mm, apoiada sobre um pilar central quadrado de $300 times 300$ mm. 
 
 #figure(
   caption: [Esquema do sistema de Ensaios utilizado por Palhares (2018) e Lima (2021).],
   image("../figuras/lima_palhares_laje.png", width: 80%)
 )
 
-A tese de @Lima2021 englobou o programa experimental completo com 20 lajes lisas, divididas em 5 séries de 4 lajes cada. A dissertação de @palhares2018 concentrou-se especificamente nos ensaios e análises detalhadas da Série 3 desse mesmo programa.
+A tese de #prose(<Lima2021>) englobou o programa experimental completo com 20 lajes lisas, divididas em 5 séries de 4 lajes cada. A dissertação de #prose(<palhares2018>) concentrou-se especificamente nos ensaios e análises detalhadas da Série 3 desse mesmo programa.
 
 
 

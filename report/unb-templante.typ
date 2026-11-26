@@ -48,7 +48,7 @@
     resumo-ing: none,
     resumo-pt: none,
     agradecimentos: none,
-    publicação: highlight([TODO]),
+    publicação: none,
     data: datetime(day:1, month:1, year:2024),
     bibliografia: none,
     estilo: none,
@@ -95,7 +95,7 @@
         #v(7mm)
 
         #align(center, upper(text(size:16pt, weight: "bold")[
-            #subtítulo \
+            
             #departamento
         ]))
 
@@ -145,7 +145,9 @@
 
     align(center, upper(text(size:14pt)[
         #subtítulo \
-        PUBLICAÇÃO: #publicação
+        #if (publicação != none) {
+            [PUBLICAÇÃO: #publicação]
+        }
     ]))
     
     v(1cm)
