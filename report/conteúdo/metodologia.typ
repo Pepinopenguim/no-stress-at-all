@@ -13,7 +13,7 @@ A pesquisa é organizada em quatro etapas, cada uma correspondendo a um dos obje
 #pagebreak()
 #rotate(-90deg, reflow: true)[
   #figure(
-    caption: [Matriz de rastreabilidade entre objetivos específicos, casos simulados, métricas, critérios e entregas.],
+    caption: [Matriz de rastreabilidade entre objetivos específicos, casos simulados, métricas, e entregas.],
     table(
       columns: (0.4fr, 1.3fr, 1.3fr, 1.4fr, 1.3fr),
       align: (center, left, left, left, left),
