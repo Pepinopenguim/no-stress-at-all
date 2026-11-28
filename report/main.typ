@@ -11,7 +11,7 @@
     departamento: "Departamento de Engenharia Civil e Ambiental",
     faculdade: "Faculdade de Tecnologia",
     autor: "Vítor Luís Costa Azevedo",
-    orientador: "Raul Durand",
+    orientador: "Raul Durand Farfan",
     coorientador: none,
     data: datetime(day:3, month:12, year:2026),
     bibliografia: "ref.bib",

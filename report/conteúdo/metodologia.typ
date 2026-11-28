@@ -4,7 +4,7 @@
 
 = Metodologia
 
-A metodologia adotada neste trabalho é organizada em cinco etapas complementares, alinhadas aos objetivos específicos. Inicialmente, define-se um modelo de referência da laje lisa ensaiada por #prose(<palhares2018>), calibrado com base nas propriedades experimentais dos materiais e comparado aos resultados numéricos de #prose(<Palhares_2022>). Em seguida, realiza-se um estudo de convergência de malha, variando o tamanho base e o refinamento local na ligação laje-pilar, para definir a discretização adotada nas etapas seguintes. Na terceira etapa, conduz-se uma análise de sensibilidade dos parâmetros do concreto coesivo — $f_t​$, $G_F​$, $ϕ$ e $α$ — sobre a carga de pico, a rigidez e o ramo de amolecimento. A quarta etapa avalia os padrões de fissuração e as tensões na armadura, comparando os resultados numéricos com os mapas experimentais e com as leituras de (_strain gauges_). Por fim, o modelo é estendido para as configurações de armadura de punção ensaiadas por #prose(<Lima2021>), avaliando a influência do tipo de ancoragem sobre a carga de pico e o modo de ruptura. A análise é realizada no pacote `Serendip`, na linguagem `Julia`, com geração de malha pelo `Gmsh` e pós-processamento no _ParaView_.
+A metodologia adotada neste trabalho é organizada em quatro etapas complementares, alinhadas aos objetivos específicos. Inicialmente, realiza-se um estudo de convergência de malha, variando o tamanho base e o refinamento local na ligação laje-pilar, para definir a discretização adotada nas etapas seguintes. Na segunda etapa, comparam-se os padrões de fissuração numéricos com os observados experimentalmente. Na terceira etapa, verifica-se a distribuição de tensões na armadura e a representação do comportamento de aderência, comparando os resultados numéricos com os mapas experimentais e as leituras dos extensômetros (_strain gauges_). Finalmente, a quarta etapa consiste em uma análise de sensibilidade dos parâmetros do concreto coesivo — $f_t​$, $G_F​$, $ϕ$ e $zeta$ — sobre a carga de pico, a rigidez e o ramo de amolecimento.
 
 == Estratégia geral e etapas da pesquisa
 
@@ -113,7 +113,7 @@ Por fim, a visualização e a inspeção dos resultados de simulação são real
 
 == Objeto de estudo
 
-O objeto de estudo é a laje lisa de referência ensaiada por @palhares2018 e posteriormente modelada numericamente por @Palhares_2022. Trata-se de uma laje quadrada de $2500 times 2500$ mm em planta, com espessura de $180$ mm, apoiada sobre um pilar central de seção quadrada $300 times 300$ mm. O pilar se estende $800$ mm acima e $600$ mm abaixo da laje, conforme as condições do ensaio original.
+O objeto de estudo é a laje lisa de referência ensaiada por #prose(<palhares2018>) e posteriormente modelada numericamente por #prose(<Palhares_2022>). Trata-se de uma laje quadrada de $2500 times 2500$ mm em planta, com espessura de $180$ mm, apoiada sobre um pilar central de seção quadrada $300 times 300$ mm. O pilar se estende $800$ mm acima e $600$ mm abaixo da laje, conforme as condições do ensaio original.
 
 A armadura de flexão é composta por barras de $16$ mm de diâmetro na face tracionada (inferior) e $10$ mm na face comprimida (superior), espaçadas a $155$ mm em ambas as direções ortogonais, resultando em uma taxa de armadura $rho approx 0.92 percent$. O cobrimento adotado é de $20$ mm. Nas bordas livres, ganchos em "U" de $16$ mm ancoram a armadura superior, impedindo o escorregamento excessivo. A laje não possui armadura de cisalhamento — condição intencional, para isolar o comportamento da punção pura.
 
@@ -239,7 +239,7 @@ A escolha dos modelos constitutivos adotados na simulação busca representar o 
 
 === Concreto (Comportamento Volumétrico)
 
-O volume (_bulk_) de concreto é modelado como elástico linear. Essa escolha segue as recomendações apresentadas por #prose(<Durand_2019>) e #prose(<Durand_2021_3D>), na qual a degradação do material e a propagação de fissuras são tratadas exclusivamente pelos elementos coesivos inseridos nas interfaces. Deste modo, como o problema é predominantemente dominado pela flexão e cisalhamento, assume-se a hipótese que a linearidade do concreto não teria efeito considerável no resultado global. Assim, o volume permanece íntegro e sua resposta mecânica depende apenas do módulo de elasticidade e do coeficiente de Poisson.
+O volume (_bulk_) de concreto é modelado como elástico linear. Essa escolha segue as recomendações apresentadas por #prose(<Durand_2019>) e #prose(<Durand_2021_3D>), na qual a degradação do material e a propagação de fissuras são tratadas exclusivamente pelos elementos coesivos inseridos nas interfaces. Essa abordagem também é observada em #prose(<Gudzulic_2025>). Deste modo, como o problema é predominantemente dominado pela flexão e cisalhamento, assume-se a hipótese que a linearidade do concreto não teria efeito considerável no resultado global. Assim, o volume permanece íntegro e sua resposta mecânica depende apenas do módulo de elasticidade e do coeficiente de Poisson.
 
 #figure(placement: none,
   caption: [Propriedades do concreto de volume.],
@@ -259,7 +259,7 @@ O volume (_bulk_) de concreto é modelado como elástico linear. Essa escolha se
 )<tab_conc_vol>
 
 === Concreto (Elementos de Interface)
-Os elementos coesivos utilizam o critério de Mohr-Coulomb para governar a abertura e o deslizamento das fissuras. Os parâmetros foram calibrados seguindo as diretrizes de @Durand_2019 e @Durand_2021_3D. Adota-se a resistência à tração ($f_t$) e a energia de fratura ($G_F$). A tangente do ângulo de atrito, $tan(55 °)$, é consistente com a faixa experimental de 54° a 57° reportada pelos autores. Por fim, o parâmetro $zeta$ controla os deslocamentos elásticos relativos na interface.
+Os elementos coesivos utilizam o critério de Mohr-Coulomb para governar a abertura e o deslizamento das fissuras. Os parâmetros foram calibrados seguindo as diretrizes de #prose(<Durand_2019>) e #prose(<Durand_2021_3D>). Adota-se a resistência à tração ($f_t$) e a energia de fratura ($G_F$). A tangente do ângulo de atrito, $tan(55 °)$, é consistente com a faixa experimental de 54° a 57° reportada pelos autores. Por fim, o parâmetro $zeta$ controla os deslocamentos elásticos relativos na interface.
 
 #figure(placement: none,
   caption: [Propriedades do concreto coesivo.],
@@ -390,7 +390,7 @@ Optou-se por controle de deslocamento nas placas de carregamento, para melhor si
 == Procedimento de Análise Numérica
 A análise não linear é conduzida por controle de deslocamento, com deslocamento vertical prescrito de $u_z = -25$ mm nos pontos de controle das placas de carregamento, subdividido em $100$ incrementos, com saída de resultados a cada $2$ incrementos (total de $50$ quadros). O processo iterativo adota tolerância de convergência de $1$ kN (equivalente a $ approx 0,2%$ de $P_(max",exp")$) e controle automático de incremento, fator praticamente necessário para convergência do modelo, de modo que o passo é reduzido caso a convergência não seja atingida dentro do número máximo de iterações e ampliado nas fases de resposta suave. Esses parâmetros foram mantidos idênticos em todas as simulações, de modo que a comparação entre casos reflita apenas a variação das grandezas em estudo.
 
-No processo de iteração do MEF, aplica-se um processo de reaplicação da carga $R(u) = f_"ext" - f_"int"$ como forma de redirecionar a linha de tensão-deformação para um falor mais próximo da realidade. Esse processo é feito ao longo de um `span`de iterações, para não afetar bruscamente o resultado.
+No processo de iteração do MEF, aplica-se um processo de reaplicação da carga $R(u) = f_"ext" - f_"int"$, reduzindo o desvio da curva de equilíbrio. Esse processo é feito ao longo de um `span` de iterações, para não afetar bruscamente o resultado.
 
 
 == Pós-processamento
@@ -403,7 +403,7 @@ O pós-processamento da análise numérica é organizado em três etapas complem
 
 = Resultados esperados
 
-Os resultados esperados são organizados segundo os cinco objetivos e se apoiam nos ensaios de #prose(<palhares2018>) e #prose(<Lima2021>), nas simulações de #prose(<Palhares_2022>) e nas diretrizes de modelagem coesiva de #prose(<Durand_2019>) e #prose(<Durand_2021_3D>). Eventuais desvios serão discutidos na Análise dos Resultados. A @tab:resumo-esp sintetiza as expectativas ao final da seção.
+Os resultados esperados são organizados segundo os quatro objetivos e se apoiam nos ensaios de #prose(<palhares2018>) e #prose(<Lima2021>), nas simulações de #prose(<Palhares_2022>) e nas diretrizes de modelagem coesiva de #prose(<Durand_2019>) e #prose(<Durand_2021_3D>). Eventuais desvios serão discutidos na Análise dos Resultados. A @tab:resumo-esp sintetiza as expectativas ao final da seção.
 
 == Convergência de malha
 
@@ -459,8 +459,7 @@ do grau de confiança e da base principal de cada hipótese.
     table.hline(stroke: 0.8pt),
 
     [I],
-    [$K_0$ pouco sensível ao refinamento; $P_(max)$ estável a partir de
-     R5; pós-pico e energia sensíveis ao refinamento],
+    [$K_0$ pouco sensível ao refinamento; $P_(max)$ estável a partir de R5, em ambos os casos; pós-pico e energia sensíveis ao refinamento],
     [Teoria de modelos coesivos; @Durand_2021_3D],
 
     table.hline(stroke: 0.4pt),
@@ -492,4 +491,4 @@ do grau de confiança e da base principal de cada hipótese.
 
 Entre as limitações reconhecidas do modelo, adota-se comportamento volumétrico simplificado em compressão, cujo efeito esperado é mínimo, e considera-se o concreto como homogêneo e isotrópico, hipótese clássica e inerente ao MEF. A fissuração é restrita aos elementos coesivos, de modo que o volume permanece contínuo e sem dano distribuído, enquanto as armaduras são representadas por elementos de barra, sem consideração explícita do efeito de pino; alternativamente, elementos de viga poderiam ser empregados para capturar esse mecanismo, sob o risco de possível aumento articial da rigidez.
 
-Do ponto de vista constitutivo e paramétrico, o modelo fib adotado é simplificado e não considera a variação das tensões confinantes, aspecto que pode ter impacto mais relevante na resposta. Além disso, os parâmetros sugeridos são provenientes de ensaios sem confinamento, e a resistência à tração e demais variáveis foram obtidas da literatura, e não de calibração específica para o caso em estudo.
+Do ponto de vista constitutivo e paramétrico, o modelo fib adotado é simplificado e não considera a variação das tensões confinantes, aspecto que pode ter impacto mais relevante na resposta. Além disso, os parâmetros sugeridos são provenientes de ensaios sem confinamento, já no concreto, a resistência à tração e demais variáveis foram obtidas da literatura, e não de calibração específica para o caso em estudo.
